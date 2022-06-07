@@ -5,23 +5,10 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Global Market</title>
-        <meta name="description" content="Home page" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Ir a <a href="/abaut">ABAUT</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-      </main>
+    <div >
+      <h1>
+        Global Market
+      </h1>
     </div>
   );
 };
