@@ -1,4 +1,4 @@
-const userSchema = require('../models/user');
+const userSchema = require('../../models/user');
 
 const updateUser = (req, res) => {
     const { id } = req.params;

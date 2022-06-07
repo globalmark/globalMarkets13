@@ -1,7 +1,10 @@
-const userSchema = require('../models/user');
-const createUsuario = (req, res) => {
-    const user = userSchema(req.body);
-    user.save()
+const userSchema = require('../../models/user');
+
+const deleteUser = (req, res) => {
+    const { id } = req.params;
+
+    userSchema.remove({ _id: id })
+
         .then((data) => {
             res.json(data);//responde con los datos del usuario creado     
         })
@@ -9,6 +12,4 @@ const createUsuario = (req, res) => {
             res.json({ message: err });
         });
 }
-
-
-module.exports = createUsuario;
+module.exports = deleteUser;
