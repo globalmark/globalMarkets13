@@ -11,7 +11,7 @@ Content-type: application/json
 ###
 GET  http://localhost:9000/users HTTP/1.1
 ###
-GET  http://localhost:9000/users?name=juan2 HTTP/1.1
+GET  http://localhost:9000/users?name=Juan9 HTTP/1.1
 
 
 ###
