@@ -17,11 +17,7 @@ const form: NextPage= () =>{
                  </label>
                  <input type="text" />
             </div>
-            <div>
-                <label>
-                    select
-                </label>
-            </div>
+            
             
         </div>
 
