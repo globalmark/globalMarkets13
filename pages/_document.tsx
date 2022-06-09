@@ -1,10 +1,18 @@
-import Document, { DocumentContext, Html, Head, Main, NextScript } from 'next/document'
+/* eslint-disable @next/next/no-page-custom-font */
+/* eslint-disable @next/next/no-document-import-in-page */
+import Document, {
+  DocumentContext,
+  Html,
+  Head,
+  Main,
+  NextScript,
+} from "next/document";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
-    const initalProps = await Document.getInitialProps(ctx)
+    const initalProps = await Document.getInitialProps(ctx);
 
-    return initalProps
+    return initalProps;
   }
 
   render() {
@@ -25,4 +33,4 @@ class MyDocument extends Document {
   }
 }
 
-export default MyDocument
+export default MyDocument;
