@@ -14,8 +14,8 @@ const port = process.env.PORT || 9000;
 app.use(cors());
 //middleware
 app.use(express.json())
-app.use(morgan('tiny'));
-app.use(helmet());
+app.use(morgan('tiny'));// nos permite que la aplicacion muestre los datos que se estan enviando
+app.use(helmet());// nos permite proteger la aplicacion de ataques
 app.use('/', useRoutes);
 
 app.use('/test', (req, res) => {
