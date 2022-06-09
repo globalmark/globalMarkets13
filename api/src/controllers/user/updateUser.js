@@ -1,9 +1,9 @@
 const userSchema = require('../../models/user');
 
 const updateUser = (req, res) => {
-    const { id } = req.params;
+    const { dni } = req.params;
     const { name, age, email } = req.body;
-    userSchema.updateOne({ _id: id }, { $set: { name, age, email } })
+    userSchema.updateOne({ dni: dni }, { $set: { name, age, email } })
 
         .then((data) => {
             res.json(data);//responde con los datos del usuario creado     

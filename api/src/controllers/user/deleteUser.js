@@ -1,9 +1,9 @@
 const userSchema = require('../../models/user');
 
 const deleteUser = (req, res) => {
-    const { id } = req.params;
+    const { dni } = req.params;
 
-    userSchema.remove({ _id: id })
+    userSchema.deleteOne({ dni: dni })
 
         .then((data) => {
             res.json(data);//responde con los datos del usuario creado     

@@ -5,7 +5,7 @@ const getUsers = (req, res) => {
     userSchema.find()
 
         .then((data) => {
-            res.json(data);//responde con los datos del usuario creado     
+            res.json(data);//responde con los datos de todos los user   
         })
         .catch((err) => {
             res.json({ message: err });
