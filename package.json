@@ -19,6 +19,7 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-hook-form": "^7.31.3",
+    "react-slideshow-image": "^3.7.5",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

@@ -1,20 +1,14 @@
-import {
-  Card,
-  CardActionArea,
-  CardMedia,
-  Grid,
-  Typography,
-} from "@mui/material";
 import type { NextPage } from "next";
-import { ShopLayout } from "../components/layouts";
-//import { initialData } from "../database/products";
+import { Typography } from "@mui/material";
 
-import Image from "next/image";
+import { ShopLayout } from "../components/layouts";
+import { initialData } from "../database/products";
+import { ProductList } from "../components/products";
 
 const Home: NextPage = () => {
   return (
     <ShopLayout
-      title={"Global-Market - Home"}
+      title={"Global-Market- Home"}
       pageDescription={"Encuentra los mejores productos en Global Market"}>
       <Typography variant="h1" component="h1">
         Tienda
@@ -22,7 +16,10 @@ const Home: NextPage = () => {
       <Typography variant="h2" sx={{ mb: 1 }}>
         Todos los productos
       </Typography>
+
+      <ProductList products={initialData.products as any} />
     </ShopLayout>
   );
 };
+
 export default Home;
