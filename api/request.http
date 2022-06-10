@@ -9,10 +9,12 @@ Content-type: application/json
 }
 
 ###
-GET  http://localhost:9000/users HTTP/1.1
+GET  http://localhost:9000/products HTTP/1.1
 ###
 GET  http://localhost:9000/users/name/Christian HTTP/1.1
 
+######
+GET  http://localhost:9000/products/?name=camisa01 HTTP/1.1
 
 ###
 GET  http://localhost:9000/users/629e80e5aa0ffa0f241b0640 HTTP/1.1
