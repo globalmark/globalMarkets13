@@ -31,4 +31,4 @@ const ElectrodomesticoPage: NextPage = () => {
   );
 };
 
-export default WomenPage;
+export default ElectrodomesticoPage;

@@ -29,4 +29,4 @@ const DeportePage: NextPage = () => {
   );
 };
 
-export default WomenPage;
+export default DeportePage;

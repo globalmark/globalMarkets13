@@ -29,4 +29,4 @@ const MueblesPage: NextPage = () => {
   );
 };
 
-export default WomenPage;
+export default MueblesPage;
