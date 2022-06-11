@@ -1,5 +1,7 @@
 import NextLink from "next/link";
 
+
+
 import {
   AppBar,
   Badge,
@@ -21,7 +23,14 @@ export const Navbar = () => {
             <Typography variant="h6">Global |</Typography>
             <Typography sx={{ ml: 0.5 }}>Market</Typography>
           </Link>
-        </NextLink>
+        </NextLink> 
+        
+        <Link href="/form">
+        <Button>  
+          Crea tu producto
+        </Button>
+        </Link>
+        
         <Box flex={1} />
 
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
