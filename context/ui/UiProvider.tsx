@@ -10,7 +10,7 @@ const UI_INITIAL_STATE: UiState = {
 };
 type Props = {};
 
-export const UiProvider: React.FC<PropsWithChildren<Props>> = ({
+export const UiProvider: FC<PropsWithChildren<Props>> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE);
