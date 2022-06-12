@@ -152,8 +152,8 @@ export const ProductFilter: FC<Props> = ({ filtro }) => {
                             <RadioGroup aria-labelledby="filtros" row={true}>
                                 <FormControlLabel onClick={(e)=>changeFiltros(e)} id="min" value="min"  control={<Radio size="small" color="secondary"/>} label="Menor Precio" />
                                 <FormControlLabel onClick={(e)=>changeFiltros(e)} id="max" value="max"  control={<Radio size="small" color="secondary"/>} label="Mayor Precio" />
-                                <FormControlLabel onClick={(e)=>changeFiltros(e)} id="A_Z" value="A_Z"  control={<Radio size="small" color="secondary"/>} label="Orden Alfabetico(A-Z)" />
-                                <FormControlLabel onClick={(e)=>changeFiltros(e)} id="Z_A" value="Z_A"  control={<Radio size="small" color="secondary"/>} label="Orden Alfabetico(Z-A)" />
+                                <FormControlLabel onClick={(e)=>changeFiltros(e)} id="A_Z" value="A_Z"  control={<Radio size="small" color="secondary"/>} label="Orden Alfabético (A-Z)" />
+                                <FormControlLabel onClick={(e)=>changeFiltros(e)} id="Z_A" value="Z_A"  control={<Radio size="small" color="secondary"/>} label="Orden Alfabético (Z-A)" />
                             </RadioGroup>
             </FormControl>
             <br />
@@ -170,9 +170,8 @@ export const ProductFilter: FC<Props> = ({ filtro }) => {
                     <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check6}  value="XXXL" label="XXXL" id="XXXL" onClick={(e)=>changeFiltros(e)} />
                 </RadioGroup>
             </FormControl>
-            <Button variant="contained"  onClick={prev} >Prev</Button>
-            <Button onClick={next} >Next</Button>
-            <ProductList products={respuesta() as any} />
+            <Button variant="outlined" color='secondary' size='medium' onClick={prev} >Prev</Button>
+            <Button variant="outlined" color='secondary' size='medium' onClick={next} >Next</Button>
             {isLoading ? <FullScreenLoading /> : <ProductList products={respuesta() as any} />}
             </ShopLayout>
             );
