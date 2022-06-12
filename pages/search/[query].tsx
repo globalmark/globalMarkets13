@@ -1,47 +1,28 @@
-/*import type { NextPage } from "next";
-import { Typography } from "@mui/material";
 
-import { ShopLayout } from "../components/layouts";
-import { initialData } from "../database/products";
-import { ProductList } from "../components/products";
-
-const Home: NextPage = () => {
-  return (
-    <ShopLayout
-      title={"Global-Market- Home"}
-      pageDescription={"Encuentra los mejores productos en Global Market"}>
-      <Typography variant="h1" component="h1">
-        Tienda
-      </Typography>
-      <Typography variant="h2" sx={{ mb: 1 }}>
-        Todos los productos
-      </Typography>
-
-      <ProductList products={initialData.products as any} />
-    </ShopLayout>
-  );
-};
-
-export default Home;
-*/
-/*
 import type { NextPage } from "next";
 import { Typography,Button,FormControl,FormLabel,RadioGroup,FormControlLabel,Radio } from "@mui/material";
 import { useEffect,useState} from 'react'
-import { initialData,SeedProduct } from "../database/products";
-import { ShopLayout } from "../components/layouts";
-import { ProductList } from "../components/products";
+import { ShopLayout } from "../../components/layouts";
+import { initialData,SeedProduct } from "../../database/products";
+import { ProductList } from "../../components/products";
+import { useRouter } from "next/router";
 
 var inicio:any[] = [];
 
-const Home: NextPage = () => {
+const SearchPage: NextPage = () => {
     const [product, setProduct] = useState(inicio);
     const [page,setPage] = useState(0);
     const [respaldo,setRespaldo] = useState(inicio);
     const [filtros,setFiltros] = useState({cheked:false,min:false,max:false,A_Z:false,Z_A:false,XS:false,S:false,M:false,L:false,XL:false,XXL:false,XXXL:false,restablecer:false,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false});
+    const {query} = useRouter();
+    const [busqueda,setBusqueda] = useState(query.query)
     useEffect(()=>{
-        setProduct(initialData.products);
-        setRespaldo(initialData.products)
+        if(query.query !== busqueda)setBusqueda(query.query);
+
+        setProduct(initialData.products.filter(i=>i.description.toLowerCase().includes(busqueda as any)));
+        setRespaldo(initialData.products.filter(i=>i.description.toLowerCase().includes(busqueda as any)))
+        console.log("esto es query : ", query.query);
+        
     },[]);
     const next = ()=>{
         if(product.length > page + 12){
@@ -167,6 +148,9 @@ return (
         <Typography variant="h2" sx={{ mb: 1 }}>
             Todos los productos
         </Typography>
+        <Typography variant="h1" component="h1">
+           Tu busqueda:  {busqueda}
+        </Typography>
         <FormControl>
         <FormLabel id="filtros">Filtrar Por:</FormLabel>
                     <RadioGroup aria-labelledby="filtros" row={true}>
@@ -198,32 +182,4 @@ return (
 );
 };
 
-export default Home;
-*/
-import type { NextPage } from 'next';
-import { Typography } from '@mui/material';
-
-import { ShopLayout } from '../components/layouts';
-
-import { ProductList } from '../components/products';
-import { useProducts } from '../hooks';
-
-import { FullScreenLoading } from '../components/ui';
-
-
-const HomePage: NextPage = () => {
-    const { products, isLoading } = useProducts('/products');
-return (
-    <ShopLayout title={'Teslo-Shop - Home'} pageDescription={'Encuentra los mejores productos de Teslo aquí'}>
-        <Typography variant='h1' component='h1'>Tienda</Typography>
-        <Typography variant='h2' sx={{ mb: 1 }}>Todos los productos</Typography>
-        {
-            isLoading
-                ? <FullScreenLoading />
-                : <ProductList products={ products } />
-        }
-    </ShopLayout>
-    )
-}
-
-export default HomePage
+export default SearchPage;
