@@ -33,7 +33,7 @@ export const Navbar = () => {
     if (searchTerm.trim().length === 0) return;
     push(`/search/${searchTerm}`);
   };
-
+  
   return (
     <AppBar>
       <Toolbar>
