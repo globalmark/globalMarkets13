@@ -1,3 +1,4 @@
+
 export interface SeedProduct {
     description: string;
     images: string[];
@@ -807,3 +808,4 @@ export const initialData: SeedData = {
         },
     ]
 }
+

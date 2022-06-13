@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {  SHOP_CONSTANTS } from '../../../database';
 import { initialData } from '../../../database/products'
 import { IProduct } from '../../../interfaces/products';
+import {db} from "../../../database"
 
 
 
@@ -21,23 +21,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             })
     }
 }
-export  function getProducts(
+export  async function getProducts(
     req: NextApiRequest,
     res: NextApiResponse<Data>
     ) {
+        
         const { genero = 'all' } = req.query;
-        let condition = {};
-        if ( genero !== 'all' && SHOP_CONSTANTS.validGenders.includes(`${genero}`) ) {
-            condition = { genero };
-        }
         if(genero === 'all' || !genero){
             res.status(200).json(initialData.products as any)
             return;
         }
-        
         const products = initialData.products.filter(i=>i.gender === genero)
-        
-        
-    
     res.status(200).json(products as any)
 }

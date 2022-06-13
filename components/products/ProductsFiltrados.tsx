@@ -196,22 +196,24 @@ import { useEffect,useState,FC} from 'react'
 import { initialData,SeedProduct } from "../../database/products";
 import { ShopLayout } from "../../components/layouts";
 import { ProductList } from "../../components/products";
+import { useProducts } from "../../hooks";
 
 var inicio:any[] = [];
 
 interface Props {
-    filtro:string ;
+    filtro:string 
 }
 
-const ProductFilter:FC<Props>= ({filtro}) => {
+const ProductFilter:FC<Props>=  ({filtro}) => {
+    const {products} = useProducts("/products/");
     const [product, setProduct] = useState(inicio);
     const [page,setPage] = useState(0);
     const [respaldo,setRespaldo] = useState(inicio);
     const [filtros,setFiltros] = useState({cheked:false,min:false,max:false,A_Z:false,Z_A:false,XS:false,S:false,M:false,L:false,XL:false,XXL:false,XXXL:false,restablecer:false,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false});
     useEffect(()=>{
-        setProduct(initialData.products.filter(i=>i.gender === filtro));
-        setRespaldo(initialData.products.filter(i=>i.gender === filtro))
-    },[]);
+        setProduct(products.filter(i=>i.gender === filtro));
+        setRespaldo(products.filter(i=>i.gender === filtro))
+    },[])
     const next = ()=>{
         if(product.length > page + 12){
             setPage(prev=>prev+12);
@@ -325,7 +327,6 @@ const ProductFilter:FC<Props>= ({filtro}) => {
             [e.target.value]:true
         }
         })
-        console.log(respuesta());
         
 return (
     <ShopLayout

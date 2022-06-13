@@ -10,7 +10,7 @@ import { FullScreenLoading } from '../components/ui';
 
 const HomePage: NextPage = () => {
 
-    const { products, isLoading } = useProducts("/products");
+    const { products, isLoading } = useProducts("/products/");
 return (
     <ShopLayout title={'Teslo-Shop - Home'} pageDescription={'Encuentra los mejores productos de Teslo aquí'}>
         <Typography variant='h1' component='h1'>Tienda</Typography>
@@ -18,7 +18,7 @@ return (
         {
             isLoading
                 ? <FullScreenLoading />
-                : <ProductList products={ products } />
+                : <ProductList products={ products as any } />
         }
     </ShopLayout>
     )
