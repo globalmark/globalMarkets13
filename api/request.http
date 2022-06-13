@@ -1,5 +1,5 @@
 ###
-POST http://localhost:9000/users/create HTTP/1.1
+POST http://localhost:3001/users/create HTTP/1.1
 Content-type: application/json
 
 {
@@ -20,7 +20,7 @@ GET  http://localhost:9000/products/?name=camisa01 HTTP/1.1
 GET  http://localhost:9000/users/629e80e5aa0ffa0f241b0640 HTTP/1.1
 
 ###
-PUT  http://localhost:9000/users/629e988c8e3da4eef3119b3c HTTP/1.1
+PUT  http://localhost:3001/users/629e988c8e3da4eef3119b3c HTTP/1.1
 Content-type: application/json
 
 {
