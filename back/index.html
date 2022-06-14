@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <link rel="stylesheet"  href="./index.css">
+</head>
+<body>
+ 
+  
+    <div > 
+                     
+        <form action=""     id="formato">
+      
+          <div  id="name">
+              <label > Nombres :     </label><br>
+              <input  type='text' id="name" name="name" maxlength="30"  placeholder="name" />    
+          </div>
+          
+          <div  id="surname">
+                 <label> Apellido :     </label><br>
+                 <input  type='text' id="surname" name="surname" maxlength="30"  placeholder="surname" />     
+          </div>
+          
+          <div  id="email">
+              <label>Email :   </label><br>
+              <input  type='text' id="email" name="email" maxlength="30"  placeholder="email"  />
+              
+          </div>
+          
+          <div   id="Username">
+              <label > Username : </label><br>
+              <input  type='text' id="Username" name="Username" maxlength="30"  placeholder="Username"  />
+              
+
+          </div>
+          
+          <div id="password">
+              <label > password: </label><br>
+              <input  type='text' id="password" name="password" maxlength="30"  placeholder="password"  />
+              
+          </div>
+          
+          <div  id="dni">
+                 <label> dni: </label><br>
+                 <input  type='text' id="dni" name="dni" maxlength="30"  placeholder="dni" />
+                
+          </div>
+          
+          <div   id="age">
+                 <label> Edad: </label><br>
+                 <input  type='text' id="age" name="age" maxlength="5"  placeholder="age"  />
+                
+          </div>
+          
+          <div  id="address">
+                 <label > Direccion:</label><br>
+                 <input  type='text' id="address" name="address" maxlength="30"  placeholder="address"  />
+                
+          </div>
+          <div id="phone">
+          <label>Numero Telefono:   </label><br>
+          <input  type='text' id="phoneNumber" name="phoneNumber" maxlength="30"  placeholder="phoneNumber" />     
+          </div>
+          <button >Registrar</button>
+
+
+          <p>
+            <input type="reset" value="Restaurar">
+          </p>
+
+          </div>
+     
+
+         
+       
+        </form> 
+      
+
+      <script >
+               const $formato=document.querySelector('#formato');
+               const $name=document.querySelector('#name');
+               const $surname=document.querySelector('#surname');
+               const $Username=document.querySelector('#Username');
+               const $password=document.querySelector('#password');
+               const $email=document.querySelector('#email');
+               const $dni=document.querySelector('#dni');
+               const $age=document.querySelector('#age');
+               const $address=document.querySelector('#address');
+               const $phoneNumber=document.querySelector('#phoneNumber');
+
+
+              function renderName(formData){
+              const name=formData.get('name');
+                  $name.textContent=name
+                    }
+              function renderSurname(formData){
+                   const surname=formData.get('surname');
+                   $surname.textContent=surname
+                 }
+              function renderUsername(formData){
+                        const Username=formData.get('Username');
+                          $Username.textContent=Username
+                     }
+               function renderpassword(formData){
+                     const password=formData.get('password');
+                     $password.textContent=password
+                     }
+                function renderEmail(formData){
+                          const email=formData.get('email');
+                        $email.textContent=email
+                   }
+              function renderDni(formData){
+                            const dni=formData.get('dni');
+                             $dni.textContent=dni
+                  }
+               function renderAge(formData){
+                          const age=formData.get('age');
+                               $age.textContent=age
+                        }
+              function renderAddress(formData){
+                            const address=formData.get('address');
+                              $address.textContent=address
+                          }
+                   function renderPhone(formData){
+                   const phoneNumber=formData.get('phoneNumber');
+                   $phoneNumber.textContent=phoneNumber
+                     }
+            $formato.addEventListener('submit',(e)=>{
+              e.preventDefault();   
+                      const formData= new FormData(e.currentTarget);
+                     renderName(formData);
+                      renderSurname(formData);
+                      renderUsername(formData);
+                      renderpassword(formData);
+                       renderEmail(formData);
+                      renderDni(formData); 
+                     renderAge(formData);
+                   renderAddress(formData);
+                    renderPhone(formData);
+                     fetch('/users/create',{
+                           method:'POST',
+                           body:formData
+                         })
+                             
+                     })
+        
+      </script>
+        
+  </div>
+ 
+</body>
+</html>
