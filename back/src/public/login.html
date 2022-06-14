@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <link rel="stylesheet"  href="./login.css">
+</head>
+<body>
+   
+    <div > 
+                     
+        <form action=""     id="formato">
+      
+         
+          
+          <div  id="email">
+              <label>Email :   </label><br>
+              <input  type='text' id="email" name="email" maxlength="30"  placeholder="email"  />
+              
+          </div>
+          
+          <div   id="Username">
+              <label > Username : </label><br>
+              <input  type='text' id="Username" name="Username" maxlength="30"  placeholder="Username"  />
+              
+
+          </div>
+          
+          <div id="password">
+              <label > password: </label><br>
+              <input  type='text' id="password" name="password" maxlength="30"  placeholder="password"  />
+              
+          </div>
+          
+          <button >Registrar</button>
+
+          <p>
+            <input type="reset" value="Restaurar">
+          </p>
+          </div>
+      
+       
+      </form>
+      
+      <script >
+               const $formato=document.querySelector('#formato'); 
+               const $Username=document.querySelector('#Username');
+               const $password=document.querySelector('#password');
+               const $email=document.querySelector('#email');
+              function renderUsername(logData){
+                        const Username=logData.get('Username');
+                          $Username.textContent=Username
+                     }
+               function renderpassword(logData){
+                     const password=logData.get('password');
+                     $password.textContent=password
+                     }
+                function renderEmail(logData){
+                          const email=logData.get('email');
+                        $email.textContent=email
+                   }
+            
+            $formato.addEventListener('submit',(e)=>{
+                       e.preventDefault();
+                      const logData= new FormData(e.currentTarget);
+                      renderUsername(logData);
+                      renderpassword(logData);
+                       renderEmail(logData);
+                        fetch('/users/login',{
+                           method:'POST',
+                           body:logData
+                         })
+                         
+                     })
+        
+      </script>
+        
+  </div>
+ 
+</body>
+</html>
