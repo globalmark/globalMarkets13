@@ -191,7 +191,7 @@ export const ProductFilter: FC<Props> = ({ filtro }) => {
 export default ProductFilter;
 */
 import type { NextPage } from "next";
-import { Typography,Button,FormControl,FormLabel,RadioGroup,FormControlLabel,Radio } from "@mui/material";
+import { Typography,Button,FormControl,FormLabel,RadioGroup,FormControlLabel,Radio,Stack,Pagination } from "@mui/material";
 import { useEffect,useState,FC} from 'react'
 import { initialData,SeedProduct } from "../../database/products";
 import { ShopLayout } from "../../components/layouts";
@@ -208,6 +208,7 @@ const ProductFilter:FC<Props>=  ({filtro}) => {
     const {products} = useProducts("/products/");
     const [product, setProduct] = useState(inicio);
     const [page,setPage] = useState(0);
+    const [page1,setPage1] = useState(1)
     const [respaldo,setRespaldo] = useState(inicio);
     const [filtros,setFiltros] = useState({cheked:false,min:false,max:false,A_Z:false,Z_A:false,XS:false,S:false,M:false,L:false,XL:false,XXL:false,XXXL:false,restablecer:false,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false});
     useEffect(()=>{
@@ -215,13 +216,13 @@ const ProductFilter:FC<Props>=  ({filtro}) => {
         setRespaldo(products.filter(i=>i.gender === filtro))
     },[])
     const next = ()=>{
-        if(product.length > page + 12){
-            setPage(prev=>prev+12);
+        if(product.length > page + 10){
+            setPage(prev=>prev+10);
         }
     }
     const prev = ()=>{
         if(0 < page){
-            setPage(pre=>pre-12);
+            setPage(pre=>pre-10);
         }
     }
     const respuesta = ():SeedProduct[]=>{
@@ -319,15 +320,24 @@ const ProductFilter:FC<Props>=  ({filtro}) => {
             setPage(prev=>prev-prev);
         }  
         if(product.length === 0) return [{title: "No hay resultados",description: 'null',gender:'unisex',inStock:0,price:0,images:[],type:"pants",sizes:[],slug:'null',tags:[]}];
-        return product.slice(page,page+12);
+        return product.slice(page,page+10);
     }
     const prueba = (e:any)=>setFiltros(prev=>{
             return {
             ...prev,
             [e.target.value]:true
         }
-        })
-        
+    })
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        setPage1(value);
+    };
+    const numberPage = ()=>{
+        let count = [];
+        for(let i = 0; i<product.length / 10;i++){
+            count.push(i)
+        }
+        return count
+    }  
 return (
     <ShopLayout
         title={"Global-Market- Home"}
@@ -338,6 +348,10 @@ return (
         <Typography variant="h2" sx={{ mb: 1 }}>
             Todos los productos
         </Typography>
+        <Stack spacing={2}>
+            <Typography>Page: {page1}</Typography>
+            <Pagination count={Math.ceil(product.length / 10)}  page={page1} onChange={handleChange}/>
+        </Stack>
         <FormControl>
         <FormLabel id="filtros">Filtrar Por:</FormLabel>
                     <RadioGroup aria-labelledby="filtros" row={true}>

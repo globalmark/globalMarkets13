@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-
 import {
   AppBar,
   Badge,
@@ -13,6 +12,11 @@ import {
   Link,
   Toolbar,
   Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent
 } from "@mui/material";
 import {
   ClearOutlined,
@@ -21,6 +25,9 @@ import {
 } from "@mui/icons-material";
 
 import { UiContext } from "../../context";
+import SelectAutoWidth from "../products/prueba";
+
+
 
 export const Navbar = () => {
   const { asPath, push } = useRouter();
@@ -28,7 +35,6 @@ export const Navbar = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-
   const onSearchTerm = () => {
     if (searchTerm.trim().length === 0) return;
     push(`/search/${searchTerm}`);
@@ -51,6 +57,36 @@ export const Navbar = () => {
             display: isSearchVisible ? "none" : { xs: "none", sm: "block" },
           }}
           className="fadeIn">
+          <Button>
+          <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
+              <InputLabel id="demo-select-small" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Moda</InputLabel>
+              <Select
+                sx={{borderRadius:10}}
+                labelId="demo-select-small"
+                id="demo-select-small"
+                label="Moda">
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <NextLink href='/category/men' passHref>
+                  <Link sx={{color:'black'}}>
+                    <MenuItem value={10} color = {asPath === '/category/men' ? 'primary' : 'info'}>Hombres</MenuItem>
+                  </Link>
+                </NextLink>
+                <NextLink href='/category/women' passHref>
+                  <Link sx={{color:'black'}}>
+                    <MenuItem value={10} color = {asPath === '/category/women' ? 'primary' : 'info'}>Mujeres</MenuItem>
+                  </Link>
+                </NextLink>
+                <NextLink href='/category/kid' passHref>
+                  <Link sx={{color:'black'}} >
+                    <MenuItem value={10} color = {asPath === '/category/kid' ? 'primary' : 'info'}>Niños</MenuItem>
+                  </Link>
+                </NextLink>
+              </Select>
+    </FormControl>
+    </Button>
+          {/*
           <NextLink href="/category/men" passHref>
             <Link>
               <Button color={asPath === "/category/men" ? "primary" : "info"}>
@@ -71,7 +107,7 @@ export const Navbar = () => {
                 Niños
               </Button>
             </Link>
-          </NextLink>
+          </NextLink>*/}
           <NextLink href="/category/women" passHref>
             <Link>
               <Button
