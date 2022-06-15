@@ -5,7 +5,6 @@ const routerUser = require('./routesUser');
 const userRouter = require('../controllers/user/loginUser')
 const router = express.Router();
 const morgan = require('morgan');
-
 // create user
 router.use('/users', routerUser);
 
