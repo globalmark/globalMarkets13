@@ -5,17 +5,29 @@ const bodyParser= require('body-parser');
 const path = require('path');
 require('dotenv').config();
 const app = express();
-   
+const cors = require('cors');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
 const port = process.env.PORT || 9000;
 
 //middleware
+app.use(morgan('tiny'));// nos permite que la aplicacion muestre los datos que se estan enviando
+app.use(helmet())
+app.use(cors());
+app.use(logger("dev"));
+app.use(cookieParser());
 app.use(express.json()); 
 app.use('/', useRoutes); 
 app.use(bodyParser.json())
 app.use(express.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,'public')))
 
+app.use('/test', (req, res) => {
+    res.send({ status: 'Bien!' })
+})
 //Routes
 
 
