@@ -46,7 +46,20 @@ const userSchema = new mongoose.Schema({
         type:Number,
         require:true
     },
-    
+    role:{
+        type: String,
+        enum:{
+            values: ['admin','client'],
+            message: '{values} no es un role válido',
+            default: 'client',
+            required: true
+        }
+    },
+     timestamps: true, 
 })
 
-module.exports = mongoose.model('User', userSchema);
+ module.exports = mongoose.model('User', userSchema);
+
+// const User = mongoose.model.User || model('User',userSchema);
+
+// module.exports = User

@@ -7,7 +7,7 @@ const userSchema = require('../../models/user');
 
 
 
-const loginUser=async (req,res)=>{ 
+const loginUser = async (req,res)=>{ 
     let {Username,email,password}=req.body;
     //console.log(email,password,Username);
     let user= await userSchema.findOne({where:{email:req.body.email}});
