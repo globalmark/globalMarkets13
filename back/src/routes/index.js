@@ -3,8 +3,8 @@ const midleware=require('../routes/middleware')
 const routerUser = require('./routesUser');
 const userRouter=require('../controllers/user/loginUser')
 const router = express.Router();
-router.use('/products/', routerProducts);
-const paypalrouter = require ('./routesPayPal')
+const paypalrouter = require ('./routesPayPal');
+const routerProducts = require('./routesProducts');
 
 
 // create user
