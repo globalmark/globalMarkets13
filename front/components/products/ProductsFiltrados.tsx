@@ -1,326 +1,157 @@
-/*
-import { useState,FC } from 'react'
-import { useProducts } from '../../hooks';
-import { Typography,FormControl,FormControlLabel,FormLabel,RadioGroup,Radio,Button } from "@mui/material";
-import { ShopLayout } from '../layouts';
-import { ProductList } from './ProductList';
-import { FullScreenLoading } from '../ui';
-import { SeedProduct } from '../../database/products';
-
-
-
-interface Props {
-    filtro:string ;
-}
-var inicio: any[] = [];
-
-export const ProductFilter: FC<Props> = ({ filtro }) => {
-    const { products, isLoading } = useProducts(`/products?genero=${filtro}`);
-    const [product, setProduct] = useState(inicio);
-    const [page,setPage] = useState(0);
-    const [respaldo,setRespaldo] = useState(products);
-    const [filtros,setFiltros] = useState({cheked:false,min:false,max:false,A_Z:false,Z_A:false,XS:false,S:false,M:false,L:false,XL:false,XXL:false,XXXL:false,restablecer:false,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false});
-
-    const next = ()=>{
-        if(product.length > page + 12){
-            setPage(prev=>prev+12);
-        }
-    }
-    const prev = ()=>{
-        if(0 < page){
-            setPage(pre=>pre-12);
-        }
-    }
-    const respuesta = ():SeedProduct[]=>{
-        if(!!products  && product.length < products.length){
-            setProduct(products);
-            setRespaldo(products);
-        }
-        if (filtros.restablecer){
-            setProduct(products);
-            setFiltros(prev=>{
-                return {...prev,restablecer: false,cheked:true,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}
-            })
-            setPage(prev=>prev-prev);
-        }  else if (filtros.XS){            
-            if(!!products && product.length < products.length) setProduct(products);
-            setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('XS')));
-            setFiltros(prev=>{
-                return {...prev,XS: false,cheked:false,check:true,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}
-            })
-            setPage(prev=>prev-prev);
-        }  else if (filtros.S){
-            if(products.length > product.length) setProduct(products);
-            setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('S')));
-            setFiltros(prev=>{
-                return {...prev,S: false,cheked:false,check:false,check1:true,check2:false,check3:false,check4:false,check5:false,check6:false}
-            })
-            setPage(prev=>prev-prev);
-        }  else if (filtros.M){
-            if(products.length > product.length) setProduct(products);
-            setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('M')));
-            setFiltros(prev=>{
-                return {...prev,M: false,cheked:false,check:false,check1:false,check2:true,check3:false,check4:false,check5:false,check6:false}
-            })
-            setPage(prev=>prev-prev);
-        }  else if (filtros.L){
-            if(products.length > product.length) setProduct(products);
-            setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('L')));
-            setFiltros(prev=>{
-                return {...prev,L: false,cheked:false,check:false,check1:false,check2:false,check3:true,check4:false,check5:false,check6:false}
-            })
-            setPage(prev=>prev-prev);
-        }  else if (filtros.XL){
-            if(products.length > product.length) setProduct(products);
-            setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('XL')));
-            setFiltros(prev=>{
-                return {...prev,XL: false,cheked:false,check:false,check1:false,check2:false,check3:false,check4:true,check5:false,check6:false}
-            })
-            setPage(prev=>prev-prev);
-        }  else if (filtros.XXL){
-            if(products.length > product.length) setProduct(products);
-            setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('XXL')));
-            setFiltros(prev=>{
-                return {...prev,XXL: false,cheked:false,check:false,check1:false,check2:false,check3:false,check4:false,check5:true,check6:false}
-            })
-            setPage(prev=>prev-prev);
-        }  else if (filtros.XXXL){
-            /*
-            if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
-            setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('XXXL')));
-            setFiltros(prev=>{
-                return {...prev,XXXL: false,cheked:false,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:true}
-            })
-            setPage(prev=>prev-prev);
-            if(products.length > product.length) setProduct(products);
-            setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.price > 40))
-            setFiltros(prev=>{
-                return {...prev,XXXL: false,cheked:false,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:true}
-            })
-            setPage(prev=>prev-prev);
-        }
-        if (filtros.min){
-            if(products.length > product.length) setProduct(products);
-                setProduct((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
-                    if(a.price < b.price) return -1
-                }));
-                setFiltros(prev=>{
-                    return {...prev,min: false,cheked:true,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}
-                })
-                setPage(prev=>prev-prev);
-        }  else if (filtros.max){
-            if(products.length > product.length) setProduct(products);
-            setProduct((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
-                if(a.price > b.price) return -1
-            }));
-            setFiltros(prev=>{
-                return {...prev,max: false,cheked:true,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}
-            })
-            setPage(prev=>prev-prev);
-        }  else if (filtros.A_Z){
-            if(products.length > product.length) setProduct(products);
-            setProduct((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
-                if(a.title < b.title) return -1
-            }));
-            setFiltros(prev=>{
-                return {...prev,A_Z: false,cheked:true,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}
-            })
-            setPage(prev=>prev-prev);
-        }  else if (filtros.Z_A){
-            if(products.length > product.length) setProduct(products);
-            setProduct((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
-                if(a.title > b.title) return -1
-            }));
-            setFiltros(prev=>{
-                return {...prev,Z_A: false,cheked:true,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}  
-            })
-            setPage(prev=>prev-prev);
-        }  
-        if(products.length === 0) return [{title: "No hay resultados",description: 'null',gender:'unisex',inStock:0,price:0,images:[],type:"pants",sizes:[],slug:'null',tags:[]}];
-        return product.slice(page,page+12);
-    }
-    const changeFiltros = (e:any)=>setFiltros(prev=>{
-            return {
-            ...prev,
-            [e.target.value]:true
-        }
-        });
-    const description = filtro === 'men'? 'ellos' : filtro ==='women'? "ellas" : "los niños";
-    const genre = filtro === 'men'? 'Hombres' : filtro ==='women'? "Mujeres" : "Niños";
-        return (
-            <ShopLayout
-                title={`Global-Market - ${filtro}`}
-                pageDescription={
-                    `Encuentra los mejores productos de TGlobal Market para ${description}`
-                }>
-                <Typography variant="h1" component="h1">
-                    {genre}
-                    </Typography>
-                    <Typography variant="h2" sx={{ mb: 1 }}>
-                    Productos para {description}
-                </Typography>
-                <FormControl>
-                <FormLabel id="filtros">Filtrar Por:</FormLabel>
-                            <RadioGroup aria-labelledby="filtros" row={true}>
-                                <FormControlLabel onClick={(e)=>changeFiltros(e)} id="min" value="min"  control={<Radio size="small" color="secondary"/>} label="Menor Precio" />
-                                <FormControlLabel onClick={(e)=>changeFiltros(e)} id="max" value="max"  control={<Radio size="small" color="secondary"/>} label="Mayor Precio" />
-                                <FormControlLabel onClick={(e)=>changeFiltros(e)} id="A_Z" value="A_Z"  control={<Radio size="small" color="secondary"/>} label="Orden Alfabético (A-Z)" />
-                                <FormControlLabel onClick={(e)=>changeFiltros(e)} id="Z_A" value="Z_A"  control={<Radio size="small" color="secondary"/>} label="Orden Alfabético (Z-A)" />
-                            </RadioGroup>
-            </FormControl>
-            <br />
-            <FormControl>
-            <FormLabel id="size">Filtrar Por Tallas:</FormLabel>
-                <RadioGroup aria-labelledby="size" row={true}>
-                <FormControlLabel control={<Radio size="small" color="secondary"/>}  value="restablecer" label="Restablecer" id="restablecer" onClick={(e)=>changeFiltros(e)} checked={filtros.cheked}/>
-                    <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check}  value="XS" label="XS" id="XS" onClick={(e)=>changeFiltros(e)} />
-                    <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check1}  value="S" label="S" id="S" onClick={(e)=>changeFiltros(e)} />
-                    <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check2}  value="M" label="M" id="M" onClick={(e)=>changeFiltros(e)} />
-                    <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check3}  value="L" label="L" id="L" onClick={(e)=>changeFiltros(e)} />
-                    <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check4}  value="XL" label="XL" id="XL" onClick={(e)=>changeFiltros(e)} />
-                    <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check5}  value="XXL" label="XXL" id="XXL" onClick={(e)=>changeFiltros(e)} />
-                    <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check6}  value="XXXL" label="XXXL" id="XXXL" onClick={(e)=>changeFiltros(e)} />
-                </RadioGroup>
-                </FormControl>
-            <Button variant="outlined" color='secondary' size='medium' onClick={prev} >Prev</Button>
-            <Button variant="outlined" color='secondary' size='medium' onClick={next} >Next</Button>
-            {isLoading ? <FullScreenLoading /> : <ProductList products={respuesta() as any} />}
-            </ShopLayout>
-            );
-};
-export default ProductFilter;
-*/
-import type { NextPage } from "next";
-import { Typography,Button,FormControl,FormLabel,RadioGroup,FormControlLabel,Radio,Stack,Pagination } from "@mui/material";
+import { Typography,Button,FormControl,Stack,Pagination,InputLabel,Select,MenuItem,Accordion,AccordionSummary,AccordionDetails } from "@mui/material";
 import { useEffect,useState,FC} from 'react'
-import { initialData,SeedProduct } from "../../database/products";
+import { SeedProduct } from "../../database/products";
 import { ShopLayout } from "../../components/layouts";
 import { ProductList } from "../../components/products";
 import { useProducts } from "../../hooks";
+import { ExpandMoreTwoTone } from "@mui/icons-material";
+
+
 
 var inicio:any[] = [];
 
 interface Props {
-    filtro:string 
+    filtro:string,
+    category: string 
 }
 
-const ProductFilter:FC<Props>=  ({filtro}) => {
-    const {products} = useProducts("/products/");
+const ProductFilter:FC<Props>=  ({filtro,category}) => {
+    const {products} = useProducts("/products");
     const [product, setProduct] = useState(inicio);
     const [page,setPage] = useState(0);
-    const [page1,setPage1] = useState(1)
+    const [name,setName] = useState('');
+    const [name1,setName1] = useState('');
+    const [page1,setPage1] = useState(1);
+    const [contador, setContador] = useState(1)
     const [respaldo,setRespaldo] = useState(inicio);
-    const [filtros,setFiltros] = useState({cheked:false,min:false,max:false,A_Z:false,Z_A:false,XS:false,S:false,M:false,L:false,XL:false,XXL:false,XXXL:false,restablecer:false,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false});
+    const [filtros,setFiltros] = useState({min:false,max:false,A_Z:false,Z_A:false,XS:false,S:false,M:false,L:false,XL:false,XXL:false,XXXL:false,restablecer:false,resTallas:false});
     useEffect(()=>{
         setProduct(products.filter(i=>i.gender === filtro));
         setRespaldo(products.filter(i=>i.gender === filtro))
+        
     },[])
     const next = ()=>{
-        if(product.length > page + 10){
-            setPage(prev=>prev+10);
+        if(product.length > page + 9){
+            setPage(prev=>prev+9);
         }
     }
     const prev = ()=>{
         if(0 < page){
-            setPage(pre=>pre-10);
+            setPage(pre=>pre-9);
         }
     }
     const respuesta = ():SeedProduct[]=>{
         if (filtros.restablecer){
-            setProduct(respaldo);
+            setProduct(products.filter(i=>i.gender === filtro));
+            setRespaldo(products.filter(i=>i.gender === filtro));
             setFiltros(prev=>{
-                return {...prev,restablecer: false,cheked:true,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}
+                return {...prev,restablecer: false}
             })
             setPage(prev=>prev-prev);
         }  else if (filtros.XS){
             if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
             setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('XS')));
             setFiltros(prev=>{
-                return {...prev,XS: false,cheked:false,check:true,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}
+                return {...prev,XS: false}
             })
             setPage(prev=>prev-prev);
         }  else if (filtros.S){
             if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
             setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('S')));
             setFiltros(prev=>{
-                return {...prev,S: false,cheked:false,check:false,check1:true,check2:false,check3:false,check4:false,check5:false,check6:false}
+                return {...prev,S: false}
             })
             setPage(prev=>prev-prev);
         }  else if (filtros.M){
             if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
             setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('M')));
             setFiltros(prev=>{
-                return {...prev,M: false,cheked:false,check:false,check1:false,check2:true,check3:false,check4:false,check5:false,check6:false}
+                return {...prev,M: false}
             })
             setPage(prev=>prev-prev);
         }  else if (filtros.L){
             if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
             setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('L')));
             setFiltros(prev=>{
-                return {...prev,L: false,cheked:false,check:false,check1:false,check2:false,check3:true,check4:false,check5:false,check6:false}
+                return {...prev,L: false}
             })
             setPage(prev=>prev-prev);
         }  else if (filtros.XL){
             if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
             setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('XL')));
             setFiltros(prev=>{
-                return {...prev,XL: false,cheked:false,check:false,check1:false,check2:false,check3:false,check4:true,check5:false,check6:false}
+                return {...prev,XL: false}
             })
             setPage(prev=>prev-prev);
         }  else if (filtros.XXL){
             if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
             setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('XXL')));
             setFiltros(prev=>{
-                return {...prev,XXL: false,cheked:false,check:false,check1:false,check2:false,check3:false,check4:false,check5:true,check6:false}
+                return {...prev,XXL: false}
             })
             setPage(prev=>prev-prev);
         }  else if (filtros.XXXL){
             if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
             setProduct((prev:any)=>prev.filter((i:SeedProduct)=>i.sizes.includes('XXXL')));
             setFiltros(prev=>{
-                return {...prev,XXXL: false,cheked:false,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:true}
+                return {...prev,XXXL: false}
+            })
+            setPage(prev=>prev-prev);
+        } else if(filtros.resTallas){
+            setProduct(respaldo);
+            setFiltros(prev=>{
+                return {...prev,resTallas: false}
             })
             setPage(prev=>prev-prev);
         }
         if (filtros.min){
-            if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
+                setRespaldo((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
+                    if(a.price < b.price) return -1
+                }));
                 setProduct((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
                     if(a.price < b.price) return -1
                 }));
                 setFiltros(prev=>{
-                    return {...prev,min: false,cheked:true,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}
+                    return {...prev,min: false}
                 })
                 setPage(prev=>prev-prev);
         }  else if (filtros.max){
-            if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
+            setRespaldo((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
+                if(a.price > b.price) return -1
+            }));
             setProduct((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
                 if(a.price > b.price) return -1
             }));
             setFiltros(prev=>{
-                return {...prev,max: false,cheked:true,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}
+                return {...prev,max: false}
             })
             setPage(prev=>prev-prev);
         }  else if (filtros.A_Z){
-            if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
+            setRespaldo((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
+                if(a.title < b.title) return -1
+            }));
             setProduct((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
                 if(a.title < b.title) return -1
             }));
             setFiltros(prev=>{
-                return {...prev,A_Z: false,cheked:true,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}
+                return {...prev,A_Z: false}
             })
             setPage(prev=>prev-prev);
         }  else if (filtros.Z_A){
-            if(!!respaldo && product.length < respaldo.length) setProduct(respaldo);
+            setRespaldo((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
+                if(a.title > b.title) return -1
+            }));
             setProduct((prev:any)=>prev.sort((a:SeedProduct,b:SeedProduct)=>{
                 if(a.title > b.title) return -1
             }));
             setFiltros(prev=>{
-                return {...prev,Z_A: false,cheked:true,check:false,check1:false,check2:false,check3:false,check4:false,check5:false,check6:false}  
+                return {...prev,Z_A: false}  
             })
             setPage(prev=>prev-prev);
         }  
         if(product.length === 0) return [{title: "No hay resultados",description: 'null',gender:'unisex',inStock:0,price:0,images:[],type:"pants",sizes:[],slug:'null',tags:[]}];
-        return product.slice(page,page+10);
+
+        return product.slice(page,page+9);
     }
     const prueba = (e:any)=>setFiltros(prev=>{
             return {
@@ -328,57 +159,124 @@ const ProductFilter:FC<Props>=  ({filtro}) => {
             [e.target.value]:true
         }
     })
-    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {        
         setPage1(value);
-    };
-    const numberPage = ()=>{
-        let count = [];
-        for(let i = 0; i<product.length / 10;i++){
-            count.push(i)
+        if(contador < value) {
+            let count = value - contador
+            while(count > 0){
+                next()
+                count--
+            }
         }
-        return count
-    }  
+        else if (contador > value){
+            let count = contador - value
+            while(count > 0){
+                prev()
+                count--
+            }
+        }
+        setContador(value);
+    };  
+    const description = filtro === 'men'? 'ellos' : filtro ==='women'? "ellas" : "los niños";
+    const genre = filtro === 'men'? 'Hombres' : filtro ==='women'? "Mujeres" : "Niños";
+    const selectTallas = (e:any)=>{
+        setName(e.target.value)
+    };
+    const restablecer = ()=>{
+        setName("")
+        setName1("")
+    }
+    const selectOrdenar = (e:any)=>{
+        setName1(e.target.value)
+    }
 return (
     <ShopLayout
-        title={"Global-Market- Home"}
-        pageDescription={"Encuentra los mejores productos en Global Market"}>
+        title={`Global-Market- ${filtro}`}
+        pageDescription={`Encuentra los mejores productos para ${description}`}>
         <Typography variant="h1" component="h1">
-            Tienda
+            {category}
         </Typography>
         <Typography variant="h2" sx={{ mb: 1 }}>
-            Todos los productos
+            La mejor ropa para {genre}
         </Typography>
-        <Stack spacing={2}>
-            <Typography>Page: {page1}</Typography>
-            <Pagination count={Math.ceil(product.length / 10)}  page={page1} onChange={handleChange}/>
+        <br />
+        <Accordion sx={{boxShadow:5,borderRadius:5}}>
+        <AccordionSummary
+        expandIcon={<ExpandMoreTwoTone/>}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
+        >
+        <Typography variant="h6" component="h6">Filtros</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+        <Button sx={{paddingLeft:0}}>
+            <Typography variant="h6" component='h6' >Ordenar Por:</Typography>
+            <FormControl sx={{ m: 0, minWidth: 133 }} size="small">
+                <InputLabel id="demo-select-small" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Seleccionar</InputLabel>
+                <Select
+                    color="secondary"
+                    sx={{borderRadius:10}}
+                    labelId="demo-select-small"
+                    id="demo-select-small"
+                    value={name1}
+                    onChange={(e)=>{
+                        prueba(e)
+                        selectOrdenar(e)
+                    }}
+                    autoWidth
+                    label="Ordenar Por:">
+                    <MenuItem value="">
+                        <em>Ninguno</em>
+                    </MenuItem>
+                    <MenuItem value={'max'} >Mayor Precio</MenuItem>
+                    <MenuItem value={'min'} >Menor Precio</MenuItem>
+                    <MenuItem value={'A_Z'} >Orden Alfabetico(A-Z)</MenuItem>
+                    <MenuItem value={'Z_A'} >Orden Alfabetico(Z-A)</MenuItem>
+                </Select>
+            </FormControl>
+        </Button>
+        <Button sx={{paddingLeft:0}}>
+            <Typography variant="h6" component='h6' >Filtrar Por Tallas:</Typography>
+            <FormControl sx={{ m: 0, minWidth: 133 }} size="small">
+                <InputLabel id="tallas" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Seleccionar</InputLabel>
+                <Select
+                    color="secondary"
+                    sx={{borderRadius:10}}
+                    labelId="tallas"
+                    id="tallas"
+                    value={name}
+                    onChange={(e)=>{
+                        prueba(e);
+                        selectTallas(e)
+                    }}
+                    autoWidth                    
+                    label="Filtrar Por Tallas:">
+                    <MenuItem value="">
+                        <em>Ninguno</em>
+                    </MenuItem>
+                    <MenuItem value={'resTallas'}>Todas</MenuItem>
+                    <MenuItem value={'XS'} >XS</MenuItem>
+                    <MenuItem value={'S'} >S</MenuItem>
+                    <MenuItem value={'M'} >M</MenuItem>
+                    <MenuItem value={'L'} >L</MenuItem>
+                    <MenuItem value={'XL'} >XL</MenuItem>
+                    <MenuItem value={'XXL'} >XXL</MenuItem>
+                    <MenuItem value={'XXXL'} >XXXL</MenuItem>
+                </Select>
+            </FormControl>
+        </Button>
+        <Button value="restablecer" variant="outlined" onClick={(e)=>{
+            prueba(e)
+            restablecer()
+        }} color='secondary' >Restablecer Filtros</Button>
+        </AccordionDetails>
+    </Accordion>
+        <br/>
+        <ProductList products={respuesta() as any} />
+        <Stack sx={{textAlign:'center'}} spacing={2}>
+            <Pagination sx={{alignSelf:"center"}} variant="outlined" size="large" color="secondary" count={Math.ceil(product.length / 9)}  page={page1} onChange={handleChange}/>
+            <Typography>Pagina: {page1} de {Math.ceil(product.length / 9)}</Typography>
         </Stack>
-        <FormControl>
-        <FormLabel id="filtros">Filtrar Por:</FormLabel>
-                    <RadioGroup aria-labelledby="filtros" row={true}>
-                        <FormControlLabel onClick={(e)=>prueba(e)} id="min" value="min"  control={<Radio size="small" color="secondary"/>} label="Menor Precio" />
-                        <FormControlLabel onClick={(e)=>prueba(e)} id="max" value="max"  control={<Radio size="small" color="secondary"/>} label="Mayor Precio" />
-                        <FormControlLabel onClick={(e)=>prueba(e)} id="A_Z" value="A_Z"  control={<Radio size="small" color="secondary"/>} label="Orden Alfabetico(A-Z)" />
-                        <FormControlLabel onClick={(e)=>prueba(e)} id="Z_A" value="Z_A"  control={<Radio size="small" color="secondary"/>} label="Orden Alfabetico(Z-A)" />
-
-                    </RadioGroup>
-                </FormControl>
-                <br />
-                <FormControl>
-                    <FormLabel id="size">Filtrar Por Tallas:</FormLabel>
-                    <RadioGroup aria-labelledby="size" row={true}>
-                        <FormControlLabel control={<Radio size="small" color="secondary"/>}  value="restablecer" label="Restablecer" id="restablecer" onClick={(e)=>prueba(e)} checked={filtros.cheked}/>
-                        <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check}  value="XS" label="XS" id="XS" onClick={(e)=>prueba(e)} />
-                        <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check1}  value="S" label="S" id="S" onClick={(e)=>prueba(e)} />
-                        <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check2}  value="M" label="M" id="M" onClick={(e)=>prueba(e)} />
-                        <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check3}  value="L" label="L" id="L" onClick={(e)=>prueba(e)} />
-                        <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check4}  value="XL" label="XL" id="XL" onClick={(e)=>prueba(e)} />
-                        <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check5}  value="XXL" label="XXL" id="XXL" onClick={(e)=>prueba(e)} />
-                        <FormControlLabel control={<Radio size="small" color="secondary"/>} checked={filtros.check6}  value="XXXL" label="XXXL" id="XXXL" onClick={(e)=>prueba(e)} />
-                    </RadioGroup>
-                </FormControl>
-                <Button variant="contained"  onClick={prev} >Prev</Button>
-                <Button onClick={next} >Next</Button>
-                <ProductList products={respuesta() as any} />
     </ShopLayout>
 );
 };
