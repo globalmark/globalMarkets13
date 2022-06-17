@@ -153,12 +153,15 @@ const ProductFilter:FC<Props>=  ({filtro,category}) => {
 
         return product.slice(page,page+9);
     }
-    const prueba = (e:any)=>setFiltros(prev=>{
+    const prueba = (e:any)=>{
+        setFiltros(prev=>{
             return {
             ...prev,
             [e.target.value]:true
         }
     })
+    handleChange(e,1)
+}
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {        
         setPage1(value);
         if(contador < value) {
@@ -182,9 +185,10 @@ const ProductFilter:FC<Props>=  ({filtro,category}) => {
     const selectTallas = (e:any)=>{
         setName(e.target.value)
     };
-    const restablecer = ()=>{
+    const restablecer = (e:any)=>{
         setName("")
         setName1("")
+    handleChange(e,1)
     }
     const selectOrdenar = (e:any)=>{
         setName1(e.target.value)
