@@ -16,11 +16,11 @@ export const ProductCard: FC<Props> = ({ product }) => {
         if(product._id){
             return isHovered
             ? product.images[0]
-            : product.images[1]? product.images[1] : product.images[0]
+            : !!product.images[1]? product.images[1] : product.images[0]
         }
         return isHovered
-          ? `/products/${ product.images[1]? product.images[1] : product.images[0] }`
-          : `/products/${ product.images[0] }`;
+        ? `/products/${ product.images[1]}`
+        : `/products/${ product.images[0]}`;
 
     }, [isHovered, product.images])
 

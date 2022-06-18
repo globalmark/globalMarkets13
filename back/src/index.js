@@ -1,28 +1,33 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const useRoutes = require('./routes/index');
+const bodyParser = require('body-parser');
+const path = require('path');
+const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
-
-require('dotenv').config();
-const app = express();
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
 
 const port = process.env.PORT || 9000;
-
-app.use(cors());
+require('dotenv').config();
 //middleware
-app.use(express.json())
 app.use(morgan('tiny'));// nos permite que la aplicacion muestre los datos que se estan enviando
-app.use(helmet());// nos permite proteger la aplicacion de ataques
+app.use(helmet())
+app.use(cors());
+app.use(logger("dev"));
+app.use(cookieParser());
+app.use(express.json());
 app.use('/', useRoutes);
+app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/test', (req, res) => {
     res.send({ status: 'Bien!' })
 })
-
-
 //Routes
 
 
