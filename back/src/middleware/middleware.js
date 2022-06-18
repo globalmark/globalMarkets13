@@ -10,9 +10,9 @@ const nodemailer=require('nodemailer');
 const checkToken =  async (req,res,next)=>{
      console.log(req.headers);   
      
-    if(!req.headers['usertoken']){
-        return res.json({error :'se necesita token en la cabecera '});
-    };
+    // if(!req.headers['usertoken']){
+    //     return res.json({error :'se necesita token en la cabecera '});
+    // };
 
     const userToken= req.headers['usertoken'];
     console.log(userToken)
