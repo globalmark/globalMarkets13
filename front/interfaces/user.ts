@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> a15dfcaa83402d9af653a2b7a75f775637eb52d8
 export interface IUser {
     _id      : string;
     name     : string;

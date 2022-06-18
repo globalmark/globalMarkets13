@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a15dfcaa83402d9af653a2b7a75f775637eb52d8
 export const isValidEmail = (email: string): boolean => {
   
     const match = String(email)
@@ -16,5 +19,8 @@ export const isValidEmail = (email: string): boolean => {
       ? undefined
       : 'El correo no parece ser válido';
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> a15dfcaa83402d9af653a2b7a75f775637eb52d8
   

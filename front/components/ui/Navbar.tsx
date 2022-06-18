@@ -37,14 +37,14 @@ export const Navbar = () => {
     if (searchTerm.trim().length === 0) return;
     push(`/search/${searchTerm}`);
   };
-
+  
   return (
     <AppBar>
       <Toolbar>
         <NextLink href="/" passHref>
           <Link display="flex" alignItems="center">
             <Typography variant="h6">Global |</Typography>
-            <Typography sx={{ ml: 0.5 }}>Market</Typography>
+            <Typography sx={{ ml: 0.5 }}>Shop</Typography>
           </Link>
         </NextLink>
 
