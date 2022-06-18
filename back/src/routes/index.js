@@ -8,7 +8,7 @@ const routerProducts = require('./routesProducts');
 
 // create user
 router.use('/users/',routerUser);
-const routerProducts = require('./routesProducts');
+
 // router.use('/products/', routerProducts);
 router.use('/auth/', userRouter);
 router.use('/paypal/', paypalrouter);
