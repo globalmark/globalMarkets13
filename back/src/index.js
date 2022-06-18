@@ -1,3 +1,4 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 const useRoutes = require("./routes/index");
@@ -49,7 +50,7 @@ app.use("/", useRoutes);
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(express.urlencoded({ extended: false }));
 app.use("/test", (req, res) => {
   res.send({ status: "Bien!" });
 })
