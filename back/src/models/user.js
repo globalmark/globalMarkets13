@@ -55,8 +55,6 @@ const userSchema = new mongoose.Schema({
             default: 'client',
             required: true
         }
-    }
-    
-})
 
-module.exports = mongoose.model('User', userSchema);
+    }
+
