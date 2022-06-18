@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema({
 
     email: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     dni:{
         type: Number,
@@ -54,12 +55,6 @@ const userSchema = new mongoose.Schema({
             default: 'client',
             required: true
         }
-    },
-    
-})
 
- module.exports = mongoose.model('User', userSchema);
+    }
 
-// const User = mongoose.model.User || model('User',userSchema);
-
-// module.exports = User

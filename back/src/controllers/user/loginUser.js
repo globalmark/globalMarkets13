@@ -14,10 +14,9 @@ const loginUser=async (req,res)=>{
     let email=req.body.email;
     let password=req.body.password;
     console.log(email,password,Username);
-    let user= await userSchema.findOne({where:{email:req.body.email}});
+    let user = await userSchema.findOne({email:req.body.email});
     const igual=bcrypt.compareSync(password,user.password);
-
-    
+    console.log(user)
 
     let mailencontraddo= await userSchema.findOne({email : email});
     let usernameexiste= await userSchema.findOne({Username:Username});
@@ -29,8 +28,18 @@ const loginUser=async (req,res)=>{
                if(usernameexiste){
                        console.log('Username correto')
                             if(igual && passwexiste){  
-                                                           
-                                     res.status(200).json({success: createToken(user)});
+                                                
+                                
+                                     res.status(200).json({
+                                        token: createToken(user),
+                                        user:{
+                                                email,Username
+                                        }
+
+
+                                });
+
+
                                      alert('Usuario Registrado');
                                      
 
@@ -60,6 +69,9 @@ const loginUser=async (req,res)=>{
 
                 };
 }
+
+
+
 
 
 
