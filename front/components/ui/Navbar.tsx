@@ -56,7 +56,7 @@ export const Navbar = () => {
           }}
           className="fadeIn">
           <Button>
-            {/* <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
+             <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
               <InputLabel id="demo-select-small" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Moda</InputLabel>
               <Select
                 sx={{borderRadius:10}}
@@ -82,7 +82,7 @@ export const Navbar = () => {
                   </Link>
                 </NextLink>
               </Select>
-    </FormControl> */}
+    </FormControl> 
           </Button>
           {/*
           <NextLink href="/category/men" passHref>

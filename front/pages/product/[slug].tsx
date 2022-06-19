@@ -14,7 +14,6 @@ import { dbProducts } from '../../database';
 import { IProduct, ICartProduct, ISize } from '../../interfaces';
 
 
-
 interface Props {
   product: IProduct
 }
@@ -27,14 +26,15 @@ const ProductPage:NextPage<Props> = ({ product }) => {
 
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
     _id: product._id,
-    image: product.images[0],
+    image: product.images ,
     price: product.price,
     size: undefined,
     slug: product.slug,
     title: product.title,
     gender: product.gender,
     quantity: 1,
-  })
+  }) 
+
 
   const selectedSize = ( size: ISize ) => {
     setTempCartProduct( currentProduct => ({
@@ -59,7 +59,8 @@ const ProductPage:NextPage<Props> = ({ product }) => {
     router.push('/cart');
   }
 
-
+ console.log("esto es el estado",tempCartProduct);
+ 
   return (
     <ShopLayout title={ product.title } pageDescription={ product.description }>
     
@@ -82,16 +83,17 @@ const ProductPage:NextPage<Props> = ({ product }) => {
             <Box sx={{ my: 2 }}>
               <Typography variant='subtitle2'>Cantidad</Typography>
               <ItemCounter 
-                currentValue={ tempCartProduct.quantity }
+                currentValue={tempCartProduct.quantity}
                 updatedQuantity={ onUpdateQuantity  }
                 maxValue={ product.inStock > 10 ? 10: product.inStock }
               />
-              <SizeSelector 
+              {<SizeSelector 
                 // selectedSize={ product.sizes[2] } 
                 sizes={ product.sizes }
                 selectedSize={ tempCartProduct.size }
                 onSelectedSize={ selectedSize }
-              />
+              />}
+
             </Box>
 
 
@@ -162,32 +164,36 @@ const ProductPage:NextPage<Props> = ({ product }) => {
 
 // getStaticPaths....
 // You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
-export const getStaticPaths: GetStaticPaths = async (ctx) => {
+/*export const getStaticPaths: GetStaticPaths = async (ctx) => {
   
-  const productSlugs = await dbProducts.getAllProductSlugs();
+  const productSlugs = await fetch("https://globalmarkets.herokuapp.com/products").then(res=>res.json());
+
 
   
   return {
-    paths: productSlugs.map( ({ slug }) => ({
+    paths: productSlugs.map( (i:any) => ({
       params: {
-        slug
+        slug : i._id? i._id: i.slug
       }
     })),
     fallback: 'blocking'
   }
 }
-
+*/
 // You should use getStaticProps when:
 //- The data required to render the page is available at build time ahead of a user’s request.
 //- The data comes from a headless CMS.
 //- The data can be publicly cached (not user-specific).
 //- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   
   const { slug = '' } = params as { slug: string };
-  const product = await dbProducts.getProductBySlug( slug );
+  const product = await fetch(`https://globalmarkets.herokuapp.com/products/${slug}`).then(res=>res.json());
+  
 
   if ( !product ) {
+    console.log("no hay productos");
+    
     return {
       redirect: {
         destination: '/',
@@ -199,8 +205,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       product
-    },
-    revalidate: 60 * 60 * 24
+    }
   }
 }
 
