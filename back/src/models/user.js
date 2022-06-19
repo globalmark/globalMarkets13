@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema({
 
     email: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     dni:{
         type: Number,
@@ -46,7 +47,14 @@ const userSchema = new mongoose.Schema({
         type:Number,
         require:true
     },
-    
-})
+    role:{
+        type: String,
+        enum:{
+            values: ['admin','client'],
+            message: '{values} no es un role válido',
+            default: 'client',
+            required: true
+        }
 
-module.exports = mongoose.model('User', userSchema);
+    }
+

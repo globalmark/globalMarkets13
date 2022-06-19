@@ -14,6 +14,7 @@ const routerProducts = require('./routesProducts');
 const  routeGoogles  = require('../routes/routesGoogle.js');
 //middleware
 router.get(passport.initialize());
+
 router.use('/auth/', userRouter);
 router.use('/paypal/', paypalrouter);
 
