@@ -16,7 +16,7 @@ const { Session } = require("inspector");
 const port = process.env.PORT || 9000;
 const session=require('express-session');
 const flash= require('connect-flash');
-const passport = require("passport");
+//const passport = require("passport");
 
 //setting
 app.set('views',path.join(__dirname,'views'));
@@ -24,7 +24,8 @@ app.engine('ejs',engine);
 app.set('view engine','ejs');
 
 //middleware
-app.use(passport.initialize());
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(session({
    secret:'danielpercoromero',
   resave:true,
