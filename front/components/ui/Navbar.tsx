@@ -44,6 +44,12 @@ export const Navbar = () => {
           </Link>
         </NextLink>
 
+        <NextLink href="/formulario/form" >
+          <Link>
+          <Button> Crea tu producto </Button>
+          </Link>
+        </NextLink>
+
         <Box flex={1} />
 
         <Box
