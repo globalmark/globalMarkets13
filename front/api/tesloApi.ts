@@ -7,8 +7,6 @@ const tesloApi = axios.create({
 });
 
 
-<<<<<<< HEAD
+
 export default tesloApi;
-=======
-export default tesloApi;
->>>>>>> 59de202ade18bb59c3d1c5ded45358eb75d498dc
+

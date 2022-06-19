@@ -119,24 +119,9 @@ export const SideMenu = () => {
                     </ListItemIcon>
                     <ListItemText primary={'Niños'} />
                 </ListItem>
-
-<<<<<<< HEAD
                 {
                     isLoggedIn ? (
                         <ListItem button onClick={logout}>
-=======
-
-                <ListItem button 
-                   onClick={ () => navigateTo('http://localhost:9000/login.html') }
-                >
-                    <ListItemIcon>
-                        <VpnKeyOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Ingresar'} />
-                </ListItem>
-
-                <ListItem button>
->>>>>>> 59de202ade18bb59c3d1c5ded45358eb75d498dc
                     <ListItemIcon>
                         <LoginOutlined/>
                     </ListItemIcon>
@@ -171,7 +156,6 @@ export const SideMenu = () => {
 
 
                 {/* Admin */}
-<<<<<<< HEAD
                 {
                     user?.role === 'admin' && (
                         <>
@@ -201,32 +185,6 @@ export const SideMenu = () => {
                     )
                 }
                
-=======
-                <Divider />
-                <ListSubheader>Admin Panel</ListSubheader>
-
-                <ListItem button>
-                    <ListItemIcon>
-                        <CategoryOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Productos'} />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <ConfirmationNumberOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Ordenes'} />
-                </ListItem>
-
-                <ListItem button
-                 onClick={ () => navigateTo('http://localhost:9000/index.html') }
-                 >
-                    <ListItemIcon>
-                        <AdminPanelSettings/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Usuarios'} />
-                </ListItem>
->>>>>>> 59de202ade18bb59c3d1c5ded45358eb75d498dc
             </List>
         </Box>
     </Drawer>
