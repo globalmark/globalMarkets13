@@ -10,7 +10,7 @@ const alert=require('alert');
 const respon = async (req,res,next) =>{
   
 
-//console.log(req.body);
+console.log(req.body);
 let password=bcrypt.hashSync(req.body.password,10);
 let  name=req.body.name;
 let surname=req.body.surname;
@@ -39,7 +39,7 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                             secure:false,
                             auth:{
                                 user:'danielperco4@gmail.com',
-                                pass:'ktwwtdtrwtzjpicn'
+                                pass:'apwsmdkesmhtmdki'
                             }
                         });
                         console.log(req.body.email)
@@ -52,12 +52,13 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                         console.log('hola');
                         await transporter.sendMail(mailOptions,(error,info)=>{
                                 if(error){
-                                     return res.status(500).json(error.message);
+                                   return   res.status(404).json(error.message);
+                                      
                                 }else{
                           
-                                    console.log('emial enviado',info.response);
-                                  // return  res.status(200).jsonp(req.body);
-                                }
+                                    console.log('emial enviado',info);
+                                  return  res.status(200).jsonp(req.body);
+                                } 
                         
                             })  
                             
