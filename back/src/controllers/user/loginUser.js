@@ -1,3 +1,4 @@
+
 const { Router } = require('express');
 
 const bcrypt= require('bcrypt');
@@ -24,7 +25,7 @@ const loginUser=async (req,res)=>{
     if(mailencontraddo){ 
             console.log('email correcto ')
              console.log(igual);
-            
+              
                if(usernameexiste){
                        console.log('Username correto')
                             if(igual && passwexiste){  
@@ -69,6 +70,9 @@ const loginUser=async (req,res)=>{
 
                 };
 }
+
+
+
 
 
 

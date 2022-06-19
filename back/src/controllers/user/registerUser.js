@@ -52,17 +52,17 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                         };
                         console.log('hola');
                         await transporter.sendMail(mailOptions,(error,info)=>{
-                                if(!error){
-                                    console.log('email enviado',info.response);
-                                    return res.status(200).json(req.body);
-                                }
-                                
-                                else{
-                                    
-                                    
-                                    res.status(500).json(error.message);
-                                    
-                                }
+
+                                if(error){
+                                   return   res.status(404).json(error.message);
+                                      
+                                }else{
+                          
+                                    console.log('emial enviado',info);
+                                  //return  res.status(200).jsonp(req.body);
+                                } 
+                        
+
                             })  
                             
                             //catch(error){return res.status(404).json({error:'el acceso no es correcto'})}
