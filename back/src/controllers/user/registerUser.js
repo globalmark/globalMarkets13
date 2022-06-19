@@ -57,7 +57,7 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                                 }else{
                           
                                     console.log('emial enviado',info);
-                                  return  res.status(200).jsonp(req.body);
+                                  //return  res.status(200).jsonp(req.body);
                                 } 
                         
                             })  

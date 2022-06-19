@@ -1,10 +1,10 @@
-const Router =require('express');
+// const Router =require('express');
 
-const routeGoogle= Router();
+// const routeGoogle= Router();
 
-routeGoogle.get('/google',(req,res,next)=>{
-    res.send(req.user)
-});
+// routeGoogle.get('/google',(req,res,next)=>{
+//     res.send(req.user)
+// });
 
-module.exports=routeGoogle;
+// module.exports=routeGoogle;
 
