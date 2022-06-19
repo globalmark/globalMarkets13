@@ -16,6 +16,7 @@ const loginUser=async (req,res)=>{
     let user = await userSchema.findOne({email:req.body.email});
     const igual=bcrypt.compareSync(password,user.password);
     console.log(user)
+    let role = user.role;
 
     let mailencontraddo= await userSchema.findOne({email : email});
     let usernameexiste= await userSchema.findOne({Username:Username});
@@ -32,7 +33,7 @@ const loginUser=async (req,res)=>{
                                      res.status(200).json({
                                         token: createToken(user),
                                         user:{
-                                                email,Username
+                                                email,role,Username
                                         }
 
 

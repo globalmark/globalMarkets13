@@ -14,6 +14,7 @@ const multer=require('multer');
 const upper=multer({dest : 'controllers/user/createUser'})
 const logon=multer({dest:'controllers/user/loginUser'})
 const passport=require('passport');
+const validateToken = require('../controllers/user/validateToken');
 
 //router.get('/', getUser);
 router.get('/:dni', getdUser);
@@ -44,6 +45,7 @@ router.put('/:dni', updateUser);
 router.delete('/delete/:dni', deleteUser);
 router.get('/users/login',createLogin);
 router.post('/users/login',loginUser);
+router.get('/validate-token',validateToken)
 router.get('/profile',(req,res,next)=>{
     res.render('profile');
 })
