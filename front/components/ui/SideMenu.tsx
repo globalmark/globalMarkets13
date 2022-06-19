@@ -106,7 +106,9 @@ export const SideMenu = () => {
                 </ListItem>
 
 
-                <ListItem button>
+                <ListItem button 
+                   onClick={ () => navigateTo('http://localhost:9000/login.html') }
+                >
                     <ListItemIcon>
                         <VpnKeyOutlined/>
                     </ListItemIcon>
@@ -138,7 +140,9 @@ export const SideMenu = () => {
                     <ListItemText primary={'Ordenes'} />
                 </ListItem>
 
-                <ListItem button>
+                <ListItem button
+                 onClick={ () => navigateTo('http://localhost:9000/index.html') }
+                 >
                     <ListItemIcon>
                         <AdminPanelSettings/>
                     </ListItemIcon>
