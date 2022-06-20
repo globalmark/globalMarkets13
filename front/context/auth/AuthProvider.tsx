@@ -29,20 +29,20 @@ export const AuthProvider:FC<any> = ({ children }) => {
 
 
     useEffect(() => {
-        checkToken();
+        // checkToken();
     }, [])
 
-    const checkToken = async() => {
+    // const checkToken = async() => {
 
-        try {
-            const { data } = await tesloApi.get('/users/validate-token');
-            const { token, user } = data;
-            Cookies.set('token', token );
-            dispatch({ type: '[Auth] - Login', payload: user });
-        } catch (error) {
-            Cookies.remove('token');
-        }
-    }
+    //     try {
+    //         const { data } = await tesloApi.get('/users/validate-tokena');
+    //         const { token, user } = data;
+    //         Cookies.set('token', token );
+    //         dispatch({ type: '[Auth] - Login', payload: user });
+    //     } catch (error) {
+    //         Cookies.remove('token');
+    //     }
+    // }
     
 
 

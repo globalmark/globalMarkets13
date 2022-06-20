@@ -25,7 +25,7 @@
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "@types/js-cookie": "^3.0.2",
-    "@vue/runtime-dom": "^3.2.37"
+    "@vue/runtime-dom": "^3.2.37",
 
     "mongoose": "^6.3.6",
     "mongose": "^0.0.2-security",

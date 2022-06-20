@@ -11,7 +11,7 @@ const routerProducts = require('./routesProducts');
 
 // create user
 router.use('/users/',routerUser);
-const routerProducts = require('./routesProducts');
+
 //const  routeGoogles  = require('../routes/routesGoogle.js');
 //middleware
 

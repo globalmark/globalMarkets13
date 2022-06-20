@@ -121,7 +121,7 @@ export const SideMenu = () => {
                 </ListItem>
                 {
                     isLoggedIn ? (
-                        <ListItem button onClick={logout}>
+                        <ListItem button onClick={onLogout}>
                     <ListItemIcon>
                         <LoginOutlined/>
                     </ListItemIcon>
