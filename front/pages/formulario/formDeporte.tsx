@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from 'next/router'
 import { RouteRounded } from "@mui/icons-material";
+import { Box,Typography } from '@mui/material';
+// import styles from "./formDeporte.module.css" ;
 
 
 let inicio:String[] = []
@@ -94,22 +96,43 @@ function FormDeportes() {
 
 
   }
+
+//   <Grid item xs={12}>
+//   <TextField
+//       type="email"
+//       label="Correo"
+//       variant="filled"
+//       fullWidth 
+//       { ...register('email', {
+//           required: 'Este campo es requerido',
+//           validate: validations.isEmail
+          
+//       })}
+//       error={ !!errors.email }
+//       helperText={ errors.email?.message }
+//   />
+
+// </Grid>
  
     
 
 
 return (
+    
+    <Box>
   <div>
+    
       <div>
           <h1>
-              Bienvenidos a la seccion de Deportes
+          <Typography variant='h1' component="h1">Bienvenidos a la seccion de Deportes</Typography>   
           </h1>
       </div>
       <form onSubmit={handleSubmit} >
-      <div>
-              <label > * Nombre</label>
+         <div>
+              <label> * Nombre</label>
               <input type="text" name='title' defaultValue={input.title} onChange={(e)=> handleChange(e)} ></input>
          </div>
+        
          <div>
              <label> * Tipo de articulo </label>
              <select onChange={(e)=> handleChange(e)} name="type"  >
@@ -148,6 +171,7 @@ return (
          </div>
       </form>
   </div>
+  </Box>
 )
 }
 
