@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  
+  
   "scripts": {
     "start": "nodemon src/index.js"
   },
@@ -31,6 +33,7 @@
     "nodemailer": "^6.7.5",
     "passport": "^0.6.0",
     "passport-google": "^0.3.0",
+    "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "sweetalert2": "^11.4.17",
@@ -39,4 +42,5 @@
   "devDependencies": {
     "nodemon": "^2.0.16"
   }
+  
 }

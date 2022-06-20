@@ -14,9 +14,10 @@ const loginUser=async (req,res)=>{
     let email=req.body.email;
     let password=req.body.password;
     console.log(email,password,Username);
-    let user = await userSchema.findOne({email:req.body.email});
+    let user = await userSchema.findOne({email:email});
     const igual=bcrypt.compareSync(password,user.password);
     console.log(user)
+    let role = user.role;
 
     let mailencontraddo= await userSchema.findOne({email : email});
     let usernameexiste= await userSchema.findOne({Username:Username});
@@ -24,7 +25,7 @@ const loginUser=async (req,res)=>{
     if(mailencontraddo){ 
             console.log('email correcto ')
              console.log(igual);
-            
+              
                if(usernameexiste){
                        console.log('Username correto')
                             if(igual && passwexiste){  
@@ -33,7 +34,7 @@ const loginUser=async (req,res)=>{
                                      res.status(200).json({
                                         token: createToken(user),
                                         user:{
-                                                email,Username
+                                                email,role,Username
                                         }
 
 
