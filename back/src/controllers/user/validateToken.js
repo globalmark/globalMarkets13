@@ -20,10 +20,12 @@ function createToken (user){   //creo el token
 
 const isValidToken = () =>{
     return new Promise((resolve,reject) => {
+        
         try {
             jwt.verify(token, (err,payload) => {
                 const {email} = payload;
                 resolve(email);
+                // console.log(email)
             })
         } catch (err) {
             reject('token is invalid')
@@ -32,7 +34,7 @@ const isValidToken = () =>{
 }
 
 const validateToken =  async (req,res)=>{ 
-    const token = req.Cookies;
+    const token = req.headers;
     console.log(token);
 
     let userEmail = '';
@@ -63,3 +65,28 @@ const validateToken =  async (req,res)=>{
 }
 
 module.exports = validateToken;
+
+
+// router.use('/secure',function(req, res) {
+//     var token = req.headers
+//     if (!token) {
+//       res.status(401).send({
+//         ok: false,
+//         message: 'Toket inválido'
+//       })
+//     }
+  
+//     token = token.replace('Bearer ', '')
+  
+//     jwt.verify(token, ‘password’, function(err, token) {
+//       if (err) {
+//         return res.status(401).send({
+//           ok: false,
+//           message: 'Toket inválido'
+//         });
+//       } else {
+//         req.token = token
+//         next()
+//       }
+//     });
+//   });

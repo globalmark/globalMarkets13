@@ -22,7 +22,7 @@ router.use('/paypal/', paypalrouter);
 //         "https://www.googleapis.com/auth/userinfo.profile",
 //         "https://www.googleapis.com/auth/userinfo.email"
 //        ],
-//        session:false
+//        session:false 
 // }),routeGoogles); 
 
 

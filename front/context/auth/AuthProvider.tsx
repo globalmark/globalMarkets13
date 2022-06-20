@@ -7,7 +7,8 @@ import axios from 'axios';
 
 import { tesloApi } from '../../api';
 import { IUser } from '../../interfaces';
-import { useRouter } from 'next/router';
+
+import { useRouter } from 'next/router'; 
 export interface AuthState {
     isLoggedIn: boolean;
     user?: IUser;
@@ -25,6 +26,7 @@ export const AuthProvider:FC<any> = ({ children }) => {
     const [state, dispatch] = useReducer( authReducer, AUTH_INITIAL_STATE );
 
     const router = useRouter();
+
 
     useEffect(() => {
         checkToken();
@@ -60,6 +62,7 @@ export const AuthProvider:FC<any> = ({ children }) => {
         }
 
     }
+
 
 
     const registerUser = async( name: string, surname:string, Username:string, password: string, email: string, dni:number, age:number, address:string, phoneNumber:number): Promise<{hasError: boolean; message?: string}> => {
@@ -104,6 +107,7 @@ export const AuthProvider:FC<any> = ({ children }) => {
             // Methods
             loginUser,
             registerUser,
+
             logout
 
 
