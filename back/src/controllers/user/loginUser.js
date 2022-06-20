@@ -14,7 +14,7 @@ const loginUser=async (req,res)=>{
     let email=req.body.email;
     let password=req.body.password;
     console.log(email,password,Username);
-    let user = await userSchema.findOne({email:req.body.email});
+    let user = await userSchema.findOne({email:email});
     const igual=bcrypt.compareSync(password,user.password);
     console.log(user)
     let role = user.role;
