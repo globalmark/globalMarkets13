@@ -1,4 +1,5 @@
 export const isValidEmail = (email: string): boolean => {
+
   
     const match = String(email)
         .toLowerCase()
@@ -13,9 +14,8 @@ export const isValidEmail = (email: string): boolean => {
     return isValidEmail(email) 
       ? undefined
       : 'El correo no parece ser válido';
-<<<<<<< HEAD
+
   }
-=======
+
   }
   
->>>>>>> 59de202ade18bb59c3d1c5ded45358eb75d498dc
