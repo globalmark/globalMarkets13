@@ -1,9 +1,11 @@
-const { model, Shema } = require('mongoose');
+const mongoose = require('mongoose');
 
-const CardShema = new Shema({
-    id: { type: _id, require: true, unique: true },
-    images: { type: String, require: true },
+const cartSchema = new mongoose.Schema({
+
+    title: { type: String, required: true },
+    images: { type: Array, require: true },
     amount: { type: Number, require: true },
     price: { type: Number }
 
 })
+module.exports = mongoose.model("cart", cartSchema);

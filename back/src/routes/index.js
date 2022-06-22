@@ -17,7 +17,7 @@ router.use('/users/', routerUser);
 
 router.use('/auth/', userRouter);
 router.use('/paypal/', paypalrouter);
-router.use('/Cart/', pagosRouter)
+router.use('/cart/', pagosRouter)
 
 // router.use('/authGoogle',passport.authenticate('auth-google',{
 //     scope:[
@@ -29,6 +29,7 @@ router.use('/Cart/', pagosRouter)
 
 
 router.use('/products/', routerProducts);
+
 
 
 
