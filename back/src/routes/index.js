@@ -4,7 +4,7 @@ const routerUser = require('./routesUser');
 const userRouter = require('../controllers/user/loginUser')
 const router = express.Router();
 const paypalrouter = require('./routesPayPal');
-const pagosRouter = require('../routes/routesCart')
+const pagosRouter = require('./routesPagos')
 const routerProducts = require('./routesProducts');
 
 
@@ -17,7 +17,7 @@ router.use('/users/', routerUser);
 
 router.use('/auth/', userRouter);
 router.use('/paypal/', paypalrouter);
-router.use('/cart/', pagosRouter)
+router.use('/pagos/', pagosRouter)
 
 // router.use('/authGoogle',passport.authenticate('auth-google',{
 //     scope:[
