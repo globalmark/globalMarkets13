@@ -35,20 +35,17 @@ const createOrder = async (req, res) => {
                     product._id
                     , product, function (err, result) {
                         if (err) {
-                            res.status(409).json({ message: "error  update", err })
-                        }
-                        else {
-                            res.status(200).json({ message: "ok" })
+                            return res.status(400).send({ message: "error  update", err })
                         }
 
                     });
-                res.json(data);
+                return res.send(data);
             })
             .catch((err) => {
-                res.json({ message: err });
+                res.send({ message: err });
             });
     } else {
-        res.status(400).json({ message: "no funciona" })
+        return res.status(400).send({ message: "no funciona" })
     }
 
 
