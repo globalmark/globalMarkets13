@@ -3,7 +3,7 @@ const { Router } = require('express');
 
 const bcrypt= require('bcrypt');
 const moment=require('moment');
-const jwt = require('jwt-simple');
+const jwt = require('jsonwebtoken');
 const userSchema = require('../../models/user');
 const alert =require('alert')
 
@@ -15,7 +15,11 @@ const loginUser=async (req,res)=>{
     let password=req.body.password;
     console.log(email,password,Username);
     let user = await userSchema.findOne({email:email});
-//     
+
+    if(!user){
+        return res.status(400).json({message:"Correo o Password no validos"}) 
+    }
+
 
     if(!bcrypt.compareSync(password,user.password)){
        alert("Password Incorrecta")
@@ -36,7 +40,7 @@ const loginUser=async (req,res)=>{
               
                if(usernameexiste){
                        console.log('Username correto')
-                            if(igual && passwexiste){  
+                            if(igual && passwexiste){   
                                                 
                                 
                                      res.status(200).json({
@@ -67,16 +71,25 @@ const loginUser=async (req,res)=>{
             return false;
       };
  
-      function createToken (user){   //creo el token
-                 const payload={
-                 username:user.Username,
-                 usermail:user.email,
-                createdAt:moment().unix(),
-                 expiredAt:moment().add(30,'minutes').unix()
-                  }
-               return jwt.encode(payload,'clave secreta');
 
-                };
+
+            
+         function createToken (user){   //creo el token
+             const token =  jwt.sign(
+                      {
+                        Username:user.Username.toString(),
+                        email:user.email.toString()        
+                      },
+                      'clave secreta',
+                      {expiresIn:'30d'}
+                )
+                return token
+
+         };
+         
+         
+
+
 }
 
 
