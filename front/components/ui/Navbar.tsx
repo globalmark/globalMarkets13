@@ -47,7 +47,11 @@ export const Navbar = () => {
             <Typography sx={{ ml: 0.5 }}>Shop</Typography>
           </Link>
         </NextLink>
-
+        <NextLink href="/formulario/form" >
+          <Link>
+          <Button> Crea tu producto </Button>
+          </Link>
+        </NextLink>
         <Box flex={1} />
 
         <Box

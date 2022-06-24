@@ -6,7 +6,7 @@ const userSchema = require('../../models/user');
 
 const createUsuario = (req, res) => {
 
-    res.render('registro')
+    res.render('index')
     //console.log(req.body); 
    // const errors= validationResult(req);
    // console.log(errors); 

@@ -51,24 +51,25 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                             text:'Buenos dias , Bienvenido a GLOBAL MARKETS, Vamos Bien '
                         };
                         console.log('hola');
-                        await transporter.sendMail(mailOptions,(error,info)=>{
-
-                                if(error){
-                                   return   res.status(404).json(error.message);
-                                      
-                                }else{
+                        let post= await transporter.sendMail(mailOptions,(error,info)=>{
+                            if(error){
+                                  return   res.status(404).json(error.message);                                      
+                              }else{                      
+                            console.log('emial enviado',info);
                           
-                                    console.log('emial enviado',info);
-                                  //return  res.status(200).jsonp(req.body);
-                                } 
-                        
-
-                            })  
+                               alert('Usuario Registrado Correctamente');
+                               function redireccionar(){window.location="http://localhost:9000/users";}
+                               setTimeout ("redireccionar()", 5000);
                             
-                            //catch(error){return res.status(404).json({error:'el acceso no es correcto'})}
-                        
-                            req.email=req.body.email;
-                            next();
+                               req.email=req.body.email;
+                               next();
+                               
+                             }  
+
+                       })  
+                    
+                   
+                await res.json('todo ok');
                    }else{
                      alert('el dni   ya esta registrado  ');
                      return false;
