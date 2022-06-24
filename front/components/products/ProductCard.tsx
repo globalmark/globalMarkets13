@@ -26,29 +26,30 @@ export const ProductCard: FC<Props> = ({ product }) => {
 
     return (
       <Grid item 
+            sx={{minWidth:'33%'}}
             xs={6} 
             sm={ 4 }
             onMouseEnter={ () => setIsHovered(true) } 
             onMouseLeave={ () => setIsHovered(false) } 
       >
-          <Card>
+          <Card sx={{margin:0.3}}>
               <NextLink href="/product/slug" passHref prefetch={ false }>
                 <Link>
                     <CardActionArea>
-                        <CardMedia 
+                        <CardMedia
+                            sx={{minHeight: 400, maxHeight:400}}
                             component='img'
                             className='fadeIn'
                             image={ productImage }
                             alt={ product.title }
                         />
-
                     </CardActionArea>
                 </Link>
               </NextLink>
               
           </Card>
 
-          <Box sx={{ mt: 1 }} className='fadeIn'>
+          <Box sx={{ mt: 1}} className='fadeIn'>
               <Typography fontWeight={700}>{ product.title }</Typography>
               <Typography fontWeight={500}>{ `$${product.price}` }</Typography>
           </Box>

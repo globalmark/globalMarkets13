@@ -4,7 +4,7 @@ import { FullScreenLoading } from '../../components/ui';
 import Hogar from "../../components/products/ProductHogar";
 
 
-const MueblesPage: NextPage = () => {
+const CocinaPage: NextPage = () => {
 
     const { products, isLoading } = useProducts("/products");
     
@@ -13,9 +13,9 @@ return (
         {
           isLoading
           ? <FullScreenLoading />
-          : <Hogar filtro='muebles' category='Muebles' productos={ products.filter(i=>i.gender === 'muebles') as any } />
+          : <Hogar filtro='cocina' category='Cocina' productos={ products.filter(i=>i.gender === 'cocina') as any } />
         }
       </>
     )
 }
-export default MueblesPage
+export default CocinaPage

@@ -4,7 +4,7 @@ import { SeedProduct } from "../../database/products";
 import { ShopLayout } from "../../components/layouts";
 import { ProductList } from "../../components/products";
 import { useProducts } from "../../hooks";
-import { ExpandMoreTwoTone } from "@mui/icons-material";
+import { ExpandMoreRounded, ExpandMoreTwoTone } from "@mui/icons-material";
 
 
 
@@ -31,13 +31,13 @@ const ProductFilter:FC<Props>=  ({filtro,category}) => {
         
     },[])
     const next = ()=>{
-        if(product.length > page + 9){
-            setPage(prev=>prev+9);
+        if(product.length > page + 12){
+            setPage(prev=>prev+12);
         }
     }
     const prev = ()=>{
         if(0 < page){
-            setPage(pre=>pre-9);
+            setPage(pre=>pre-12);
         }
     }
     const respuesta = ():SeedProduct[]=>{
@@ -151,14 +151,17 @@ const ProductFilter:FC<Props>=  ({filtro,category}) => {
         }  
         if(product.length === 0) return [{title: "No hay resultados",description: 'null',gender:'unisex',inStock:0,price:0,images:[],type:"pants",sizes:[],slug:'null',tags:[]}];
 
-        return product.slice(page,page+9);
+        return product.slice(page,page+12);
     }
-    const prueba = (e:any)=>setFiltros(prev=>{
+    const prueba = (e:any)=>{
+        setFiltros(prev=>{
             return {
             ...prev,
             [e.target.value]:true
         }
     })
+    handleChange(e,1)
+}
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {        
         setPage1(value);
         if(contador < value) {
@@ -182,9 +185,10 @@ const ProductFilter:FC<Props>=  ({filtro,category}) => {
     const selectTallas = (e:any)=>{
         setName(e.target.value)
     };
-    const restablecer = ()=>{
+    const restablecer = (e?:any)=>{
         setName("")
         setName1("")
+    handleChange(e,1)
     }
     const selectOrdenar = (e:any)=>{
         setName1(e.target.value)
@@ -194,22 +198,23 @@ return (
         title={`Global-Market- ${filtro}`}
         pageDescription={`Encuentra los mejores productos para ${description}`}>
         <Typography variant="h1" component="h1">
-            {category}
+            Deportes-{category}
         </Typography>
         <Typography variant="h2" sx={{ mb: 1 }}>
             La mejor ropa para {genre}
         </Typography>
         <br />
-        <Accordion sx={{boxShadow:5,borderRadius:5}}>
+        <Accordion sx={{boxShadow:2,borderRadius:5, maxWidth:380,textAlign:'center', alignSelf:'center',backgroundColor:'ButtonFace'}}>
         <AccordionSummary
-        expandIcon={<ExpandMoreTwoTone/>}
+        expandIcon={<ExpandMoreRounded/>}
         aria-controls="panel1a-content"
         id="panel1a-header"
+        sx={{textAlign:'end', alignSelf:'center',paddingLeft:17,paddingRight:20}}
         >
         <Typography variant="h6" component="h6">Filtros</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <Button sx={{paddingLeft:0}}>
+        <Button sx={{paddingLeft:0, backgroundColor:'ButtonFace'}}>
             <Typography variant="h6" component='h6' >Ordenar Por:</Typography>
             <FormControl sx={{ m: 0, minWidth: 133 }} size="small">
                 <InputLabel id="demo-select-small" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Seleccionar</InputLabel>
@@ -235,7 +240,7 @@ return (
                 </Select>
             </FormControl>
         </Button>
-        <Button sx={{paddingLeft:0}}>
+        <Button sx={{paddingLeft:0,backgroundColor:'ButtonFace'}}>
             <Typography variant="h6" component='h6' >Filtrar Por Tallas:</Typography>
             <FormControl sx={{ m: 0, minWidth: 133 }} size="small">
                 <InputLabel id="tallas" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Seleccionar</InputLabel>
@@ -265,7 +270,7 @@ return (
                 </Select>
             </FormControl>
         </Button>
-        <Button value="restablecer" variant="outlined" onClick={(e)=>{
+        <Button value="restablecer" variant="outlined" sx={{backgroundColor:'Background'}} onClick={(e)=>{
             prueba(e)
             restablecer()
         }} color='secondary' >Restablecer Filtros</Button>
@@ -274,8 +279,8 @@ return (
         <br/>
         <ProductList products={respuesta() as any} />
         <Stack sx={{textAlign:'center'}} spacing={2}>
-            <Pagination sx={{alignSelf:"center"}} variant="outlined" size="large" color="secondary" count={Math.ceil(product.length / 9)}  page={page1} onChange={handleChange}/>
-            <Typography>Pagina: {page1} de {Math.ceil(product.length / 9)}</Typography>
+            <Pagination sx={{alignSelf:"center"}} variant="outlined" size="large" color="secondary" count={Math.ceil(product.length / 12)}  page={page1} onChange={handleChange}/>
+            <Typography>Pagina: {page1} de {Math.ceil(product.length / 12)}</Typography>
         </Stack>
     </ShopLayout>
 );
