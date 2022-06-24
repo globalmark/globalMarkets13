@@ -121,6 +121,21 @@ const LoginPage = () => {
                             </Button>
                         </Grid>
 
+                        <Grid item xs={12}>
+                        <NextLink href="htttp://localhost:9000/login" passHref>
+                           <Link underline='always'>
+                            <Button
+                                type="submit"
+                                color="secondary"
+                                className='circular-btn'
+                                size='large'
+                                fullWidth>
+                                Ingresar con Google
+                            </Button>
+                            </Link>
+                            </NextLink>
+                        </Grid>
+
                         <Grid item xs={12} display='flex' justifyContent='end'>
                             <NextLink href="/auth/register" passHref>
                                 <Link underline='always'>
