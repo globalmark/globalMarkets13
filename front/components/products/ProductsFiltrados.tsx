@@ -1,3 +1,4 @@
+
 import {
   Typography,
   Button,
@@ -16,11 +17,13 @@ import { SeedProduct } from "../../database/products";
 import { ShopLayout } from "../../components/layouts";
 import { ProductList } from "../../components/products";
 import { useProducts } from "../../hooks";
+
 import { ExpandMoreTwoTone } from "@mui/icons-material";
 
 var inicio: any[] = [];
 
 interface Props {
+
   filtro: string;
   category: string;
 }
