@@ -17,7 +17,18 @@ const session=require('express-session');
 const flash= require('connect-flash');
 //const passport = require("passport");
 
-app.use(cors()); // todo el mundo connect
+// app.use(cors());
+
+const corsConfig = {
+    credentials: true,
+    origin: true,
+};
+app.use(cors(corsConfig));
+
+
+
+
+// todo el mundo connect
 // app.use( "/",function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", req.header('Origin'));
 //   res.header("Access-Control-Allow-Credentials", true);

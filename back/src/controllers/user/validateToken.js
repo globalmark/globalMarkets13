@@ -55,7 +55,7 @@ function createToken (user){   //creo el token
 
 const validateToken = async function(req, res) {
     const token = req.cookies.token
-    console.log(token)
+    // console.log(token)
     if (!token) {
       res.status(401).send({
         ok: false,
@@ -63,12 +63,12 @@ const validateToken = async function(req, res) {
       })
     };
    const decode = jwt.verify(token,'clave secreta')
-   console.log(decode);
+  //  console.log(decode);
    const email = decode.email 
    let user = await userSchema.findOne({email:email});
   //console.log(user)
   if(!user) return res.status(400).json({message: "no user found"})
-  console.log(user)
+  // console.log(user)
   let role = user.role;
   let Username = user.Username
   return res.status(200).json({

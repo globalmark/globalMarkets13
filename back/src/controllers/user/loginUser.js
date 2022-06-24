@@ -9,11 +9,11 @@ const alert =require('alert')
 
 
 const loginUser=async (req,res)=>{ 
-   console.log(req.body);
+//    console.log(req.body);
     let Username=req.body.Username;
     let email=req.body.email;
-    let password=req.body.password;
-    console.log(email,password,Username);
+    let password=req.body.password; 
+//     console.log(email,password,Username);
     let user = await userSchema.findOne({email:email});
 
     if(!user){
