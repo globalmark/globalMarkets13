@@ -2,7 +2,7 @@ const userSchema = require('../../models/user');
 
 const getdUser = (req, res) => {
     const { dni } = req.params;
-    console.log(req.params)
+    //console.log(req.params)
     userSchema.findOne({_dni : dni})
       
         .then((data) => {

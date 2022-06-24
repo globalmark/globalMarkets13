@@ -1,36 +1,97 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const useRoutes = require('./routes/index');
-const cors = require('cors');
-const morgan = require('morgan');
-const helmet = require('helmet');
-
-require('dotenv').config();
+const express = require("express");
+const mongoose = require("mongoose");
+const useRoutes=require("./routes/index");
+const rootergoogle = require('./routes/auth');
+const bodyParser = require("body-parser");
+const path = require("path");
+require("dotenv").config();
 const app = express();
-
-
+const cors = require("cors");
+const morgan = require("morgan");
+const helmet = require("helmet");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const engine=require('ejs-mate');
+let passport=require('passport');
 const port = process.env.PORT || 9000;
+const session=require('express-session');
+const flash= require('connect-flash');
+require('./models/usergoogle');
+require('./Passport/passport.js');
+//const logintwet=require('./routes/logintwet');
+const route=require('./routes');
+var SQLiteStore = require('connect-sqlite3')(session);
+//setting
+app.set('views',path.join(__dirname,'views'));
+app.engine('ejs',engine);
+app.set('view engine','ejs');
 
-app.use(cors());
-//middleware
-app.use(express.json())
-app.use(morgan('tiny'));// nos permite que la aplicacion muestre los datos que se estan enviando
-app.use(helmet());// nos permite proteger la aplicacion de ataques
-app.use('/', useRoutes);
 
-app.use('/test', (req, res) => {
-    res.send({ status: 'Bien!' })
+app.use(session({
+   secret:'danielpercoromero',
+  resave:true,
+  saveUninitialized:true
+}))
+app.use(flash());
+app.use(morgan("dev")); // nos permite que la aplicacion muestre los datos que se estan enviando
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+  store: new SQLiteStore({ db: 'sessions.db', dir: './var/db' })
+}));
+
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: false,
+//   store: new SQLiteStore({ db: 'sessions.db', dir: './var/db' })
+// }));
+app.use(passport.authenticate('session'));
+app.use(helmet());
+app.use(cors()); 
+//app.use(favicon());
+app.use(logger("dev"));
+app.use(cookieParser());
+app.use(express.json());
+//app.use(express.methodOverride());
+app.use((req,res,next)=>{
+  
+  res.locals.success_msg=req.flash('success_msg');
+
+  next();
 })
-
-
 //Routes
+app.use(passport.initialize());
+app.use(passport.session());
+app.use("/", useRoutes);
+app.use("/", rootergoogle);
+app.use(bodyParser.json());
+ 
+//rutas passport
+
+ //app.get('/',); 
+
+// app.get('/logout',function(req,res){
+//   req.logOut();
+//   res.redirect('/');
+// });
+
+// app.get('/auth/twitter',passport.authenticate('twitter'));
+
+// app.get('/auth/twitter/callback',passport.authenticate('twitter',
+//   {successRedirect:'/',failureRedirect:'/login'}     
+
+// ));
 
 
 
 //Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI).then(() => console.log("connect to MomgoDB Atlas")).catch(err => console.log(err));
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("connect to MomgoDB Atlas"))
+  .catch((err) => console.log(err));
 
-
-
-
-app.listen(port, () => console.log('servidor escuchando ', port))
+app.listen(port, () => console.log("servidor escuchando ", port));

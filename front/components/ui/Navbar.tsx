@@ -16,7 +16,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  SelectChangeEvent
+  SelectChangeEvent,
 } from "@mui/material";
 import {
   ClearOutlined,
@@ -25,8 +25,6 @@ import {
 } from "@mui/icons-material";
 
 import { UiContext } from "../../context";
-
-
 
 
 export const Navbar = () => {
@@ -49,7 +47,11 @@ export const Navbar = () => {
             <Typography sx={{ ml: 0 }}>Market</Typography>
           </Link>
         </NextLink>
-
+        <NextLink href="/formulario/form" >
+          <Link>
+          <Button> Crea tu producto </Button>
+          </Link>
+        </NextLink>
         <Box flex={1} />
 
         <Box
@@ -57,11 +59,11 @@ export const Navbar = () => {
             display: isSearchVisible ? "none" : { xs: "none", sm: "block" },
           }}
           className="fadeIn">
-          <Button>
-            Filtros
-          </Button>
+
           <Button>
           <FormControl sx={{ m: 0, minWidth: 83 }} size="small">
+
+             <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
               <InputLabel id="demo-select-small" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Moda</InputLabel>
               <Select
                 sx={{borderRadius:10}}
@@ -177,6 +179,10 @@ export const Navbar = () => {
               </Select>
         </FormControl>
     </Button>
+    </FormControl> 
+          </Button>
+          
+          
         </Box>
         <Box flex={1} />
 

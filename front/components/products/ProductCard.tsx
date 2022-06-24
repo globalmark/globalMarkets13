@@ -1,58 +1,64 @@
-import { FC, useMemo, useState } from 'react';
-import NextLink from 'next/link';
-import { Grid, Card, CardActionArea, CardMedia, Box, Typography, Link } from '@mui/material'
+import { FC, useMemo, useState } from "react";
+import NextLink from "next/link";
+import {
+  Grid,
+  Card,
+  CardActionArea,
+  CardMedia,
+  Box,
+  Typography,
+  Link,
+} from "@mui/material";
 
-import { IProduct } from '../../interfaces'
+import { IProduct } from "../../interfaces";
 
 interface Props {
-    product: IProduct;
+  product: IProduct;
 }
 
 export const ProductCard: FC<Props> = ({ product }) => {
 
-    const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
-    const productImage = useMemo(() => {
-        if(product._id){
-            return isHovered
-            ? product.images[0]
-            : !!product.images[1]? product.images[1] : product.images[0]
-        }
-        return isHovered
-        ? `/products/${ product.images[1]}`
-        : `/products/${ product.images[0]}`;
+  const productImage = useMemo(() => {
+    if (product._id) {
+      return isHovered
+        ? product.images[0]
+        : !!product.images[1]
+        ? product.images[1]
+        : product.images[0];
+    }
+    return isHovered
+      ? `/products/${product.images[1]}`
+      : `/products/${product.images[0]}`;
+  }, [isHovered, product._id, product.images]);
+  const details = product._id? product._id : product.slug
+  return (
+    <Grid
+      item
+      xs={6}
+      sm={4}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}>
+      <Card>
+        <NextLink href={`/product/${ details }`} passHref prefetch={false}>
+          <Link>
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                className="fadeIn"
+                image={productImage}
+                alt={product.title}
+              />
+            </CardActionArea>
+          </Link>
+        </NextLink>
+      </Card>
 
-    }, [isHovered, product.images])
-
-    return (
-      <Grid item 
-            sx={{minWidth:'33%'}}
-            xs={6} 
-            sm={ 4 }
-            onMouseEnter={ () => setIsHovered(true) } 
-            onMouseLeave={ () => setIsHovered(false) } 
-      >
-          <Card sx={{margin:0.3}}>
-              <NextLink href="/product/slug" passHref prefetch={ false }>
-                <Link>
-                    <CardActionArea>
-                        <CardMedia
-                            sx={{minHeight: 400, maxHeight:400}}
-                            component='img'
-                            className='fadeIn'
-                            image={ productImage }
-                            alt={ product.title }
-                        />
-                    </CardActionArea>
-                </Link>
-              </NextLink>
-              
-          </Card>
-
-          <Box sx={{ mt: 1}} className='fadeIn'>
-              <Typography fontWeight={700}>{ product.title }</Typography>
-              <Typography fontWeight={500}>{ `$${product.price}` }</Typography>
-          </Box>
-      </Grid>
-    )
-}
+      <Box sx={{ mt: 1 }} className="fadeIn">
+        <Typography fontWeight={700}>{product.title}</Typography>
+        <Typography fontWeight={500}>{`$${product.price}`}</Typography>
+      </Box>
+    </Grid>
+  );
+};

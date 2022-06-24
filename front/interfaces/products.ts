@@ -11,6 +11,11 @@ export interface IProduct {
     type: IType;
     gender: string,
     caterogiras?: string[]
+
+    // TODO: agregar createdAt y updatedAt
+    createdAt: string;
+    updatedAt: string;
+
 }
 
 export type ISize = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
