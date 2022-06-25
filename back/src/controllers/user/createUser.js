@@ -5,10 +5,18 @@ const { validationResult } = require("express-validator");
 const userSchema = require("./models/user");
 
 const createUsuario = (req, res) => {
+<<<<<<< HEAD
   res.render("registro");
   //console.log(req.body);
   // const errors= validationResult(req);
   // console.log(errors);
+=======
+
+    res.render('index')
+    //console.log(req.body); 
+   // const errors= validationResult(req);
+   // console.log(errors); 
+>>>>>>> 3ef89821c320638f6027b6f075359acc9f8b4d62
   // console.log(formData);
   //let  {name,surname,email,password,dni,age,address,Username,phoneNumber}=req.body;
   //  let name=req.body.name;

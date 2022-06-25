@@ -28,7 +28,7 @@ export const connect = async() => {
         await mongoose.disconnect();
     }
 
-    await mongoose.connect( process.env.MONGO_URL || 'mongodb://localhost/test');
+    await mongoose.connect( process.env.MONGO_URL || 'mongodb+srv://globalmarkets:henry2022@globalmarkets.o87b8k6.mongodb.net/?retryWrites=true&w=majority');
     mongoConnection.isConnected = 1;
     console.log('Conectado a MongoDB:', process.env.MONGO_URL );
 }

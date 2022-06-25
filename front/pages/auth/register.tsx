@@ -5,17 +5,22 @@ import { Box, Button, Chip, Grid, Link, TextField, Typography } from '@mui/mater
 import { ErrorOutline } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 
-
+import { AuthContext } from '../../context';
 import { tesloApi } from '../../api';
 import { AuthLayout } from '../../components/layouts'
 import { validations } from '../../utils';
-import { AuthContext } from '../../context/auth/AuthContext';
 
 
 type FormData = {
-    name    : string;
-    email   : string;
-    password: string;
+    name       :string,
+    surname    :string,
+    Username   :string,
+    email      :string,
+    password   :string,
+    dni        :number,
+    age        :number,
+    address    :string,
+    phoneNumber:number
 };
 
 
@@ -29,10 +34,10 @@ const RegisterPage = () => {
     const [ showError, setShowError ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState('');
 
-    const onRegisterForm = async( {  name, email, password }: FormData ) => {
+    const onRegisterForm = async( {  name, surname, Username, password, email, dni, age, address, phoneNumber}: FormData ) => {
         
         setShowError(false);
-        const { hasError, message } = await registerUser(name, email, password);
+        const { hasError, message } = await registerUser( name, surname, Username, password, email, dni, age, address, phoneNumber);
 
         if ( hasError ) {
             setShowError(true);
@@ -64,7 +69,7 @@ const RegisterPage = () => {
 
                         <Grid item xs={12}>
                             <TextField
-                                label="Nombre completo"
+                                label="Nombre"
                                 variant="filled"
                                 fullWidth 
                                 { ...register('name', {
@@ -75,6 +80,43 @@ const RegisterPage = () => {
                                 helperText={ errors.name?.message }
                             />
                         </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Apellido"
+                                variant="filled"
+                                fullWidth 
+                                { ...register('surname', {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                })}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Nombre De Usuario"
+                                variant="filled"
+                                fullWidth 
+                                { ...register('Username', {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                })}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Contraseña"
+                                type='password'
+                                variant="filled"
+                                fullWidth 
+                                { ...register('password', {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 6, message: 'Mínimo 6 caracteres' }
+                                })}
+                                error={ !!errors.password }
+                                helperText={ errors.password?.message }
+                            />
+                        </Grid>
+                        
                         <Grid item xs={12}>
                             <TextField
                                 type="email"
@@ -92,18 +134,49 @@ const RegisterPage = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label="Contraseña"
-                                type='password'
+                                label="Nº De Identidad"
                                 variant="filled"
                                 fullWidth 
-                                { ...register('password', {
+                                { ...register('dni', {
                                     required: 'Este campo es requerido',
-                                    minLength: { value: 6, message: 'Mínimo 6 caracteres' }
+                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
                                 })}
-                                error={ !!errors.password }
-                                helperText={ errors.password?.message }
                             />
                         </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Edad"
+                                variant="filled"
+                                fullWidth 
+                                { ...register('age', {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                })}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Calle Y Numero"
+                                variant="filled"
+                                fullWidth 
+                                { ...register('address', {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                })}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Tel/Cel"
+                                variant="filled"
+                                fullWidth 
+                                { ...register('phoneNumber', {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                })}
+                            />
+                        </Grid>
+         
 
                         <Grid item xs={12}>
                             <Button
@@ -113,7 +186,7 @@ const RegisterPage = () => {
                                 size='large'
                                 fullWidth
                             >
-                                Ingresar
+                                Registrar !!!
                             </Button>
                         </Grid>
 

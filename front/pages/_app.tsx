@@ -7,9 +7,10 @@ import { SWRConfig } from "swr";
 
 import { lightTheme } from "../themes";
 
+
 import { CartProvider } from "../context/cart/CartProvider";
 import { UiProvider } from "../context/ui/UiProvider";
-//import { AuthProvider } from "../context/auth/AuthProvider";
+import { AuthProvider } from "../context/auth/AuthProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,7 +20,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           fetcher: (resource, init) =>
             fetch(resource, init).then((res) => res.json()),
         }}>
+        <AuthProvider>
         <CartProvider>
+          
           <UiProvider>
             <ThemeProvider theme={lightTheme}>
               <CssBaseline />
@@ -27,8 +30,10 @@ function MyApp({ Component, pageProps }: AppProps) {
             </ThemeProvider>
           </UiProvider>
         </CartProvider>
+          </AuthProvider>
       </SWRConfig>
     </SessionProvider>
+
   );
 }
 
