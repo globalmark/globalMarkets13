@@ -9,7 +9,8 @@ export interface IProduct {
     tags: string[];
     title: string;
     type: IType;
-    gender: 'men'|'women'|'kid'|'unisex'
+    gender: string,
+    caterogiras?: string[]
 
     // TODO: agregar createdAt y updatedAt
     createdAt: string;

@@ -45,13 +45,25 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             }
         }
     }
-    let products = await fetch(`http://localhost:3000/api/search/${query}`).then(res=>res.json())    
+    let find  = query.toString().toLowerCase();
+    let response = await fetch('https://globalmarkets.herokuapp.com/products').then(res=>res.json());
+    let products = response.filter((i:any)=>{
+        let tag = Array.isArray(i.tags)? i.tags[0] : i.tags
+        if(i.title.toLowerCase().includes(find)) return i;
+        else if(i.description.toLowerCase().includes(find)) return i;
+        else if(!!i.slug && i.slug.toLowerCase().includes(find)) return i;
+        else if(!!i.tags && tag.toLowerCase().includes(find)) return i;
+        else if(!!i.gender && i.gender.toLowerCase().includes(find)) return i;
+        else if(!!i.types && i.types.toLowerCase().includes(find))return i;
+        else if(!!i.caterogiras && i.caterogiras.length > 0 && i.caterogiras[0].toLowerCase().includes(find)) return i
+    })   
     const foundProducts = products.length > 0;
     if(!foundProducts){
-        let data = await fetch("http://localhost:3000/api/search/cybertruck").then(res=>res.json())
+
+        let data = await fetch("https://globalmarkets.herokuapp.com/products").then(res=>res.json());
         return {
             props: {
-                products:data,
+                products:data.slice(0,15),
                 foundProducts,
                 query
             }

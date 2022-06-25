@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import { useProducts } from '../../hooks';
 import { FullScreenLoading } from '../../components/ui';
-import Hogar from "../../components/products/ProductHogar";
+import Tecnologia from '../../components/products/ProductTecnologia';
 
 
-const MueblesPage: NextPage = () => {
+const DispositivosPage: NextPage = () => {
 
     const { products, isLoading } = useProducts("/products");
     
@@ -13,9 +13,10 @@ return (
         {
           isLoading
           ? <FullScreenLoading />
-          : <Hogar filtro='muebles' category='Muebles' productos={ products.filter(i=>i.gender === 'muebles') as any } />
+          : <Tecnologia filtro='dispositivos' category='Dispositivos' productos={ products.filter(i=>i.gender === 'dispositivos') as any } />
         }
       </>
     )
 }
-export default MueblesPage
+export default DispositivosPage
+
