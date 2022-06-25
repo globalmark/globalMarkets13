@@ -16,11 +16,46 @@ let passport=require('passport');
 const port = process.env.PORT || 9000;
 const session=require('express-session');
 const flash= require('connect-flash');
+
+//const passport = require("passport");
+
+// app.use(cors());
+
+const corsConfig = {
+    credentials: true,
+    origin: true,
+};
+app.use(cors(corsConfig));
+
+
+
+
+// todo el mundo connect
+// app.use( "/",function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", req.header('Origin'));
+//   res.header("Access-Control-Allow-Credentials", true);
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+//   next();
+// });
+// app.use("/", function (req, res)  {
+//   res.setHeader("Access-Control-Allow-Origin", "*")
+//   res.setHeader("Access-Control-Allow-Credentials", "true");
+//   res.setHeader("Access-Control-Max-Age", "1800");
+//   res.setHeader("Access-Control-Allow-Headers", "content-type");
+//   res.setHeader( "Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS" ); 
+//    });
+
+
 require('./models/usergoogle');
 require('./Passport/passport.js');
 //const logintwet=require('./routes/logintwet');
 const route=require('./routes');
 var SQLiteStore = require('connect-sqlite3')(session);
+
 //setting
 app.set('views',path.join(__dirname,'views'));
 app.engine('ejs',engine);
@@ -51,8 +86,10 @@ app.use(session({
 // }));
 app.use(passport.authenticate('session'));
 app.use(helmet());
+
 app.use(cors()); 
 //app.use(favicon());
+
 app.use(logger("dev"));
 app.use(cookieParser());
 app.use(express.json());

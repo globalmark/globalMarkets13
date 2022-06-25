@@ -34,7 +34,7 @@ export const SideMenu = () => {
     }
 
 
-  return (
+  return ( 
     <Drawer
         open={ isMenuOpen }
         anchor='right'
