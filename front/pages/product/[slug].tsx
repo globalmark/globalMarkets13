@@ -37,6 +37,7 @@ const ProductPage:NextPage<Props> = ({ product }) => {
 
 
   const selectedSize = ( size: ISize ) => {
+
     setTempCartProduct( currentProduct => ({
       ...currentProduct,
       size
@@ -52,7 +53,10 @@ const ProductPage:NextPage<Props> = ({ product }) => {
 
 
   const onAddProduct = () => {
-
+    if(product.sizes.length < 1) {
+      addProductToCart(tempCartProduct);
+      router.push('/cart');
+    }
     if ( !tempCartProduct.size ) { return; }
 
     addProductToCart(tempCartProduct);
@@ -107,6 +111,7 @@ const ProductPage:NextPage<Props> = ({ product }) => {
                     onClick={ onAddProduct }
                   >
                     {
+                      product.sizes.length === 0? 'Agregar al carrito' : 
                       tempCartProduct.size
                         ? 'Agregar al carrito'
                         : 'Seleccione una talla'
