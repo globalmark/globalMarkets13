@@ -10,7 +10,7 @@ const alert=require('alert');
 const respon = async (req,res,next) =>{
   
 
-//console.log(req.body);
+console.log(req.body);
 let password=bcrypt.hashSync(req.body.password,10);
 let  name=req.body.name;
 let surname=req.body.surname;
@@ -20,6 +20,7 @@ let dni=req.body.dni;
 let age=req.body.age;
 let address=req.body.address;
 let phoneNumber=req.body.phoneNumber;
+let role = "client"
  
 let mailencontraddo= await userSchema.findOne({email : email});
 let usernameexiste= await userSchema.findOne({Username:Username});
@@ -30,7 +31,7 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
          if(!usernameexiste){
                  console.log('no exsite el Username en la base')
                    if(!dniexiste){
-                           let user= userSchema({name,surname,email,Username,password,dni,age,address,phoneNumber});
+                           let user= userSchema({name,surname,email,Username,password,dni,age,address,phoneNumber,role});
                            await user.save();
                            console.log(user)
                            var transporter= nodemailer.createTransport({
@@ -39,7 +40,7 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                             secure:false,
                             auth:{
                                 user:'danielperco4@gmail.com',
-                                pass:'ktwwtdtrwtzjpicn'
+                                pass:'apwsmdkesmhtmdki'
                             }
                         });
                         console.log(req.body.email)
@@ -51,14 +52,17 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                         };
                         console.log('hola');
                         await transporter.sendMail(mailOptions,(error,info)=>{
+
                                 if(error){
-                                     return res.status(500).json(error.message);
+                                   return   res.status(404).json(error.message);
+                                      
                                 }else{
                           
-                                    console.log('emial enviado',info.response);
-                                  // return  res.status(200).jsonp(req.body);
-                                }
+                                    console.log('emial enviado',info);
+                                  //return  res.status(200).jsonp(req.body);
+                                } 
                         
+
                             })  
                             
                             //catch(error){return res.status(404).json({error:'el acceso no es correcto'})}

@@ -1,58 +1,61 @@
 import { useState, useContext } from 'react';
-import { useRouter } from 'next/router';
 import NextLink from 'next/link';
+
 import { Box, Button, Chip, Grid, Link, TextField, Typography } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 
-
-import { tesloApi } from '../../api';
+import { AuthContext } from '../../context';
 import { AuthLayout } from '../../components/layouts'
 import { validations } from '../../utils';
-import { AuthContext } from '../../context/auth/AuthContext';
+
+import { useRouter } from 'next/router';
 
 
 type FormData = {
-    name    : string;
-    email   : string;
-    password: string;
-};
+    Username: string
+    email   : string,
+    password: string,
+
+  };
 
 
-const RegisterPage = () => {
+const LoginPage = () => {
 
     const router = useRouter();
-    const { registerUser } = useContext( AuthContext );
-
+    const { loginUser } = useContext( AuthContext );
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false);
-    const [ errorMessage, setErrorMessage ] = useState('');
 
-    const onRegisterForm = async( {  name, email, password }: FormData ) => {
-        
+    const onLoginUser = async( {Username, email, password }: FormData ) => {
+
         setShowError(false);
-        const { hasError, message } = await registerUser(name, email, password);
 
-        if ( hasError ) {
+        const isValidLogin = await loginUser(Username, email, password );
+
+        if ( !isValidLogin ) {
             setShowError(true);
-            setErrorMessage( message! );
             setTimeout(() => setShowError(false), 3000);
             return;
         }
-        
+
+
+
         // Todo: navegar a la pantalla que el usuario estaba
-        router.replace('/');
+        const destination = router.query.p?.toString() ||'/';
+        router.replace(destination);
 
     }
 
+
     return (
         <AuthLayout title={'Ingresar'}>
-            <form onSubmit={ handleSubmit(onRegisterForm) } noValidate>
+            <form onSubmit=  {handleSubmit(onLoginUser)} noValidate>
                 <Box sx={{ width: 350, padding:'10px 20px' }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Typography variant='h1' component="h1">Crear cuenta</Typography>
+                            <Typography variant='h1' component="h1">Iniciar Sesión</Typography>
                             <Chip 
                                 label="No reconocemos ese usuario / contraseña"
                                 color="error"
@@ -64,17 +67,18 @@ const RegisterPage = () => {
 
                         <Grid item xs={12}>
                             <TextField
-                                label="Nombre completo"
+                                type="Username"
+                                label="Usuario"
                                 variant="filled"
                                 fullWidth 
-                                { ...register('name', {
+                                { ...register('Username', {
                                     required: 'Este campo es requerido',
-                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                    
                                 })}
-                                error={ !!errors.name }
-                                helperText={ errors.name?.message }
                             />
+
                         </Grid>
+
                         <Grid item xs={12}>
                             <TextField
                                 type="email"
@@ -89,6 +93,7 @@ const RegisterPage = () => {
                                 error={ !!errors.email }
                                 helperText={ errors.email?.message }
                             />
+
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -111,16 +116,15 @@ const RegisterPage = () => {
                                 color="secondary"
                                 className='circular-btn'
                                 size='large'
-                                fullWidth
-                            >
+                                fullWidth>
                                 Ingresar
                             </Button>
                         </Grid>
 
                         <Grid item xs={12} display='flex' justifyContent='end'>
-                            <NextLink href="/auth/login" passHref>
+                            <NextLink href="/auth/register" passHref>
                                 <Link underline='always'>
-                                    ¿Ya tienes cuenta?
+                                    ¿No tienes cuenta?
                                 </Link>
                             </NextLink>
                         </Grid>
@@ -128,7 +132,7 @@ const RegisterPage = () => {
                 </Box>
             </form>
         </AuthLayout>
-    )
+  )
 }
 
-export default RegisterPage
+export default LoginPage

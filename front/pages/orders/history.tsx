@@ -1,24 +1,26 @@
 import NextLink from 'next/link';
-
 import { Typography, Grid, Chip, Link } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-
 import { ShopLayout } from '../../components/layouts';
+import {AuthContext} from "../../context/auth/AuthContext"
+import React,{useContext} from "react"
+import {useState, useEffect} from "react"
 
 
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'fullname', headerName: 'Nombre Completo', width: 300 },
+    { field: 'firtsName', headerName: 'Nombre ', width: 300 },
+    { field: 'lastName', headerName: 'apellido', width: 300 },
 
     {
-        field: 'paid',
+        field: 'isPaid',
         headerName: 'Pagada',
         description: 'Muestra información si está pagada la orden o no',
         width: 200,
         renderCell: (params: GridValueGetterParams) => {
             return (
-                params.row.paid
+                params.row.isPaid
                     ? <Chip color="success" label="Pagada" variant='outlined' />
                     : <Chip color="error" label="No pagada" variant='outlined' />
             )
@@ -42,20 +44,63 @@ const columns: GridColDef[] = [
 ];
 
 
-const rows = [
-    { id: 1, paid: true, fullname: 'Fernando Herrera' },
-    { id: 2, paid: false, fullname: 'Melissa Flores' },
-    { id: 3, paid: true, fullname: 'Hernando Vallejo' },
-    { id: 4, paid: false, fullname: 'Emin Reyes' },
-    { id: 5, paid: false, fullname: 'Eduardo Rios' },
-    { id: 6, paid: true, fullname: 'Natalia Herrera' },
-]
+
+const HistoryPage =  () => {
+    const{user,isLoggedIn}=useContext(AuthContext)
+        
+        const userId= user.email
 
 
-const HistoryPage = () => {
+    const [orders, setOrders]= useState([])
+    
+
+    useEffect(()=>{
+        async function fetchData(){
+            try {
+                const t= await fetch(`http://localhost:9000/orders/getAll`,{
+                    method:"POST",
+                    headers:{
+                        "Content-type":"application/json"
+                    },
+                    body:JSON.stringify({userId:userId})
+                })
+                const enviar= await t.json()
+                setOrders(enviar)
+                console.log("orders",enviar) 
+
+            } catch (err) {
+                console.log(err);
+            }
+            
+        }
+        fetchData();
+    },[])
+
+   
+    const rows=orders.map(p=>{
+        return{
+            id:p._id,
+            firtsName:p.shippingAddress.firstName,
+            lastName:p.shippingAddress.lastName,
+            isPaid:p.isPaid
+        }
+    })
+
+
+    
+
+    
+
+ 
+
+
+    
+        
+   
   return (
     <ShopLayout title={'Historial de ordenes'} pageDescription={'Historial de ordenes del cliente'}>
         <Typography variant='h1' component='h1'>Historial de ordenes</Typography>
+        
 
 
         <Grid container>
@@ -73,5 +118,34 @@ const HistoryPage = () => {
     </ShopLayout>
   )
 }
+
+
+export const datoss= async(userId)=>{
+
+   
+
+    const datos= await fetch(`http://localhost:9000/orders/getAll  `,{
+        method:"POST",
+        headers:{
+            "Content-type":"application/json"
+        },
+        body: JSON.stringify({userId:userId})
+        
+    })
+    const date= await datos.json()
+    
+    
+    
+//   return date.map((order:any,i)=>{
+//       <li key={i} className="list-group-item">{order.userId}</li>
+//   })
+
+    
+
+}
+
+
+
+
 
 export default HistoryPage
