@@ -30,7 +30,7 @@ router.post('/',resgisterUser);
 //     passReqToCallback:true
 
 // }));
-   
+
 
 // [check('name','el nombre es obligatorio').not().isEmpty(),                    
 // check('surname','el surname  es obligatorio').not().isEmpty(),
