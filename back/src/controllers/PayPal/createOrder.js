@@ -5,18 +5,20 @@ const axios = require("axios");
 PAYPAL_API="https://api.sandbox.paypal.com";
 PAYPAL_API_CLIENT="AfxRBPpYCg7i0bseISrnslYhnCld6FVa4-tPOhoo7MkAjYSpetfETdX3tDKiGNptqJZEFsi2yBoKNCTF";
 PAYPAL_API_SECRET="EI9dQUFyOSTloVcocqeJick-Fk7puCqX_WrjkNzCEglwPnE_RYAQmHg1yI6FoB-GffVdPuBSUszgMgps";
+ 
 
-//const subtotal= req.query.subtotal;
 
 const createOrder = async (req, res) => {
+
     try {
+      const total= req.body.total;
       const order = {
         intent: "CAPTURE",
         purchase_units: [
           {
             amount: {
               currency_code: "USD",
-              value: "2000.00",
+              value:total,
             },
           },
         ],
