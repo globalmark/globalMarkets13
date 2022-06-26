@@ -1,12 +1,18 @@
 import NextLink from 'next/link';
 
 import { Link, Box, Button, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
-
+import { tesloApi } from '../../api';
 import { ShopLayout } from '../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../components/cart';
+import {ordenP} from "../checkout/address"
+import {id} from "../cart/index"
 
+const SummaryPage = (props) => {
 
-const SummaryPage = () => {
+    const _id= id
+  
+                    
+
   return (
     <ShopLayout title='Resumen de orden' pageDescription={'Resumen de la orden'}>
         <Typography variant='h1' component='h1'>Resumen de la orden</Typography>
@@ -31,11 +37,12 @@ const SummaryPage = () => {
                         </Box>
 
                         
-                        <Typography>Fernando Herrera</Typography>
-                        <Typography>323 Algun lugar</Typography>
-                        <Typography>Stittsville, HYA 23S</Typography>
-                        <Typography>Canadá</Typography>
-                        <Typography>+1 23123123</Typography>
+                        <Typography>Nombre: {`${_id.shippingAddress.firstName}`}</Typography>
+                        <Typography>Apellido: {`${_id.shippingAddress.lastName}`}</Typography>
+                        <Typography>Calle: {`${_id.shippingAddress.address}`}</Typography>
+                        <Typography>Ciudad: {`${_id.shippingAddress.city}`}</Typography>
+                        <Typography>Pais: {`${_id.shippingAddress.country}`}</Typography>
+                     
 
                         <Divider sx={{ my:1 }} />
 

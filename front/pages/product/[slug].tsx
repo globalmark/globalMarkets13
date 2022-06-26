@@ -59,7 +59,7 @@ const ProductPage:NextPage<Props> = ({ product }) => {
     router.push('/cart');
   }
 
- console.log("esto es el estado",tempCartProduct);
+//  console.log("esto es el estado",tempCartProduct);
  
   return (
     <ShopLayout title={ product.title } pageDescription={ product.description }>
