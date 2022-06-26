@@ -21,7 +21,7 @@ const flash= require('connect-flash');
 
 // app.use(cors());
 
-const corsConfig = {
+const corsConfig = { 
     credentials: true,
     origin: true,
 };
@@ -53,7 +53,7 @@ app.use(cors(corsConfig));
 require('./models/usergoogle');
 require('./Passport/passport.js');
 //const logintwet=require('./routes/logintwet');
-const route=require('./routes');
+// const route=require('./routes');
 var SQLiteStore = require('connect-sqlite3')(session);
 
 //setting
@@ -87,7 +87,7 @@ app.use(session({
 app.use(passport.authenticate('session'));
 app.use(helmet());
 
-app.use(cors()); 
+// app.use(cors()); 
 //app.use(favicon());
 
 app.use(logger("dev"));

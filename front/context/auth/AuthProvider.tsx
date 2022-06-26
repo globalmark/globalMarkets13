@@ -34,12 +34,14 @@ export const AuthProvider:FC<any> = ({ children }) => {
 
 
 
+
+
     const checkToken = async() => {
         if (!Cookies.get('token')) { 
             return ;
         }
         try {
-            const { data } = await tesloApi.get('/users/users/secure');
+            const { data } = await tesloApi.get('/users/users/secure',{withCredentials:true});
             console.log(data)
             const { token, user } = data;
             Cookies.set('token', token );
