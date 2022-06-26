@@ -87,7 +87,7 @@ app.use(session({
 app.use(passport.authenticate('session'));
 app.use(helmet());
 
-app.use(cors()); 
+// app.use(cors()); 
 //app.use(favicon());
 
 app.use(logger("dev"));
