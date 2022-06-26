@@ -1,5 +1,9 @@
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from 'next/router'
+import { RouteRounded } from "@mui/icons-material";
+import { Box,Typography } from '@mui/material';
+// import styles from "./formDeporte.module.css" ;
 
 
 let inicio:String[] = []
@@ -12,8 +16,14 @@ function FormDeportes() {
       images:otro,
       price:"",
       inStock:"",
-      caterogiras:[]
+      caterogiras:["deporte"],
+      type: "",
+      gender:""
+      
+
   })
+
+  const router = useRouter()
 
   const [image,setImage]= useState(inicio);
   const [loading,setLoading]= useState(false)
@@ -56,11 +66,13 @@ function FormDeportes() {
       e.preventDefault();
       if(!input.title||
           !input.description||
-          !input.caterogiras||
+          !input.type||
           !input.price||
           !input.inStock){
           alert("* parametro requerido")
-      }else{postData(input)}
+      }else { postData(input)
+        router.push('/')
+    }
       
   }
   const postData= async(input:any)=>{
@@ -84,25 +96,46 @@ function FormDeportes() {
 
 
   }
+
+//   <Grid item xs={12}>
+//   <TextField
+//       type="email"
+//       label="Correo"
+//       variant="filled"
+//       fullWidth 
+//       { ...register('email', {
+//           required: 'Este campo es requerido',
+//           validate: validations.isEmail
+          
+//       })}
+//       error={ !!errors.email }
+//       helperText={ errors.email?.message }
+//   />
+
+// </Grid>
  
     
 
 
 return (
+    
+    <Box>
   <div>
+    
       <div>
           <h1>
-              Bienvenidos a la seccion de Deportes
+          <Typography variant='h1' component="h1">Bienvenidos a la seccion de Deportes</Typography>   
           </h1>
       </div>
       <form onSubmit={handleSubmit} >
-      <div>
-              <label > * Nombre</label>
+         <div>
+              <label> * Nombre</label>
               <input type="text" name='title' defaultValue={input.title} onChange={(e)=> handleChange(e)} ></input>
          </div>
+        
          <div>
-             <label> * Categoria </label>
-             <select onChange={(e)=> handleChange(e)} name="caterogiras"  >
+             <label> * Tipo de articulo </label>
+             <select onChange={(e)=> handleChange(e)} name="type"  >
                  <option>Todas las categorias </option>
                  <option> Pelota </option>
                  <option> Raquetas </option>
@@ -131,13 +164,14 @@ return (
              <button onClick={handleSubmit} > Crear</button>
          </div>
          <div>
-             <Link href="/home">
+             <Link href="/">
                  <button> HOME </button>
              </Link>
 
          </div>
       </form>
   </div>
+  </Box>
 )
 }
 

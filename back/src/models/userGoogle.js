@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchemaGoogle = new mongoose.Schema({
+const userGogle = new mongoose.Schema({
     
     name: {
         type: String,
@@ -14,8 +14,9 @@ const userSchemaGoogle = new mongoose.Schema({
     },
     provider_id: {
         type: String,
-        unique:true,
-        required: true
+        required: true,
+        unique:true
+
     },
     photo: {
         type: String,
@@ -23,13 +24,15 @@ const userSchemaGoogle = new mongoose.Schema({
 
     },
 
-    CreatedAt: {
+    createdAt: {
         type: Date,
-        default:Date.now,
-        required: true
-    },
-    
-    
-})
+        default:Date.now
 
-module.exports = mongoose.model('UserGoogle', userSchema);
+    }
+
+    }
+)
+
+
+
+module.exports = mongoose.model('Usergogle', userGogle);
