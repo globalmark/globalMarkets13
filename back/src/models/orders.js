@@ -31,6 +31,7 @@ const orderSchema = new mongoose.Schema({
     total:{type:Number, required: false},
     isPaid: {type: Boolean, default: false ,required: false},
     paidAt:{type:String},
+    paypalId:{type:String, required:false},
     
     },
     {timestamps: false}

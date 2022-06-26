@@ -4,6 +4,7 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { ShopLayout } from '../../components/layouts';
 import {AuthContext} from "../../context/auth/AuthContext"
 import React,{useContext} from "react"
+
 import {useState, useEffect} from "react"
 
 
@@ -76,6 +77,7 @@ const HistoryPage =  () => {
         fetchData();
     },[])
 
+//    console.log("orders",orders)
    
     const rows=orders.map(p=>{
         return{
@@ -86,13 +88,43 @@ const HistoryPage =  () => {
         }
     })
 
+    const result = orders.filter(p=> p.paypalId);
 
+    result.map(async p =>{
+        try{ 
+            const r= await fetch(`http://localhost:9000/paypal/getDataOrderById/${p.paypalId}`,{
+                method:"GET",
+                headers:{
+                    "Content-type":"application/json"
+                }
+            })
+            const r2= await r.json()
+
+            if(r2.status==="COMPLETED"){
+                try{
+                    const q= await fetch(`http://localhost:9000/orders/${p._id}`,{
+                        method:"PUT",
+                        headers:{
+                            "Content-type":"application/json"
+                        },
+                        body: JSON.stringify({isPaid:true})
+
+                    })
+                }
+                catch(err) {
+                    console.log(err)
+
+                }
+
+            }
+                    
+        }
+        catch(err) {
+            console.log(err)
+
+        }
+    })
     
-
-    
-
- 
-
 
     
         

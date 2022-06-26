@@ -18,7 +18,7 @@ const OrderPage =  ({date}) => {
     
 
     const [ordersP, setOrdersP]= useState([])
-    
+    const [idPaypal, setIdPaypal]= useState([])
 
     useEffect(()=>{
         async function fetchData(){
@@ -32,7 +32,9 @@ const OrderPage =  ({date}) => {
                 })
                 const enviar= await t.json()
                 setOrdersP(enviar.links[1].href)
+                setIdPaypal(enviar.id)
                 console.log("orders",enviar) 
+                
 
             } catch (err) {
                 console.log(err);
@@ -42,8 +44,34 @@ const OrderPage =  ({date}) => {
         fetchData();
     },[])
 
+    const handleSubmit= async (e:any)=>{
+        try{ 
+            const p= await fetch(`http://localhost:9000/orders/${date._id}`,{
+                method:"PUT",
+                headers:{
+                    "Content-type":"application/json"
+                },
+                     body:JSON.stringify({paypalId:idPaypal})
+
+            })
+            const pId= await p.json()
+            console.log("pdi",pId)
+
+        }
+        catch (err){console.log(err)}
+    }
+
+    
+
+    const p= date.isPaid
 
 
+
+
+
+   
+
+    
 
    
     
@@ -118,13 +146,7 @@ const OrderPage =  ({date}) => {
 
                         <Divider sx={{ my:1 }} />
 
-                        <Box display='flex' justifyContent='end'>
-                            <NextLink href='/cart' passHref>
-                                <Link underline='always'>
-                                    Editar
-                                </Link>
-                            </NextLink>
-                        </Box>
+                       
 
                         <Grid container>
         
@@ -158,8 +180,8 @@ const OrderPage =  ({date}) => {
 
                 </Grid>
 
-                        <Box sx={{ mt: 3 }}>
-                        <Button>
+                        <Box sx={{ mt: 3 }}>disabled
+                        <Button onClick={handleSubmit} disabled={p===true}  color="secondary" className='circular-btn' fullWidth   >
                             <Link href={`${ordersP}`} >pagar</Link>
                         </Button>
                         </Box>
