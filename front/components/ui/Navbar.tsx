@@ -56,11 +56,13 @@ export const Navbar = () => {
         </NextLink>
         <Box flex={1} />
 
-        <Box
-          sx={{
-            display: isSearchVisible ? "none" : { xs: "none", sm: "block" },
-          }}
-          className="fadeIn">
+          <Box
+            sx={{
+              display: isSearchVisible ? "none" : { xs: "none", sm: "block" },
+            }}
+            className="fadeIn">
+            <Button>
+              <FormControl sx={{ m: 0, minWidth: 83 }} size="small" />
 
           <Button>
 
@@ -185,33 +187,33 @@ export const Navbar = () => {
     </Box>
     <Box flex={1} />
 
-        {/* Pantallas pantallas grandes */}
-        {isSearchVisible ? (
-          <Input
-            sx={{ display: { xs: "none", sm: "flex" } }}
-            className="fadeIn"
-            autoFocus
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyPress={(e) => (e.key === "Enter" ? onSearchTerm() : null)}
-            type="text"
-            placeholder="Buscar..."
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton onClick={() => setIsSearchVisible(false)}>
-                  <ClearOutlined />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        ) : (
-          <IconButton
-            onClick={() => setIsSearchVisible(true)}
-            className="fadeIn"
-            sx={{ display: { xs: "none", sm: "flex" } }}>
-            <SearchOutlined />
-          </IconButton>
-        )}
+            {/* Pantallas pantallas grandes */}
+            {isSearchVisible ? (
+              <Input
+                sx={{ display: { xs: "none", sm: "flex" } }}
+                className="fadeIn"
+                autoFocus
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyPress={(e) => (e.key === "Enter" ? onSearchTerm() : null)}
+                type="text"
+                placeholder="Buscar..."
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setIsSearchVisible(false)}>
+                      <ClearOutlined />
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            ) : (
+              <IconButton
+                onClick={() => setIsSearchVisible(true)}
+                className="fadeIn"
+                sx={{ display: { xs: "none", sm: "flex" } }}>
+                <SearchOutlined />
+              </IconButton>
+            )}
 
         {/* Pantallas pequeñas */}
         <><IconButton
