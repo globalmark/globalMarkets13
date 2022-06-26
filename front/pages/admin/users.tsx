@@ -8,15 +8,15 @@ import { Grid, Select, MenuItem } from '@mui/material';
 import { AdminLayout } from '../../components/layouts'
 import { IUser } from '../../interfaces';
 import { tesloApi } from '../../api';
+import { useProducts } from '../../hooks/useProducts';
 
 
 
 
 const UsersPage = () => {
-
-    const { data, error } = useSWR<IUser[]>('/api/admin/users');
+    
+    const { data, error } = useSWR<IUser[]>('http://localhost:9000/admin/users');
     const [ users, setUsers ] = useState<IUser[]>([]);
-
 
     useEffect(() => {
       if (data) {
