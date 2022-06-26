@@ -48,6 +48,11 @@ const LoginPage = () => {
 
     }
 
+    const navigateTo = ( url: string ) => {
+        router.push(url);
+    }
+
+
 
     return (
         <AuthLayout title={'Ingresar'}>
@@ -111,7 +116,7 @@ const LoginPage = () => {
                         </Grid>
 
                         <Grid item xs={12}>
-                            <Button
+                            <Button 
                                 type="submit"
                                 color="secondary"
                                 className='circular-btn'
@@ -122,10 +127,11 @@ const LoginPage = () => {
                         </Grid>
 
                         <Grid item xs={12}>
-                        <NextLink href="htttp://localhost:9000/login" passHref>
+                        {/* <NextLink href="http://localhost:9000/login" passHref> */}
+                        <NextLink href="http://localhost:9000/login" passHref>
                            <Link underline='always'>
                             <Button
-                                type="submit"
+                                onClick={ () => navigateTo('http://localhost:9000/login') }
                                 color="secondary"
                                 className='circular-btn'
                                 size='large'

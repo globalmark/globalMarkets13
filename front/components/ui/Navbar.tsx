@@ -38,7 +38,7 @@ export const Navbar = () => {
     push(`/search/${searchTerm}`);
   };
   
-  return (
+  return (<>
     <AppBar>
       <Toolbar>
         <NextLink href="/" passHref>
@@ -47,9 +47,9 @@ export const Navbar = () => {
             <Typography sx={{ ml: 0 }}>Market</Typography>
           </Link>
         </NextLink>
-        <NextLink href="/formulario/form" >
+        <NextLink href="/formulario/form">
           <Link>
-          <Button> Crea tu producto </Button>
+            <Button> Crea tu producto </Button>
           </Link>
         </NextLink>
         <Box flex={1} />
@@ -61,41 +61,40 @@ export const Navbar = () => {
           className="fadeIn">
 
           <Button>
-          <FormControl sx={{ m: 0, minWidth: 83 }} size="small">
 
-             <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
-              <InputLabel id="demo-select-small" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Moda</InputLabel>
+              <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
+                <InputLabel id="demo-select-small" sx={{ fontFamily: 'sans-serif', fontWeight: 'Bold', color: 'GrayText' }}>Moda</InputLabel>
+                <Select
+                  sx={{ borderRadius: 10 }}
+                  labelId="demo-select-small"
+                  id="demo-select-small"
+                  label="Moda">
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <NextLink href='/category/men' passHref>
+                    <Link sx={{ color: 'black' }}>
+                      <MenuItem value={10} color={asPath === '/category/men' ? 'primary' : 'info'}>Hombres</MenuItem>
+                    </Link>
+                  </NextLink>
+                  <NextLink href='/category/women' passHref>
+                    <Link sx={{ color: 'black' }}>
+                      <MenuItem value={10} color={asPath === '/category/women' ? 'primary' : 'info'}>Mujeres</MenuItem>
+                    </Link>
+                  </NextLink>
+                  <NextLink href='/category/kid' passHref>
+                    <Link sx={{ color: 'black' }}>
+                      <MenuItem value={10} color={asPath === '/category/kid' ? 'primary' : 'info'}>Niños</MenuItem>
+                    </Link>
+                  </NextLink>
+                </Select>
+              </FormControl>
+            </Button>
+          <Button>
+            <FormControl sx={{ m: 0, minWidth: 103 }} size="small">
+              <InputLabel id="demo-select-small" sx={{ fontFamily: 'sans-serif', fontWeight: 'Bold', color: 'GrayText' }}>Deporte</InputLabel>
               <Select
-                sx={{borderRadius:10}}
-                labelId="demo-select-small"
-                id="demo-select-small"
-                label="Moda">
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <NextLink href='/category/men' passHref>
-                  <Link sx={{color:'black'}}>
-                    <MenuItem value={10} color = {asPath === '/category/men' ? 'primary' : 'info'}>Hombres</MenuItem>
-                  </Link>
-                </NextLink>
-                <NextLink href='/category/women' passHref>
-                  <Link sx={{color:'black'}}>
-                    <MenuItem value={10} color = {asPath === '/category/women' ? 'primary' : 'info'}>Mujeres</MenuItem>
-                  </Link>
-                </NextLink>
-                <NextLink href='/category/kid' passHref>
-                  <Link sx={{color:'black'}} >
-                    <MenuItem value={10} color = {asPath === '/category/kid' ? 'primary' : 'info'}>Niños</MenuItem>
-                  </Link>
-                </NextLink>
-              </Select>
-    </FormControl>
-    </Button>
-    <Button>
-          <FormControl sx={{ m: 0, minWidth: 103 }} size="small">
-              <InputLabel id="demo-select-small" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Deporte</InputLabel>
-              <Select
-                sx={{borderRadius:10}}
+                sx={{ borderRadius: 10 }}
                 labelId="demo-select-small"
                 id="demo-select-small"
                 label="Deporte">
@@ -103,28 +102,28 @@ export const Navbar = () => {
                   <em>None</em>
                 </MenuItem>
                 <NextLink href='/category/futbol' passHref>
-                  <Link sx={{color:'black'}}>
-                    <MenuItem value={10} color = {asPath === '/category/futbol' ? 'primary' : 'info'}>Futbol</MenuItem>
+                  <Link sx={{ color: 'black' }}>
+                    <MenuItem value={10} color={asPath === '/category/futbol' ? 'primary' : 'info'}>Futbol</MenuItem>
                   </Link>
                 </NextLink>
                 <NextLink href='/category/basquetbol' passHref>
-                  <Link sx={{color:'black'}}>
-                    <MenuItem value={10} color = {asPath === '/category/basquetbol' ? 'primary' : 'info'}>Basquetbol</MenuItem>
+                  <Link sx={{ color: 'black' }}>
+                    <MenuItem value={10} color={asPath === '/category/basquetbol' ? 'primary' : 'info'}>Basquetbol</MenuItem>
                   </Link>
                 </NextLink>
                 <NextLink href='/category/box' passHref>
-                  <Link sx={{color:'black'}} >
-                    <MenuItem value={10} color = {asPath === '/category/box' ? 'primary' : 'info'}>Box</MenuItem>
+                  <Link sx={{ color: 'black' }}>
+                    <MenuItem value={10} color={asPath === '/category/box' ? 'primary' : 'info'}>Box</MenuItem>
                   </Link>
                 </NextLink>
               </Select>
-        </FormControl>
-    </Button>
-    <Button>
-    <FormControl sx={{ m: 0, minWidth: 125 }} size="small">
-              <InputLabel id="demo-select-small" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Tecnologia</InputLabel>
+            </FormControl>
+          </Button>
+          <Button>
+            <FormControl sx={{ m: 0, minWidth: 125 }} size="small">
+              <InputLabel id="demo-select-small" sx={{ fontFamily: 'sans-serif', fontWeight: 'Bold', color: 'GrayText' }}>Tecnologia</InputLabel>
               <Select
-                sx={{borderRadius:10}}
+                sx={{ borderRadius: 10 }}
                 labelId="demo-select-small"
                 id="demo-select-small"
                 label="Tecnologia">
@@ -132,28 +131,28 @@ export const Navbar = () => {
                   <em>None</em>
                 </MenuItem>
                 <NextLink href='/category/dispositivos' passHref>
-                  <Link sx={{color:'black'}}>
-                    <MenuItem value={10} color = {asPath === '/category/dispositivos' ? 'primary' : 'info'}>Celulares/Smart TV/Tablets</MenuItem>
+                  <Link sx={{ color: 'black' }}>
+                    <MenuItem value={10} color={asPath === '/category/dispositivos' ? 'primary' : 'info'}>Celulares/Smart TV/Tablets</MenuItem>
                   </Link>
                 </NextLink>
                 <NextLink href='/category/computacion' passHref>
-                  <Link sx={{color:'black'}}>
-                    <MenuItem value={10} color = {asPath === '/category/computacion' ? 'primary' : 'info'}>Computación</MenuItem>
+                  <Link sx={{ color: 'black' }}>
+                    <MenuItem value={10} color={asPath === '/category/computacion' ? 'primary' : 'info'}>Computación</MenuItem>
                   </Link>
                 </NextLink>
                 <NextLink href='/category/videojuegos' passHref>
-                  <Link sx={{color:'black'}} >
-                    <MenuItem value={10} color = {asPath === '/category/videojuegos' ? 'primary' : 'info'}>Videojuegos</MenuItem>
+                  <Link sx={{ color: 'black' }}>
+                    <MenuItem value={10} color={asPath === '/category/videojuegos' ? 'primary' : 'info'}>Videojuegos</MenuItem>
                   </Link>
                 </NextLink>
               </Select>
-        </FormControl>
-    </Button>
-        <Button>
-    <FormControl sx={{ m: 0, minWidth: 87 }} size="small">
-              <InputLabel id="demo-select-small" sx={{fontFamily:'sans-serif',fontWeight:'Bold',color:'GrayText'}}>Hogar</InputLabel>
+            </FormControl>
+          </Button>
+          <Button>
+            <FormControl sx={{ m: 0, minWidth: 87 }} size="small">
+              <InputLabel id="demo-select-small" sx={{ fontFamily: 'sans-serif', fontWeight: 'Bold', color: 'GrayText' }}>Hogar</InputLabel>
               <Select
-                sx={{borderRadius:10}}
+                sx={{ borderRadius: 10 }}
                 labelId="demo-select-small"
                 id="demo-select-small"
                 label="Hogar">
@@ -161,30 +160,28 @@ export const Navbar = () => {
                   <em>None</em>
                 </MenuItem>
                 <NextLink href='/category/muebles' passHref>
-                  <Link sx={{color:'black'}}>
-                    <MenuItem value={10} color = {asPath === '/category/muebles' ? 'primary' : 'info'}>Muebles</MenuItem>
+                  <Link sx={{ color: 'black' }}>
+                    <MenuItem value={10} color={asPath === '/category/muebles' ? 'primary' : 'info'}>Muebles</MenuItem>
                   </Link>
                 </NextLink>
                 <NextLink href='/category/cocina' passHref>
-                  <Link sx={{color:'black'}}>
-                    <MenuItem value={10} color = {asPath === '/category/cocina' ? 'primary' : 'info'}>Cocina</MenuItem>
+                  <Link sx={{ color: 'black' }}>
+                    <MenuItem value={10} color={asPath === '/category/cocina' ? 'primary' : 'info'}>Cocina</MenuItem>
                   </Link>
                 </NextLink>
                 <NextLink href='/category/calefaccion' passHref>
-                  <Link sx={{color:'black'}} >
-                    <MenuItem value={10} color = {asPath === '/category/calefaccion' ? 'primary' : 'info'}>Calefaccion Y Enfriamento</MenuItem>
+                  <Link sx={{ color: 'black' }}>
+                    <MenuItem value={10} color={asPath === '/category/calefaccion' ? 'primary' : 'info'}>Calefaccion Y Enfriamento</MenuItem>
                   </Link>
                 </NextLink>
-                
+
               </Select>
-        </FormControl>
-    </Button>
-    </FormControl> 
+            </FormControl>
           </Button>
-          
-          
-        </Box>
-        <Box flex={1} />
+        
+
+    </Box>
+    <Box flex={1} />
 
         {/* Pantallas pantallas grandes */}
         {isSearchVisible ? (
@@ -215,22 +212,20 @@ export const Navbar = () => {
         )}
 
         {/* Pantallas pequeñas */}
-        <IconButton
-          sx={{ display: { xs: "flex", sm: "none" } }}
-          onClick={toggleSideMenu}>
-          <SearchOutlined />
+        <><IconButton
+    sx={{ display: { xs: "flex", sm: "none" } }}
+    onClick={toggleSideMenu}>
+    <SearchOutlined />
+  </IconButton><NextLink href="/cart" passHref>
+      <Link>
+        <IconButton>
+          <Badge badgeContent={2} color="secondary">
+            <ShoppingCartOutlined />
+          </Badge>
         </IconButton>
-        <NextLink href="/cart" passHref>
-          <Link>
-            <IconButton>
-              <Badge badgeContent={2} color="secondary">
-                <ShoppingCartOutlined />
-              </Badge>
-            </IconButton>
-          </Link>
-        </NextLink>
-        <Button onClick={toggleSideMenu}>Menú</Button>
+      </Link>
+    </NextLink><Button onClick={toggleSideMenu}>Menú</Button></>
       </Toolbar>
     </AppBar>
-  );
+  </>);
 };
