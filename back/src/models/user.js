@@ -47,10 +47,7 @@ const userSchema = new mongoose.Schema({
       default: "client",
       required: true,
     },
-<<<<<<< HEAD
-  },
-});
-=======
+
     surname: {
         type: String,
         required: true
@@ -106,4 +103,3 @@ const userSchema = new mongoose.Schema({
 
 
 module.exports = mongoose.model('User', userSchema);
->>>>>>> 3ef89821c320638f6027b6f075359acc9f8b4d62
