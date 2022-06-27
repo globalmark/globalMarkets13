@@ -40,7 +40,7 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                             secure:false,
                             auth:{
                                 user:'danielperco4@gmail.com',
-                                pass:'apwsmdkesmhtmdki'
+                                pass:'khievlntybmzoqqn'
                             }
                         });
                         console.log(req.body.email)

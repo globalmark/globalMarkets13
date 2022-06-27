@@ -13,7 +13,7 @@ export default function form() {
   return (
     <div>
         <div>
-            <h1>Bienvenido, aqui podras publicar un producto </h1>
+            <h1>Crear Productos</h1>
         </div>
         <Grid container>
             <Grid item xs={2}>
@@ -44,21 +44,10 @@ export default function form() {
             </Grid>
             <Grid item xs={2}>
                 <Box border={2}>
-                    <Link href="formElectrodomesticos">
-                        <Button 
-                        endIcon={<TvOutlinedIcon></TvOutlinedIcon>}>
-                            Electrodomesticos
-                        </Button>
-                    </Link>
-                    
-                </Box>
-            </Grid>
-            <Grid item xs={2}>
-                <Box border={2}>
                     <Link href="formMuebles">
                         <Button 
                         endIcon={<BungalowOutlinedIcon></BungalowOutlinedIcon>}>
-                            Muebles
+                            Hogar
                         </Button>
                     </Link>
                     
