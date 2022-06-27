@@ -49,7 +49,7 @@ const columns: GridColDef[] = [
 const HistoryPage =  () => {
     const{user,isLoggedIn}=useContext(AuthContext)
         
-        const userId= user.email
+        const userId= user?.email
 
 
     const [orders, setOrders]= useState([])
@@ -79,7 +79,7 @@ const HistoryPage =  () => {
 
 //    console.log("orders",orders)
    
-    const rows=orders.map(p=>{
+    const rows = orders.map(p=>{
         return{
             id:p._id,
             firtsName:p.shippingAddress.firstName,
