@@ -52,15 +52,17 @@ const ProductPage:NextPage<Props> = ({ product }) => {
 
 
   const onAddProduct = () => {
-
+    
+    if(product.sizes.length < 1) {
+      addProductToCart(tempCartProduct)
+      router.push('/cart');
+    }
     if ( !tempCartProduct.size ) { return; }
-
     addProductToCart(tempCartProduct);
     router.push('/cart');
   }
 
-//  console.log("esto es el estado",tempCartProduct);
- 
+  
   return (
     <ShopLayout title={ product.title } pageDescription={ product.description }>
     
@@ -106,8 +108,8 @@ const ProductPage:NextPage<Props> = ({ product }) => {
                     className='circular-btn'
                     onClick={ onAddProduct }
                   >
-                    {
-                      tempCartProduct.size
+                    { product.sizes.length < 1? 'Agregar al carrito' : 
+                        tempCartProduct.size
                         ? 'Agregar al carrito'
                         : 'Seleccione una talla'
                     }
@@ -117,8 +119,7 @@ const ProductPage:NextPage<Props> = ({ product }) => {
                  <Chip label="No hay disponibles" color="error" variant='outlined' />
                )
             }
-
-
+            
             {/* Descripción */}
             <Box sx={{ mt:3 }}>
               <Typography variant='subtitle2'>Descripción</Typography>
@@ -164,28 +165,28 @@ const ProductPage:NextPage<Props> = ({ product }) => {
 
 // getStaticPaths....
 // You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
-/*export const getStaticPaths: GetStaticPaths = async (ctx) => {
+export const getStaticPaths: GetStaticPaths = async (ctx) => {
   
-  const productSlugs = await fetch("https://globalmarkets.herokuapp.com/products").then(res=>res.json());
+  const productSlugs = await fetch("http://localhost:9000/products/").then(res=>res.json());
 
 
   
   return {
     paths: productSlugs.map( (i:any) => ({
       params: {
-        slug : i._id? i._id: i.slug
+        slug : i._id
       }
     })),
     fallback: 'blocking'
   }
 }
-*/
+
 // You should use getStaticProps when:
 //- The data required to render the page is available at build time ahead of a user’s request.
 //- The data comes from a headless CMS.
 //- The data can be publicly cached (not user-specific).
 //- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   
   const { slug = '' } = params as { slug: string };
   const product = await fetch(`https://globalmarkets.herokuapp.com/products/${slug}`).then(res=>res.json());
@@ -211,4 +212,4 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 
 
-export default ProductPage
+  export default ProductPage
