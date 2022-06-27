@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {
   Box,
   Button,
@@ -10,153 +9,177 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 import { ShopLayout } from "../../components/layouts";
+import { useRouter } from "next/router";
+import { id } from "../cart/index";
 
-=======
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
-import { useState } from "react"
-import { ShopLayout } from "../../components/layouts"
-import { useRouter } from 'next/router'
-import {id} from "../cart/index"
-
-export var ordenP
->>>>>>> 93af31c16a0000a6a5de28f7dc2e644b59b51b07
+export var ordenP;
 const AddressPage = () => {
-    const router = useRouter()
-    const _id= id
+  const router = useRouter();
+  const _id = id;
 
-    
+  const [input, setInput] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    zip: "",
+    city: "",
+    country: "",
+    phone: "",
+  });
 
-    const [input,setInput]= useState({
+  const mandar = { shippingAddress: { ...input } };
 
-        firstName:"",
-        lastName:"",
-        address:"",
-        zip:"",
-        city:"",
-        country:"",
-        phone:""
+  ordenP = mandar;
 
+  const handleChange = (e: any) => {
+    const { value, name } = e.target;
 
-    })
-    
-    
-    const mandar= {shippingAddress:{...input}}
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
 
-    ordenP=mandar
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (
+      !input.firstName ||
+      !input.lastName ||
+      !input.address ||
+      !input.zip ||
+      !input.city ||
+      !input.country ||
+      !input.phone
+    ) {
+      alert("* parametro requerido");
+    } else {
+      sendDatos(input);
+    }
+  };
 
-    const handleChange=(e:any)=>{
-        const{value,name}=e.target
+  const sendDatos = async (input: any) => {
+    try {
+      console.log("input", input);
 
-        setInput({
-            ...input,
-            [name]:value
-        })
+      const x = await fetch(`http://localhost:9000/orders/${_id._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(mandar),
+      });
+      const data = await x.json();
+
+      console.log("data", data);
+
+      let y: String[] = [];
+      y.push(input);
+
+      console.log("mandar", mandar);
+      console.log("esto es y", y);
+    } catch (error) {
+      console.log(error);
     }
 
-    const handleSubmit=(e:any)=>{
-        e.preventDefault();
-        if(!input.firstName||
-            !input.lastName||
-            !input.address||
-            !input.zip||
-            !input.city||
-            !input.country||
-            !input.phone){
-                alert("* parametro requerido")
-            }
+    router.push(`/orders/${_id._id}`);
+  };
 
-        else{
-            sendDatos(input)
-        }   
-    }
-
-    const sendDatos= async(input:any)=>{
-        try{ 
-
-            console.log("input", input)
-
-            const x= await fetch(`http://localhost:9000/orders/${_id._id}`,{
-                method:"PUT",
-                headers:{
-                    "Content-type":"application/json"
-                },
-                body: JSON.stringify(mandar)
-            })
-            const data= await x.json()
-            
-            console.log("data",data)
-
-            let y:String[]=[];
-            y.push(input)
-
-            console.log("mandar",mandar)
-            console.log("esto es y",y)
-            
-        }
-        catch(error) {
-            console.log(error)
-        }
-
-        router.push(`/orders/${_id._id}`)
-       
-    } 
-
-    console.log("idd",ordenP)
-
-    
-
-    
-
-
+  console.log("idd", ordenP);
 
   return (
-<<<<<<< HEAD
     <ShopLayout
       title="Dirección"
       pageDescription="Confirmar dirección del destino">
       <Typography variant="h1" component="h1">
         Dirección
       </Typography>
-=======
-    <ShopLayout title="Dirección" pageDescription="Confirmar dirección del destino">
-        <Typography variant="h1" component='h1'>Dirección</Typography>
 
-        <Grid container spacing={ 2 } sx={{ mt: 2 }}>
+      {/* <Grid container spacing={ 2 } sx={{ mt: 2 }}> */}
 
-            <form onSubmit={handleSubmit}>
-            
-                <Grid item xs={12} sm={ 20 }>
-                    <TextField label='Nombre' variant="filled" fullWidth name="firstName" defaultValue={input.firstName} onChange={(e)=> handleChange(e)} />
-                </Grid>
-                <Grid item xs={12} sm={ 20 }>
-                    <TextField label='Apellido' variant="filled" fullWidth name="lastName" defaultValue={input.lastName} onChange={(e)=> handleChange(e)} />
-                </Grid>
+      <form onSubmit={handleSubmit}>
+        <Grid item xs={12} sm={20}>
+          <TextField
+            label="Nombre"
+            variant="filled"
+            fullWidth
+            name="firstName"
+            defaultValue={input.firstName}
+            onChange={(e) => handleChange(e)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={20}>
+          <TextField
+            label="Apellido"
+            variant="filled"
+            fullWidth
+            name="lastName"
+            defaultValue={input.lastName}
+            onChange={(e) => handleChange(e)}
+          />
+        </Grid>
 
-                <Grid item xs={12} sm={ 20 }>
-                    <TextField label='Dirección' variant="filled" fullWidth name="address" defaultValue={input.address} onChange={(e)=> handleChange(e)} />
-                </Grid>
-                <Grid item xs={12} sm={ 20}>
-                    <TextField label='Dirección 2 (opcional)' variant="filled" fullWidth  />
-                </Grid>
+        <Grid item xs={12} sm={20}>
+          <TextField
+            label="Dirección"
+            variant="filled"
+            fullWidth
+            name="address"
+            defaultValue={input.address}
+            onChange={(e) => handleChange(e)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={20}>
+          <TextField
+            label="Dirección 2 (opcional)"
+            variant="filled"
+            fullWidth
+          />
+        </Grid>
 
-                <Grid item xs={12} sm={ 20 }>
-                    <TextField label='Código Postal' variant="filled" fullWidth name="zip" defaultValue={input.zip} onChange={(e)=> handleChange(e)} />
-                </Grid>
-                <Grid item xs={12} sm={ 20 }>
-                    <TextField label='Ciudad' variant="filled" fullWidth name="city" defaultValue={input.city} onChange={(e)=> handleChange(e)} />
-                </Grid>
-                       
-                
-                <Grid item xs={12} sm={ 20 }>
-                    <TextField label='Pais' variant="filled" fullWidth name="country" defaultValue={input.country} onChange={(e)=> handleChange(e)} />
-            
-                </Grid>
-                <Grid item xs={12} sm={ 20 }>
-                    <TextField label='Teléfono' variant="filled" fullWidth name="phone" defaultValue={input.phone} onChange={(e)=> handleChange(e)} />
-                </Grid>
-            </form>
->>>>>>> 93af31c16a0000a6a5de28f7dc2e644b59b51b07
+        <Grid item xs={12} sm={20}>
+          <TextField
+            label="Código Postal"
+            variant="filled"
+            fullWidth
+            name="zip"
+            defaultValue={input.zip}
+            onChange={(e) => handleChange(e)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={20}>
+          <TextField
+            label="Ciudad"
+            variant="filled"
+            fullWidth
+            name="city"
+            defaultValue={input.city}
+            onChange={(e) => handleChange(e)}
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={20}>
+          <TextField
+            label="Pais"
+            variant="filled"
+            fullWidth
+            name="country"
+            defaultValue={input.country}
+            onChange={(e) => handleChange(e)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={20}>
+          <TextField
+            label="Teléfono"
+            variant="filled"
+            fullWidth
+            name="phone"
+            defaultValue={input.phone}
+            onChange={(e) => handleChange(e)}
+          />
+        </Grid>
+      </form>
 
       <Grid container spacing={2} sx={{ mt: 2 }}>
         <Grid item xs={12} sm={6}>
@@ -177,20 +200,12 @@ const AddressPage = () => {
           />
         </Grid>
 
-<<<<<<< HEAD
         <Grid item xs={12} sm={6}>
           <TextField label="Código Postal" variant="filled" fullWidth />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField label="Ciudad" variant="filled" fullWidth />
         </Grid>
-=======
-        <Box sx={{ mt: 5 }} display='flex' justifyContent='center'  >
-            <Button color="secondary" className="circular-btn" size="large" onClick={handleSubmit} >
-                Revisar pedido
-            </Button>
-        </Box>
->>>>>>> 93af31c16a0000a6a5de28f7dc2e644b59b51b07
 
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
