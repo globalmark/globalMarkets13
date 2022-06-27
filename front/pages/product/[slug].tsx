@@ -167,7 +167,7 @@ const ProductPage:NextPage<Props> = ({ product }) => {
 // You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   
-  const productSlugs = await fetch("http://localhost:9000/products/").then(res=>res.json());
+  const productSlugs = await fetch("https://globalmarkets.herokuapp.com/products").then(res=>res.json());
 
 
   
