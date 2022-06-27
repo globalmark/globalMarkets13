@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 
-import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
-import { AccountCircleOutlined, AdminPanelSettings, CategoryOutlined, ConfirmationNumberOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined } from "@mui/icons-material"
+import { Accordion, Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, ListItemText, ListSubheader,AccordionSummary,AccordionDetails, Link, Typography } from "@mui/material"
+import { AccountCircleOutlined, AdminPanelSettings, CategoryOutlined, ConfirmationNumberOutlined, EscalatorWarningOutlined, ExpandMoreRounded, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined,ShoppingBagOutlined,HomeOutlined,KitchenOutlined,ChairOutlined,AirOutlined,DevicesOutlined,ComputerOutlined,DevicesOtherOutlined,SportsEsportsOutlined,SportsOutlined,SportsSoccerOutlined,SportsBasketballOutlined,SportsMmaOutlined } from "@mui/icons-material"
 
 import { UiContext } from '../../context/ui/UiContext';
 import { useRouter } from 'next/router';
@@ -64,36 +64,26 @@ export const SideMenu = () => {
                         }
                     />
                 </ListItem>
-
-                {
-                    isLoggedIn && (
-                        <>
-                        <ListItem button>
-                        <ListItemIcon>
-                            <AccountCircleOutlined/>
-                        </ListItemIcon>
-                        <ListItemText primary={'Perfil'} />
-                    </ListItem>
-    
-                    <ListItem button
-                     onClick={ () => navigateTo('/orders/history') }
-                    >
-                        <ListItemIcon>
-                            <ConfirmationNumberOutlined/>
-                        </ListItemIcon>
-                        <ListItemText primary={'Mis Ordenes'} />
-                    </ListItem>
-                    </>
-                    )
-                }
-
-               
+                <Accordion 
+                sx={{ display: { xs: '', sm: 'none' } }}
+                >
+                    <AccordionSummary
+                    expandIcon={<ExpandMoreRounded />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header">
+                    <ListItemIcon>
+                        <ShoppingBagOutlined/>
+                    </ListItemIcon>
+                    <Typography variant="h5" component="h5">Moda
+                    </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
 
                 <ListItem 
                     button 
                     sx={{ display: { xs: '', sm: 'none' } }} 
                     onClick={ () => navigateTo('/category/men') }
-                >
+                    >
                     <ListItemIcon>
                         <MaleOutlined/>
                     </ListItemIcon>
@@ -115,12 +105,185 @@ export const SideMenu = () => {
                     button 
                     sx={{ display: { xs: '', sm: 'none' } }}
                     onClick={ () => navigateTo('/category/kid') }
-                >
+                    >
                     <ListItemIcon>
                         <EscalatorWarningOutlined/>
                     </ListItemIcon>
                     <ListItemText primary={'Niños'} />
                 </ListItem>
+                    </AccordionDetails>
+                </Accordion>
+
+                <Accordion 
+                sx={{ display: { xs: '', sm: 'none' } }}
+                >
+                    <AccordionSummary
+                    expandIcon={<ExpandMoreRounded />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header">
+                    <ListItemIcon>
+                        <HomeOutlined/>
+                    </ListItemIcon>
+                    <Typography variant="h5" component="h5">Hogar
+                    </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+
+                <ListItem 
+                    button 
+                    sx={{ display: { xs: '', sm: 'none' } }} 
+                    onClick={ () => navigateTo('/category/cocina') }
+                    >
+                    <ListItemIcon>
+                        <KitchenOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Cocina'} />
+                </ListItem>
+
+                <ListItem 
+                    button 
+                    sx={{ display: { xs: '', sm: 'none' } }}
+                    onClick={ () => navigateTo('/category/muebles') }
+                >
+                    <ListItemIcon>
+                        <ChairOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Muebles'} />
+                </ListItem>
+
+                <ListItem 
+                    button 
+                    sx={{ display: { xs: '', sm: 'none' } }}
+                    onClick={ () => navigateTo('/category/calefaccion') }
+                    >
+                    <ListItemIcon>
+                        <AirOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Calefacción y Enfriamento'} />
+                </ListItem>
+                    </AccordionDetails>
+                </Accordion>
+
+                <Accordion 
+                sx={{ display: { xs: '', sm: 'none' } }}
+                >
+                    <AccordionSummary
+                    expandIcon={<ExpandMoreRounded />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header">
+                    <ListItemIcon>
+                        <DevicesOutlined/>
+                    </ListItemIcon>
+                    <Typography variant="h5" component="h5">Tecnologia
+                    </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+
+                <ListItem 
+                    button 
+                    sx={{ display: { xs: '', sm: 'none' } }} 
+                    onClick={ () => navigateTo('/category/computacion') }
+                    >
+                    <ListItemIcon>
+                        <ComputerOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Computación'} />
+                </ListItem>
+
+                <ListItem 
+                    button 
+                    sx={{ display: { xs: '', sm: 'none' } }}
+                    onClick={ () => navigateTo('/category/dispositivos') }
+                >
+                    <ListItemIcon>
+                        <DevicesOtherOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Varios'} />
+                </ListItem>
+
+                <ListItem 
+                    button 
+                    sx={{ display: { xs: '', sm: 'none' } }}
+                    onClick={ () => navigateTo('/category/videojuegos') }
+                    >
+                    <ListItemIcon>
+                        <SportsEsportsOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'VideoJuegos'} />
+                </ListItem>
+                    </AccordionDetails>
+                </Accordion>
+
+                <Accordion 
+                sx={{ display: { xs: '', sm: 'none' } }}
+                >
+                    <AccordionSummary
+                    expandIcon={<ExpandMoreRounded />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header">
+                    <ListItemIcon>
+                        <SportsOutlined/>
+                    </ListItemIcon>
+                    <Typography variant="h5" component="h5">Deportes
+                    </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+
+                <ListItem 
+                    button 
+                    sx={{ display: { xs: '', sm: 'none' } }} 
+                    onClick={ () => navigateTo('/category/futbol') }
+                    >
+                    <ListItemIcon>
+                        <SportsSoccerOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Futbol'} />
+                </ListItem>
+
+                <ListItem 
+                    button 
+                    sx={{ display: { xs: '', sm: 'none' } }}
+                    onClick={ () => navigateTo('/category/basquetbol') }
+                >
+                    <ListItemIcon>
+                        <SportsBasketballOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Basquetbol'} />
+                </ListItem>
+
+                <ListItem 
+                    button 
+                    sx={{ display: { xs: '', sm: 'none' } }}
+                    onClick={ () => navigateTo('/category/box') }
+                    >
+                    <ListItemIcon>
+                        <SportsMmaOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Box'} />
+                </ListItem>
+                    </AccordionDetails>
+                </Accordion>
+                {
+                    isLoggedIn && (
+                        <>
+                        <ListItem button>
+                        <ListItemIcon>
+                            <AccountCircleOutlined/>
+                        </ListItemIcon>
+                        <ListItemText primary={'Perfil'} />
+                    </ListItem>
+    
+                    <ListItem button
+                     onClick={ () => navigateTo('/orders/history') }
+                    >
+                        <ListItemIcon>
+                            <ConfirmationNumberOutlined/>
+                        </ListItemIcon>
+                        <ListItemText primary={'Mis Ordenes'} />
+                    </ListItem>
+                    </>
+                    )
+                }
                 {
                     isLoggedIn ? (
                         <ListItem button onClick={onLogout}>
@@ -164,7 +327,9 @@ export const SideMenu = () => {
                         <Divider />
                         <ListSubheader>Admin Panel</ListSubheader>
         
-                        <ListItem button>
+                        <ListItem button
+                        onClick={ () => navigateTo('/formulario/form') } 
+                        >
                             <ListItemIcon>
                                 <CategoryOutlined/>
                             </ListItemIcon>
