@@ -2,9 +2,26 @@ import { Box, Button, Card, CardContent, Divider, Grid, Typography } from '@mui/
 import NextLink from "next/link";
 import { ShopLayout } from '../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../components/cart';
+import { CartContext } from '../../context';
+import { useContext, useEffect } from 'react';
+import { useRouter } from 'next/router';
+
 
 const CartPage = () => {
-  return (
+    const { cart,isLoaded } = useContext(CartContext);
+    const router = useRouter();
+
+    useEffect(()=>{
+        if(isLoaded && cart.length === 0){
+            router.replace('/cart/empty');
+        }
+    },[!isLoaded || cart.length === 0]);
+
+    if(!isLoaded || cart.length === 0){
+        return (<></>);
+    }
+
+    return (
     <ShopLayout title='Carrito - 3' pageDescription={'Carrito de compras de la tienda'}>
         <Typography variant='h1' component='h1'>Carrito</Typography>
 

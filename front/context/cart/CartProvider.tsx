@@ -6,6 +6,7 @@ import { CartContext, cartReducer } from "./";
 import * as React from "react";
 
 export interface CartState {
+  isLoaded:boolean;
   cart: ICartProduct[];
   numberOfItems: number;
   subTotal: number;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const CART_INITIAL_STATE: CartState = {
+  isLoaded:false,
   cart: [],
   numberOfItems: 0,
   subTotal: 0,
