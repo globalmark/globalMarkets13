@@ -34,17 +34,19 @@ const columns: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridValueGetterParams) => {
             return (
+                <>
                <NextLink href={`/orders/${ params.row.id }`} passHref>
                     <Link underline='always'>
                         Ver orden
                     </Link>
                </NextLink>
+               </>
             )
         }
     }
 ];
 
-
+var inicio:any[] = []
 
 const HistoryPage =  () => {
     const{user,isLoggedIn}=useContext(AuthContext)
@@ -52,7 +54,7 @@ const HistoryPage =  () => {
         const userId= user?.email
 
 
-    const [orders, setOrders]= useState([])
+    const [orders, setOrders]= useState(inicio)
     
 
     useEffect(()=>{
@@ -75,10 +77,10 @@ const HistoryPage =  () => {
             
         }
         fetchData();
-    },[])
+    },[orders])
 
 //    console.log("orders",orders)
-   
+  
     const rows = orders.map(p=>{
         return{
             id:p._id,
@@ -87,6 +89,8 @@ const HistoryPage =  () => {
             isPaid:p.isPaid
         }
     })
+   
+    
 
     const result = orders.filter(p=> p.paypalId);
 
