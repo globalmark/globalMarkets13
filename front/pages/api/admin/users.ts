@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { isValidObjectId } from 'mongoose';
 import { db } from '../../../database';
 import { IUser } from '../../../interfaces';
-import * as User from '../../../../back/src/models/user';
+import * as User from '../../../models';
 
 
 type Data = 
@@ -30,10 +30,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 const getUsers = async(req: NextApiRequest, res: NextApiResponse<Data>) =>  {
 
     await db.connect();
-    const users = await User.find().select('-password').lean();
+    //const users = await User.find().select('-password').lean();
     await db.disconnect();
 
-    return res.status(200).json( users );
+    //return res.status(200).json( users );
 
 
 }
@@ -54,9 +54,9 @@ const updateUser = async(req: NextApiRequest, res: NextApiResponse<Data>) =>  {
     }
 
     await db.connect();
-    const user = await User.findById( userId );
+    //const user = await User.findById( userId );
 
-    if ( !user ) {
+    /*if ( !user ) {
         await db.disconnect();
         return res.status(404).json({ message: 'Usuario no encontrado: ' + userId });
     }
@@ -67,5 +67,5 @@ const updateUser = async(req: NextApiRequest, res: NextApiResponse<Data>) =>  {
 
     return res.status(200).json({ message: 'Usuario actualizado' });
      
+    */
 }
-
