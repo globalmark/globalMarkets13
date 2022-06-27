@@ -27,8 +27,13 @@ router.post('/',resgisterUser);
 //     failureRedirect:'/',
 //     passReqToCallback:true
 
+<<<<<<< HEAD
+// }));
+
+=======
 // })); 
    
+>>>>>>> 93af31c16a0000a6a5de28f7dc2e644b59b51b07
 
 // [check('name','el nombre es obligatorio').not().isEmpty(),                    
 // check('surname','el surname  es obligatorio').not().isEmpty(),

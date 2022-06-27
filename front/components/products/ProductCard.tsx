@@ -8,18 +8,18 @@ import {
   Box,
   Typography,
   Link,
+  Button,
 } from "@mui/material";
 
 import { IProduct } from "../../interfaces";
+import Image from "next/image";
 
 interface Props {
   product: IProduct;
 }
 
 export const ProductCard: FC<Props> = ({ product }) => {
-
   const [isHovered, setIsHovered] = useState(false);
-
   const productImage = useMemo(() => {
     if (product._id) {
       return isHovered
@@ -32,7 +32,12 @@ export const ProductCard: FC<Props> = ({ product }) => {
       ? `/products/${product.images[1]}`
       : `/products/${product.images[0]}`;
   }, [isHovered, product._id, product.images]);
-  const details = product._id? product._id : product.slug
+  const details = product._id ? product._id : product.slug;
+  //"https://meet.google.com/qwi-dxjo-ahy"
+  const myLoader: any = ({ src, width, quality }) => {
+    return `${src}?w=${width}&q=${quality || 75}`;
+  };
+
   return (
     <Grid
       item
@@ -41,14 +46,25 @@ export const ProductCard: FC<Props> = ({ product }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       <Card>
-        <NextLink href={`/product/${ details }`} passHref prefetch={false}>
+        <NextLink href={`/product/${details}`} passHref prefetch={false}>
           <Link>
             <CardActionArea>
-              <CardMedia
+              {/*<CardMedia
                 component="img"
                 className="fadeIn"
                 image={productImage}
                 alt={product.title}
+                width={420}
+                height={450}
+            />*/}
+
+              <Image
+                loader={myLoader}
+                src={productImage}
+                alt="imagenes de los productos"
+                width={500}
+                height={600}
+                priority={true}
               />
             </CardActionArea>
           </Link>

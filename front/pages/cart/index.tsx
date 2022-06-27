@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  Typography,
+} from "@mui/material";
+import NextLink from "next/link";
+import { ShopLayout } from "../../components/layouts/ShopLayout";
+import { CartList, OrderSummary } from "../../components/cart";
+=======
 import { Box, Button, Card, CardContent, Divider, FormControl, Grid, Typography } from '@mui/material';
 import NextLink from "next/link";
 import { ShopLayout } from '../../components/layouts/ShopLayout';
@@ -7,6 +21,7 @@ import {CartContext} from "../../context/cart/CartContext"
 import { useRouter } from 'next/router' 
 import {AuthContext} from "../../context/auth/AuthContext"
 export var id 
+>>>>>>> 93af31c16a0000a6a5de28f7dc2e644b59b51b07
 
 const CartPage = () => {
 
@@ -79,6 +94,24 @@ const CartPage = () => {
 
 
   return (
+<<<<<<< HEAD
+    <ShopLayout
+      title="Carrito - 3"
+      pageDescription={"Carrito de compras de la tienda"}>
+      <Typography variant="h1" component="h1">
+        Carrito
+      </Typography>
+
+      <Grid container>
+        <Grid item xs={12} sm={7}>
+          <CartList editable />
+        </Grid>
+        <Grid item xs={12} sm={5}>
+          <Card className="summary-card">
+            <CardContent>
+              <Typography variant="h2">Orden</Typography>
+              <Divider sx={{ my: 1 }} />
+=======
     <ShopLayout title='Carrito - 3' pageDescription={'Carrito de compras de la tienda'}>
         <Typography variant='h1' component='h1'>Carrito</Typography>
         <FormControl onSubmit={handleSubmit} >
@@ -108,11 +141,27 @@ const CartPage = () => {
                 
             </Grid>
         </FormControl>
+>>>>>>> 93af31c16a0000a6a5de28f7dc2e644b59b51b07
 
+              <OrderSummary />
 
+              <Box sx={{ mt: 3 }}>
+                <NextLink href="/checkout/address">
+                  <Button color="secondary" className="circular-btn" fullWidth>
+                    Chekear Orden
+                  </Button>
+                </NextLink>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </ShopLayout>
-  )
-}
+  );
+};
 
 export default CartPage;
+<<<<<<< HEAD
+=======
  
+>>>>>>> 93af31c16a0000a6a5de28f7dc2e644b59b51b07
