@@ -12,7 +12,7 @@ const CartPage = () => {
 
     const{user,isLoggedIn}=useContext(AuthContext)
 
-    const userId= user.email 
+    const userId= user?.email 
 
     
 
