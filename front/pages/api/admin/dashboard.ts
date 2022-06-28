@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from '../../../database'
-import { Order, Product, User } from '../../../models';
+import { Orders, Product, User } from '../../../models';
 
 type Data = {
     numberOfOrders: number;
@@ -30,8 +30,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         productsWithNoInventory,
         lowInventory,
     ] = await Promise.all([
-        Order.count(),
-        Order.find({ isPaid: true }).count(),
+        Orders.count(),
+        Orders.find({ isPaid: true }).count(),
         User.find({ role: 'client' }).count(),
         Product.count(),
         Product.find({ inStock: 0 }).count(),
