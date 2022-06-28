@@ -21,13 +21,10 @@ export const AdminNavbar = () => {
                         <Typography sx={{ ml: 0.5 }}>Market</Typography>
                     </Link>  
                 </NextLink>
-
                 <Box flex={ 1 } />
-
                 <Button onClick={ toggleSideMenu }>
                     Menú
                 </Button>
-
             </Toolbar>
         </AppBar>
     )

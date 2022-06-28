@@ -7,7 +7,7 @@ import {
 } from "next";
 import { useRouter } from "next/router";
 
-import { Box, Button, Chip, Grid, Typography } from "@mui/material";
+import { Box, Button, Chip, Grid, Rating, Typography } from "@mui/material";
 
 import { CartContext } from "../../context/cart/CartContext";
 
@@ -17,6 +17,7 @@ import { ItemCounter } from "../../components/ui/ItemCounter";
 
 import { dbProducts } from "../../database";
 import { IProduct, ICartProduct, ISize } from "../../interfaces";
+import { AirlineSeatIndividualSuite } from "@mui/icons-material";
 
 interface Props {
   product: IProduct;
@@ -59,8 +60,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
     addProductToCart(tempCartProduct);
     router.push("/cart");
   };
-
-  //  console.log("esto es el estado",tempCartProduct);
+  const [value, setValue] = useState<number | null>(0);
 
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
@@ -119,6 +119,17 @@ const ProductPage: NextPage<Props> = ({ product }) => {
             <Box sx={{ mt: 3 }}>
               <Typography variant="subtitle2">Descripción</Typography>
               <Typography variant="body2">{product.description}</Typography>
+              <br />
+              <Typography component="legend">
+                Si te gusto Califica el Producto
+              </Typography>
+              <Rating
+                name="simple-controlled"
+                value={value}
+                onChange={(event, newValue) => {
+                  AirlineSeatIndividualSuite(newValue);
+                }}
+              />
             </Box>
           </Box>
         </Grid>
