@@ -1,9 +1,8 @@
 const orderSchema = require('../../models/orders');
 
 
-const getAllOrders = (req, res) => {
-
-
+const getAllOrders =  (req, res) => {
+        
           orderSchema.find()
             .then((data) => {
                 res.json(data);

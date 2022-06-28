@@ -7,7 +7,7 @@ import {
 } from "next";
 import { useRouter } from "next/router";
 
-import { Box, Button, Chip, Grid, Typography } from "@mui/material";
+import { Box, Button, Chip, Grid, Rating, Typography } from "@mui/material";
 
 import { CartContext } from "../../context/cart/CartContext";
 
@@ -59,8 +59,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
     addProductToCart(tempCartProduct);
     router.push("/cart");
   };
-
-  //  console.log("esto es el estado",tempCartProduct);
+  const [value, setValue] = useState<number | null>(0);
 
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
@@ -119,6 +118,11 @@ const ProductPage: NextPage<Props> = ({ product }) => {
             <Box sx={{ mt: 3 }}>
               <Typography variant="subtitle2">Descripción</Typography>
               <Typography variant="body2">{product.description}</Typography>
+              <br />
+              <Typography component="legend">
+                Si te gusto Califica el Producto
+              </Typography>
+              <Rating />
             </Box>
           </Box>
         </Grid>
@@ -129,7 +133,6 @@ const ProductPage: NextPage<Props> = ({ product }) => {
 
 // getServerSideProps
 // You should use getServerSideProps when:
-// - Only if you need to pre-render a page whose data must be fetched at request time
 //* No usar esto.... SSR
 // export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 

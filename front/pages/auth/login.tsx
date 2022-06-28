@@ -93,7 +93,6 @@ const LoginPage = () => {
                                 { ...register('email', {
                                     required: 'Este campo es requerido',
                                     validate: validations.isEmail
-                                    
                                 })}
                                 error={ !!errors.email }
                                 helperText={ errors.email?.message }
