@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const useRoutes=require("./routes/index");
 const rootergoogle = require('./routes/auth');
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser"); 
 const path = require("path");
 require("dotenv").config();
 const app = express();
@@ -17,7 +17,7 @@ const port = process.env.PORT || 9000;
 const session=require('express-session');
 const flash= require('connect-flash');
 
-//const passport = require("passport"); 
+//const passport = require("passport");   
 
 // app.use(cors());
 
