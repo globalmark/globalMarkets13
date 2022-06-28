@@ -23,7 +23,7 @@ const EmptyPage = () => {
               Regresar
             </Link>
           </NextLink>
-          <Typography>ALTO espera mira estos especial para ti</Typography>
+          <Typography>Global Market tiene estos especial para ti</Typography>
         </Box>
       </Box>
     </ShopLayout>
