@@ -132,7 +132,7 @@ function FormElectrodomesticos() {
                <button> Crear</button>
            </div>
            <div>
-               <Link href="/">
+               <Link href="/home">
                    <button> HOME </button>
                </Link>
 

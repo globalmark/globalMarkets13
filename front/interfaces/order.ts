@@ -4,12 +4,12 @@ export interface IOrder{
 
 
     //     export interface  IOrderItems: [{
-    //     id:     {type:String }
-    //     title:  {type:String }
-    //     size:   {type:String }
-    //     quantity:{type:Number}
-    //     slug:   {type:String}
-    //     image:  {type:String}
+    //     id:     {type:String },
+    //     title:  {type:String },
+    //     size:   {type:String },
+    //     quantity:{type:Number},
+    //     slug:   {type:String},
+    //     image:  {type:String},
     //     price:  {type:Number}
     // }]
     //  shippingAddress:{
@@ -30,7 +30,7 @@ export interface IOrder{
     //     isPaid: {type: false}
     //     paidAt:{type:String}
     
-    orderItems:IOrderItem[]
+    // orderItems:IOrderItem[]
 
 }
 

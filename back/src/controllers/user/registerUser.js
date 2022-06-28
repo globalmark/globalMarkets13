@@ -35,13 +35,13 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                            await user.save();
                            console.log(user)
                            var transporter= nodemailer.createTransport({
-                            host:"smtp.gmail.com",
+                            host:"smtp.gmail.com", 
                             port: 587,
                             secure:false,
                             auth:{
                                 user:'danielperco4@gmail.com',
                                 pass:'khievlntybmzoqqn'
-                            }
+                            } 
                         });
                         console.log(req.body.email)
                         var mailOptions={

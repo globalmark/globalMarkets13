@@ -18,7 +18,8 @@ const validateToken = require('../controllers/user/validateToken');
 //router.get('/', getUser);
 router.get('/:dni', getdUser);
 router.get('/name/:name', getNameUser);  
-// se requier check de express-validator   
+// se requier check de express-validator 
+router.get('/user',getUser)  
 router.get('/',createUser);
 router.post('/',resgisterUser);
 //router.get('/registro',createUser);
@@ -27,13 +28,8 @@ router.post('/',resgisterUser);
 //     failureRedirect:'/',
 //     passReqToCallback:true
 
-<<<<<<< HEAD
-// }));
-
-=======
 // })); 
    
->>>>>>> 93af31c16a0000a6a5de28f7dc2e644b59b51b07
 
 // [check('name','el nombre es obligatorio').not().isEmpty(),                    
 // check('surname','el surname  es obligatorio').not().isEmpty(),

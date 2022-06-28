@@ -9,6 +9,7 @@ import { Grid, Button } from '@mui/material';
 import { Box } from '@mui/system';
 import { Icon } from '@mui/material';
 
+
 export default function form() {
   return (
     <div>
@@ -42,23 +43,13 @@ export default function form() {
                     
                 </Box>
             </Grid>
+            
             <Grid item xs={2}>
                 <Box border={2}>
-                    <Link href="formElectrodomesticos">
-                        <Button 
-                        endIcon={<TvOutlinedIcon></TvOutlinedIcon>}>
-                            Electrodomesticos
-                        </Button>
-                    </Link>
-                    
-                </Box>
-            </Grid>
-            <Grid item xs={2}>
-                <Box border={2}>
-                    <Link href="formMuebles">
+                    <Link href="formHogar">
                         <Button 
                         endIcon={<BungalowOutlinedIcon></BungalowOutlinedIcon>}>
-                            Muebles
+                            Hogar
                         </Button>
                     </Link>
                     

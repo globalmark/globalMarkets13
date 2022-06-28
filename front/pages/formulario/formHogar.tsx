@@ -3,17 +3,20 @@ import Link from "next/link";
 import {ShopLayout} from "../../components/layouts/ShopLayout"
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 
+
+
+
+
 let inicio:String[] = []
 let otro:any[] = []
-
-function FormTecnologia() {
+function FormMuebles() {
     const [input, setInput]= useState({
         title:"",
         description:"",
         images:otro,
         price:"",
         inStock:"",
-        caterogiras:["tecnologia"],
+        caterogiras:["hogar"],
         type: "",
         gender:""
         
@@ -89,29 +92,49 @@ function FormTecnologia() {
   
   
     }
-
+   
+      
+  
 
   return (
     <div>
         <ShopLayout title="Bienvenidos a la seccion de deportes" pageDescription="Bienvenidos a la seccion de deportes" >
-            <FormControl onSubmit={handleSubmit} sx={{  width:"100%",alignItems:"center" }} >
+        <Grid>
+            <Typography variant="h1" component="h1" textAlign="center" padding={1} >
+                Bienvenidos a la seccion de Hogar
+            </Typography >
+        </Grid>
+        
+    
+        <FormControl onSubmit={handleSubmit} sx={{  width:"100%",alignItems:"center" }} >
+
             <Grid item xs={12} sm={ 10 }>
                 
                 <TextField label="* Nombre" variant="filled" name='title' defaultValue={input.title} onChange={(e)=> handleChange(e)} ></TextField>
             </Grid>
             <Grid    >
                 <FormControl sx={{ minWidth :180, padding:1,mt:1 }}>
+                    <InputLabel sx={{padding:1, mt:1}} > * Genero </InputLabel>
+                    <Select onChange={(e)=> handleChange(e)} name="gender" label="Genero" >
+                        <MenuItem value="muebles">Muebles </MenuItem>
+                        <MenuItem value="cocina " > Cocina </MenuItem>
+                        <MenuItem value="calefaccion y enfriamiento" > Calefaccion y enfriamiento </MenuItem>                       
+                    </Select>
+                </FormControl>
+            </Grid>    
+            <Grid    >
+                <FormControl sx={{ minWidth :180, padding:1,mt:1 }}>
                     <InputLabel sx={{padding:1, mt:1}} > * Tipo de articulo </InputLabel>
                     <Select onChange={(e)=> handleChange(e)} name="type" label="Tipo de articulo" >
-                        <MenuItem value="Todas las categorias">Todas las categorias </MenuItem>
-                        <MenuItem value="Televisores" > Televisores </MenuItem>
-                        <MenuItem value="Computadoras" > Computadoras </MenuItem>
-                        <MenuItem value="Celulares"> Celulares</MenuItem>
-                        <MenuItem value="Consolas"> Consolas</MenuItem>
+                        <MenuItem value="Todas las catergorias">Todas las categorias </MenuItem>
+                        <MenuItem value="juego de vajilla" > juego de  vajilla </MenuItem>
+                        <MenuItem value="utencillos" > utencillos </MenuItem>
+                        <MenuItem value="Redes"> Redes</MenuItem>
+                        <MenuItem value="Guantes"> Guantes</MenuItem>
                     </Select>
                 </FormControl>
             </Grid >
-                <Grid item xs={12} sm={ 10 } sx={{mt:1}} >
+            <Grid item xs={12} sm={ 10 } sx={{mt:1}} >
                 
                 <TextField label="* Descripcion" variant="filled" type="text" name='description' defaultValue={input.description} onChange={(e)=> handleChange(e)} />
             </Grid>
@@ -137,11 +160,12 @@ function FormTecnologia() {
                 </Link>
 
             </Box >
-                
-            </FormControl>
-       </ShopLayout>
+        
+        </FormControl>
+        </ShopLayout>
     </div>
+    
   )
 }
 
-export default FormTecnologia
+export default FormMuebles
