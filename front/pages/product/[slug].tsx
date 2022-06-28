@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { NextPage, GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { Box, Button, Chip, Grid, Typography } from '@mui/material';
+import { Box, Button, Chip, Grid, Rating, Typography } from '@mui/material';
 
 import { CartContext } from '../../context/cart/CartContext';
 
@@ -57,7 +57,9 @@ const ProductPage:NextPage<Props> = ({ product }) => {
 
     addProductToCart(tempCartProduct);
     router.push('/cart');
+
   }
+  const [value, setValue] = useState<number | null>(0);
 
 //  console.log("esto es el estado",tempCartProduct);
  
@@ -123,6 +125,15 @@ const ProductPage:NextPage<Props> = ({ product }) => {
             <Box sx={{ mt:3 }}>
               <Typography variant='subtitle2'>Descripción</Typography>
               <Typography variant='body2'>{ product.description }</Typography>
+              <br />
+              <Typography component="legend">Si te gusto Califica el Producto</Typography>
+              <Rating
+                name="simple-controlled"
+                value={value}
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                }}
+              />
             </Box>
 
           </Box>

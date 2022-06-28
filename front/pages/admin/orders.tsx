@@ -43,7 +43,7 @@ const columns:GridColDef[] = [
 
 const OrdersPage = () => {
 
-    const { data, error } = useSWR<IOrder[]>('/api/admin/orders');
+    const { data, error } = useSWR<IOrder[]>('http//:localhost:9000/');
 
     if ( !data && !error ) return (<></>);
     

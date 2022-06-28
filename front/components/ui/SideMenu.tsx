@@ -44,7 +44,7 @@ export const SideMenu = () => {
         <Box sx={{ width: 250, paddingTop: 5 }}>
             
             <List>
-
+                
                 <ListItem>
                     <Input
                         autoFocus
@@ -64,9 +64,11 @@ export const SideMenu = () => {
                         }
                     />
                 </ListItem>
-                <Accordion 
-                sx={{ display: { xs: '', sm: 'none' } }}
-                >
+                {
+                    user?.role === "admin"? null : 
+                    <>
+                    <Accordion 
+                    sx={{ display: { xs: '', sm: 'none' } }}>
                     <AccordionSummary
                     expandIcon={<ExpandMoreRounded />}
                     aria-controls="panel1a-content"
@@ -244,13 +246,12 @@ export const SideMenu = () => {
                     button 
                     sx={{ display: { xs: '', sm: 'none' } }}
                     onClick={ () => navigateTo('/category/basquetbol') }
-                >
+                    >
                     <ListItemIcon>
                         <SportsBasketballOutlined/>
                     </ListItemIcon>
                     <ListItemText primary={'Basquetbol'} />
                 </ListItem>
-
                 <ListItem 
                     button 
                     sx={{ display: { xs: '', sm: 'none' } }}
@@ -263,8 +264,11 @@ export const SideMenu = () => {
                 </ListItem>
                     </AccordionDetails>
                 </Accordion>
+                </>
+                }
+
                 {
-                    isLoggedIn && (
+                    isLoggedIn && user?.role !== "admin" && (
                         <>
                         <ListItem button>
                         <ListItemIcon>
@@ -274,7 +278,7 @@ export const SideMenu = () => {
                     </ListItem>
     
                     <ListItem button
-                     onClick={ () => navigateTo('/orders/history') }
+                    onClick={ () => navigateTo('/orders/history') }
                     >
                         <ListItemIcon>
                             <ConfirmationNumberOutlined/>
