@@ -9,11 +9,12 @@ import { Grid, Button } from '@mui/material';
 import { Box } from '@mui/system';
 import { Icon } from '@mui/material';
 
+
 export default function form() {
   return (
     <div>
         <div>
-            <h1>Crear Productos</h1>
+            <h1>Bienvenido, aqui podras publicar un producto </h1>
         </div>
         <Grid container>
             <Grid item xs={2}>
@@ -42,9 +43,10 @@ export default function form() {
                     
                 </Box>
             </Grid>
+            
             <Grid item xs={2}>
                 <Box border={2}>
-                    <Link href="formMuebles">
+                    <Link href="formHogar">
                         <Button 
                         endIcon={<BungalowOutlinedIcon></BungalowOutlinedIcon>}>
                             Hogar

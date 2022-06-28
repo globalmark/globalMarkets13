@@ -17,12 +17,12 @@ const port = process.env.PORT || 9000;
 const session=require('express-session');
 const flash= require('connect-flash');
 
-//const passport = require("passport");
+//const passport = require("passport"); 
 
 // app.use(cors());
 
 const corsConfig = { 
-    credentials: true,
+    credentials: true, 
     origin: true,
 };
 app.use(cors(corsConfig));
