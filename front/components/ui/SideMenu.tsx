@@ -270,7 +270,9 @@ export const SideMenu = () => {
                 {
                     isLoggedIn && user?.role !== "admin" && (
                         <>
-                        <ListItem button>
+                        <ListItem button
+                         onClick={ () => navigateTo('/auth/user') }
+                        >
                         <ListItemIcon>
                             <AccountCircleOutlined/>
                         </ListItemIcon>

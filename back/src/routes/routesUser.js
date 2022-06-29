@@ -17,9 +17,9 @@ const passport=require('passport');
 const validateToken = require('../controllers/user/validateToken');
 //router.get('/', getUser);
 router.get('/:dni', getdUser);
-router.get('/name/:name', getNameUser);  
+router.post('/name', getNameUser);  
 // se requier check de express-validator 
-router.get('/user',getUser)  
+router.get('/users',getUser)  
 router.get('/',createUser);
 router.post('/',resgisterUser);
 //router.get('/registro',createUser);
