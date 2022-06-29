@@ -4,6 +4,8 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { ShopLayout } from '../../components/layouts';
 import {AuthContext} from "../../context/auth/AuthContext"
 import React,{useContext} from "react"
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router'
 
 import {useState, useEffect} from "react"
 
@@ -44,15 +46,18 @@ const columns: GridColDef[] = [
     }
 ];
 
-
+const inicio: any[] = []
 
 const HistoryPage =  () => {
     const{user,isLoggedIn}=useContext(AuthContext)
         
-        const userId= user.email
+        const userId= user?.email
+    const router= useRouter()
+//    if (isLoggedIn===false){router.push("/")}
 
 
-    const [orders, setOrders]= useState([])
+    const [orders, setOrders]= useState(inicio)
+   
     
 
     useEffect(()=>{
@@ -65,33 +70,35 @@ const HistoryPage =  () => {
                     },
                     body:JSON.stringify({userId:userId})
                 })
-                const enviar= await t.json()
+                var enviar= await t.json()
                 setOrders(enviar)
-                console.log("orders",enviar) 
-
             } catch (err) {
                 console.log(err);
             }
             
         }
-        fetchData();
-    },[])
+        if(orders.length === 0){
+            fetchData();
+        }
+    },[orders])
 
-//    console.log("orders",orders)
+  
+
+
    
     const rows=orders.map(p=>{
         return{
             id:p._id,
-            firtsName:p.shippingAddress.firstName,
-            lastName:p.shippingAddress.lastName,
+            firtsName:p.shippingAddress?.firstName,
+            lastName:p.shippingAddress?.lastName,
             isPaid:p.isPaid
         }
     })
 
-    const result = orders.filter(p=> p.paypalId);
+    const result = orders.filter(p=> p.paypalId && p.isPaid===false);
 
-    result.map(async p =>{
-        try{ 
+    let array= result.map(async p =>{
+        try{
             const r= await fetch(`http://localhost:9000/paypal/getDataOrderById/${p.paypalId}`,{
                 method:"GET",
                 headers:{
@@ -101,34 +108,39 @@ const HistoryPage =  () => {
             const r2= await r.json()
 
             if(r2.status==="COMPLETED"){
-                try{
                     const q= await fetch(`http://localhost:9000/orders/${p._id}`,{
                         method:"PUT",
                         headers:{
                             "Content-type":"application/json"
                         },
                         body: JSON.stringify({isPaid:true})
-
                     })
-                }
-                catch(err) {
-                    console.log(err)
-
-                }
-
-            }
                     
+            p.orderItems?.map(async (t:any)=>{
+                                const product= await fetch(`http://localhost:9000/products/${t._id}`,{
+                                    method:"GET",
+                                    headers:{
+                                        "Content-type":"application/json"
+                                    },
+        
+                                }).then(r=>r.json());
+                                var nvoStock= product.inStock - (t.quantity / 4);
+                                console.log("stock", nvoStock)
+                                const i= await fetch(`http://localhost:9000/products/${t._id}`,{
+                            method:"PUT",
+                            headers:{
+                                "Content-type":"application/json"
+                            },
+                            body: JSON.stringify({inStock:nvoStock})
+                        })
+                        })
+            }
         }
         catch(err) {
             console.log(err)
-
-        }
+        } 
     })
-    
 
-    
-        
-   
   return (
     <ShopLayout title={'Historial de ordenes'} pageDescription={'Historial de ordenes del cliente'}>
         <Typography variant='h1' component='h1'>Historial de ordenes</Typography>
@@ -168,9 +180,6 @@ export const datoss= async(userId)=>{
     
     
     
-//   return date.map((order:any,i)=>{
-//       <li key={i} className="list-group-item">{order.userId}</li>
-//   })
 
     
 

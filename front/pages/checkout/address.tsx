@@ -112,9 +112,7 @@ const AddressPage = () => {
                 <Grid item xs={12} sm={ 20 }>
                     <TextField label='Dirección' variant="filled" fullWidth name="address" defaultValue={input.address} onChange={(e)=> handleChange(e)} />
                 </Grid>
-                <Grid item xs={12} sm={ 20}>
-                    <TextField label='Dirección 2 (opcional)' variant="filled" fullWidth  />
-                </Grid>
+               
 
                 <Grid item xs={12} sm={ 20 }>
                     <TextField label='Código Postal' variant="filled" fullWidth name="zip" defaultValue={input.zip} onChange={(e)=> handleChange(e)} />

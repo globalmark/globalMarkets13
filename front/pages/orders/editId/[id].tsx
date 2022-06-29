@@ -1,13 +1,15 @@
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { useState } from "react"
-import { ShopLayout } from "../../components/layouts"
+import { ShopLayout } from "../../../components/layouts"
 import { useRouter } from 'next/router'
-import {id} from "../cart/index"
+// import {id} from "../cart/index"
+import { GetServerSideProps } from 'next';
+
 
 export var ordenP
-const AddressPage = () => {
+const AddressPage = ({date}) => {
     const router = useRouter()
-    const _id= id
+    
 
     
 
@@ -60,7 +62,7 @@ const AddressPage = () => {
 
             console.log("input", input)
 
-            const x= await fetch(`http://localhost:9000/orders/${_id._id}`,{
+            const x= await fetch(`http://localhost:9000/orders/${date._id}`,{
                 method:"PUT",
                 headers:{
                     "Content-type":"application/json"
@@ -82,13 +84,13 @@ const AddressPage = () => {
             console.log(error)
         }
 
-        router.push(`/orders/${_id._id}`)
+        router.push(`/orders/${date._id}`)
        
     } 
 
     console.log("idd",ordenP)
 
-    
+    console.log("date",date)
 
     
 
@@ -112,9 +114,7 @@ const AddressPage = () => {
                 <Grid item xs={12} sm={ 20 }>
                     <TextField label='Dirección' variant="filled" fullWidth name="address" defaultValue={input.address} onChange={(e)=> handleChange(e)} />
                 </Grid>
-                <Grid item xs={12} sm={ 20}>
-                    <TextField label='Dirección 2 (opcional)' variant="filled" fullWidth  />
-                </Grid>
+               
 
                 <Grid item xs={12} sm={ 20 }>
                     <TextField label='Código Postal' variant="filled" fullWidth name="zip" defaultValue={input.zip} onChange={(e)=> handleChange(e)} />
@@ -147,3 +147,24 @@ const AddressPage = () => {
 }
 
 export default AddressPage
+
+export const getServerSideProps: GetServerSideProps= async({req,query})=>{
+    console.log("query",query.id)
+    const datos= await fetch(`http://localhost:9000/orders/${query.id}`,{
+        method:"GET",
+        headers:{
+            "Content-type":"application/json"
+        },
+        
+    })
+    const date= await datos.json()
+    
+    
+    
+    return {props:{date}}
+
+
+
+
+
+}
