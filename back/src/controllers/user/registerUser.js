@@ -11,7 +11,7 @@ const respon = async (req,res,next) =>{
   
 
 console.log(req.body);
-let password=bcrypt.hashSync(req.body.password,10);
+let password=req.body.password;
 let  name=req.body.name;
 let surname=req.body.surname;
 let email=req.body.email;
@@ -40,12 +40,12 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                             secure:false,
                             auth:{
                                 user:'danielperco4@gmail.com',
-                                pass:'khievlntybmzoqqn'
+                                pass:'ttakmtneynhkwmjl'
                             }
                         });
                         console.log(req.body.email)
                         var mailOptions={
-                            from :'"server Api"<danielperco4@gmail.com>',
+                            from :'server Api"<danielperco4@gmail.com>',
                             to : req.body.email,
                             subject:"server Api",
                             text:'Buenos dias , Bienvenido a GLOBAL MARKETS, Vamos Bien '
@@ -55,17 +55,17 @@ let dniexiste=await userSchema.findOne({dni:req.body.dni});
                             if(error){
                                   return   res.status(404).json(error.message);                                      
                               }else{                      
-                            console.log('emial enviado',info);
+                               console.log('emial enviado',info);
                           
                                alert('Usuario Registrado Correctamente');
-                               function redireccionar(){window.location="http://localhost:9000/users";}
-                               setTimeout ("redireccionar()", 5000);
+                            //    function redireccionar(){window.location="http://localhost:9000/users";}
+                            //    setTimeout ("redireccionar()", 5000);
                             
                                req.email=req.body.email;
                                next();
                                
                              }  
-
+   
                        })  
                     
                    

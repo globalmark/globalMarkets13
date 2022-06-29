@@ -21,7 +21,6 @@ const captureOrder = async (req, res) => {
         }
       );
        
-      console.log(response.data);
         
       res.redirect("http://localhost:3000/");
     } catch (error) {

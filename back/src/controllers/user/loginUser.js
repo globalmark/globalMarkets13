@@ -21,11 +21,11 @@ const loginUser=async (req,res)=>{
     }
 
 
-    if(!bcrypt.compareSync(password,user.password)){
-       alert("Password Incorrecta")
-       res.status(400);
-    }
-    const igual=bcrypt.compareSync(password,user.password);
+//     if(!bcrypt.compareSync(password,user.password)){
+//        alert("Password Incorrecta")
+//        res.status(400);
+//     }
+    //const igual=bcrypt.compareSync(password,user.password);
 
     console.log(user) 
     let role = user.role;
@@ -35,12 +35,12 @@ const loginUser=async (req,res)=>{
     let passwexiste=await userSchema.findOne({password:password});
     if(mailencontraddo){ 
             console.log('email correcto ')
-             console.log(igual);
+            // console.log(igual);
              
-              
+             //passwexiste=true;
                if(usernameexiste){
                        console.log('Username correto')
-                            if(igual && passwexiste){   
+                            if( passwexiste){   
                                                 
                                 
                                      res.status(200).json({

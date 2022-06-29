@@ -53,7 +53,6 @@ const createOrder = async (req, res) => {
         }
       );
   
-      console.log(access_token);
   
       const response = await axios.post(
         `${PAYPAL_API}/v2/checkout/orders`,
@@ -65,7 +64,6 @@ const createOrder = async (req, res) => {
         }
       );
   
-      console.log(response.data);
   
       return res.json(response.data);
     } catch (error) {
