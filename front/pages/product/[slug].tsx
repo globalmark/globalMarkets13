@@ -52,6 +52,10 @@ const ProductPage: NextPage<Props> = ({ product }) => {
   };
 
   const onAddProduct = () => {
+    if(product.sizes.length < 1){
+      addProductToCart(tempCartProduct);
+      router.push("/cart");
+    }
     if (!tempCartProduct.size) {
       return;
     }
@@ -102,9 +106,11 @@ const ProductPage: NextPage<Props> = ({ product }) => {
                 color="secondary"
                 className="circular-btn"
                 onClick={onAddProduct}>
-                {tempCartProduct.size
-                  ? "Agregar al carrito"
-                  : "Seleccione una talla"}
+                { product.sizes.length < 1? 'Agregar al carrito' : 
+                        tempCartProduct.size
+                        ? 'Agregar al carrito'
+                        : 'Seleccione una talla'
+                    }
               </Button>
             ) : (
               <Chip

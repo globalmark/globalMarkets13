@@ -79,7 +79,7 @@ export const SideMenu = () => {
       open={isMenuOpen}
       anchor="right"
       sx={{ backdropFilter: "blur(4px)", transition: "all 0.5s ease-out" }}
-      onClose={toggleSideMenu}>
+      onClose={toggleSideMenu} >
       <Box sx={{ width: 250, paddingTop: 5 }}>
         <List>
           <ListItem>
@@ -325,25 +325,7 @@ export const SideMenu = () => {
             </>
           )}
 
-          {/* Admin */}
-          {user?.role === "admin" && (
-            <>
-              <Divider />
-              <ListSubheader>Admin Panel</ListSubheader>
-
-              <ListItem button onClick={() => navigateTo("/formulario/form")}>
-                <ListItemIcon>
-                  <CategoryOutlined />
-                </ListItemIcon>
-                <ListItemText primary={"Productos"} />
-              </ListItem>
-              <ListItem button>
-                <ListItemIcon>
-                  <ConfirmationNumberOutlined />
-                </ListItemIcon>
-                <ListItemText primary={"Ordenes"} />
-              </ListItem>
-
+          
 
 
 
