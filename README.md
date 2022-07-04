@@ -9,6 +9,10 @@ Este trabajo  se realizo en grupo con : Sergio Garcia , Pablo Gribaudo , Emmanue
 
 podes  ver su funcionamiento aqui :   https://globalmarket.vercel.app/ 
 
+para  arrancar  la aplicacion ,desde un editor de codigo entrar a la carpeta /api ,y ejecutar 'npm i ' y despues 'npm start ' , con esto se levantara el 
+backend  sobre el port:9000  , y  para el front  , entrar a la carpeta /front  ejecutar primero 'npm i' y luego 'npm build' ,esto levantara el frontend en el puerto 3000  .
+Cuando  este todo levantado , abrir en un navegador  http://localhost:3000  , y ahi luego de unos segundos se mostrara la aplicacion 
+
 
 
 
