@@ -5,7 +5,7 @@ El Front-end  esta realizado en base a Next.js y Typescript  ,el 'CSS' se realiz
 El Baclend  esta  realizado con Javascript - Node.js- Express - Mongodb  
 Se utilizo  Passport , Next-Auh , NodeMailer , Jwt ,Bcript  ,..,para  las funcionalidades  de autenticacion de usuarios ,encriptacion de claves y Token 
 y las  distintas comunicaciones entre la apliacion y los usuarios via email.
-
+Este trabajo  se realizo en grupo con : Sergio Garcia , Pablo Gribaudo , Emmanuel Romero ,Franklin Yañes , Christian Carmona
 
 podes  ver su funcionamiento aqui :   https://globalmarket.vercel.app/ 
 
