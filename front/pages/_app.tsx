@@ -7,7 +7,6 @@ import { SWRConfig } from "swr";
 
 import { lightTheme } from "../themes";
 
-
 import { CartProvider } from "../context/cart/CartProvider";
 import { UiProvider } from "../context/ui/UiProvider";
 import { AuthProvider } from "../context/auth/AuthProvider";
@@ -22,7 +21,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         }}>
         <AuthProvider>
         <CartProvider>
-          
           <UiProvider>
             <ThemeProvider theme={lightTheme}>
               <CssBaseline />

@@ -47,7 +47,7 @@ const RegisterPage = () => {
         }
         
         // Todo: navegar a la pantalla que el usuario estaba
-        router.replace('/');
+        router.push('/');
 
     }
 

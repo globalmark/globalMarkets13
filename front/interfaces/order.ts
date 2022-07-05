@@ -41,7 +41,7 @@ export interface IOrderItem{
     quantity:{type:Number}
     slug:   {type:String}
     image:  {type:String}
-     price:  {type:Number}
+    price:  {type:Number}
 
 
 }

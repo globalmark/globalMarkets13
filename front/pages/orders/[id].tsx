@@ -1,21 +1,15 @@
 import NextLink from 'next/link';
 
 import { Link, Box, Card, CardContent, Divider, Grid, Typography, Chip, Button, CardActionArea,CardMedia  } from '@mui/material';
-import { CreditCardOffOutlined, CreditScoreOutlined } from '@mui/icons-material';
 import { GetServerSideProps } from 'next';
 import { ShopLayout } from '../../components/layouts/ShopLayout';
-import { CartList, OrderSummary } from '../../components/cart';
 import {currency} from "../../utils"
-import { PayPalButton } from "react-paypal-button-v2";
 import { useRouter } from 'next/router'
 import {useState, useEffect} from "react"
 
+
 const OrderPage =  ({date}) => {
     const router = useRouter()
-
-    
-
-    
 
     const [ordersP, setOrdersP]= useState([])
     const [idPaypal, setIdPaypal]= useState([])
@@ -23,7 +17,7 @@ const OrderPage =  ({date}) => {
     useEffect(()=>{
         async function fetchData(){
             try {
-                const t= await fetch(`http://localhost:9000/paypal/create-order`,{
+                const t= await fetch(`https://globalmarkets13.herokuapp.com/paypal/create-order`,{
                     method:"POST",
                     headers:{
                         "Content-type":"application/json"
@@ -46,7 +40,10 @@ const OrderPage =  ({date}) => {
 
     const handleSubmit= async (e:any)=>{
         try{ 
-            const p= await fetch(`http://localhost:9000/orders/${date._id}`,{
+            click=true
+            console.log("click", click)
+
+            const p= await fetch(`https://globalmarkets13.herokuapp.com/orders/${date._id}`,{
                 method:"PUT",
                 headers:{
                     "Content-type":"application/json"
@@ -61,21 +58,8 @@ const OrderPage =  ({date}) => {
         catch (err){console.log(err)}
     }
 
-    
-
     const p= date.isPaid
-
-
-
-
-
-   
-
-    
-
-   
-    
-
+    var click= new Boolean(false)
   return (
        
 
@@ -117,7 +101,7 @@ const OrderPage =  ({date}) => {
                        
                     </Grid>
                 </Grid>
-            ))
+            ))  
         }
     </>
             </Grid>
@@ -129,10 +113,12 @@ const OrderPage =  ({date}) => {
 
                         <Box display='flex' justifyContent='space-between'>
                             <Typography variant='subtitle1'>Dirección de entrega</Typography>
-                            <NextLink href='/checkout/address' passHref>
+                            <NextLink href={`editId/${date._id}`} passHref>
+                                <Button>
                                 <Link underline='always'>
                                     Editar
                                 </Link>
+                                </Button>
                             </NextLink>
                         </Box>
 
@@ -180,9 +166,9 @@ const OrderPage =  ({date}) => {
 
                 </Grid>
 
-                        <Box sx={{ mt: 3 }}>disabled
-                        <Button onClick={handleSubmit} disabled={p===true}  color="secondary" className='circular-btn' fullWidth   >
-                            <Link href={`${ordersP}`} >pagar</Link>
+                        <Box sx={{ mt: 3 }}>
+                        <Button onClick={handleSubmit} disabled={p===true|| click===true}  color="secondary" className='circular-btn' fullWidth   >
+                            <Link href={`${ordersP}`} >Pagar</Link>
                         </Button>
                         </Box>
 
@@ -198,7 +184,7 @@ const OrderPage =  ({date}) => {
 
 export const getServerSideProps: GetServerSideProps= async({req,query})=>{
     console.log("query",query.id)
-    const datos= await fetch(`http://localhost:9000/orders/${query.id}`,{
+    const datos= await fetch(`https://globalmarkets13.herokuapp.com/orders/${query.id}`,{
         method:"GET",
         headers:{
             "Content-type":"application/json"

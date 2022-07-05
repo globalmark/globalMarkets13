@@ -1,15 +1,21 @@
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { ShopLayout } from "../../components/layouts"
 import { useRouter } from 'next/router'
 import {id} from "../cart/index"
+import Cookies from 'js-cookie'
+import { CartContext } from "../../context"
+
 
 export var ordenP
+
+
+
 const AddressPage = () => {
+    const {removeAll} = useContext(CartContext)
     const router = useRouter()
     const _id= id
 
-    
 
     const [input,setInput]= useState({
 
@@ -51,7 +57,9 @@ const AddressPage = () => {
             }
 
         else{
-            sendDatos(input)
+            Cookies.remove('cart');
+            removeAll();
+            sendDatos(input);
         }   
     }
 
@@ -60,7 +68,7 @@ const AddressPage = () => {
 
             console.log("input", input)
 
-            const x= await fetch(`http://localhost:9000/orders/${_id._id}`,{
+            const x= await fetch(`https://globalmarkets13.herokuapp.com/orders/${_id._id}`,{
                 method:"PUT",
                 headers:{
                     "Content-type":"application/json"
@@ -112,9 +120,6 @@ const AddressPage = () => {
                 <Grid item xs={12} sm={ 20 }>
                     <TextField label='Dirección' variant="filled" fullWidth name="address" defaultValue={input.address} onChange={(e)=> handleChange(e)} />
                 </Grid>
-                <Grid item xs={12} sm={ 20}>
-                    <TextField label='Dirección 2 (opcional)' variant="filled" fullWidth  />
-                </Grid>
 
                 <Grid item xs={12} sm={ 20 }>
                     <TextField label='Código Postal' variant="filled" fullWidth name="zip" defaultValue={input.zip} onChange={(e)=> handleChange(e)} />
@@ -141,7 +146,6 @@ const AddressPage = () => {
                 Revisar pedido
             </Button>
         </Box>
-
     </ShopLayout>
   )
 }

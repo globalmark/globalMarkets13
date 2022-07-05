@@ -127,16 +127,15 @@ const LoginPage = () => {
                         </Grid>
 
                         <Grid item xs={12}>
-                        {/* <NextLink href="http://localhost:9000/login" passHref> */}
-                        <NextLink href="http://localhost:9000/login" passHref>
+                        <NextLink href="/api/auth/signin" passHref>
                            <Link underline='always'>
                             <Button
-                                onClick={ () => navigateTo('http://localhost:9000/login') }
+                                onClick={ () => navigateTo('/api/auth/signin') }
                                 color="secondary"
                                 className='circular-btn'
                                 size='large'
                                 fullWidth>
-                                Ingresar con Google
+                                Ingresar con Github
                             </Button>
                             </Link>
                             </NextLink>

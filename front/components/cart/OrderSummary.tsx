@@ -2,12 +2,10 @@ import { Grid, Typography } from "@mui/material"
 import { useContext } from "react"
 import { CartContext } from "../../context"
 import { currency } from "../../utils"
-import { id } from "../../pages/cart"
 
 
 
 export const OrderSummary = () => {
-    const idd= id
 
 
     const { numberOfItems, subTotal, total, tax } = useContext( CartContext );

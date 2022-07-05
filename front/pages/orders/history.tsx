@@ -4,8 +4,11 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { ShopLayout } from '../../components/layouts';
 import {AuthContext} from "../../context/auth/AuthContext"
 import React,{useContext} from "react"
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router'
 
 import {useState, useEffect} from "react"
+import { CartContext } from '../../context';
 
 
 
@@ -34,69 +37,70 @@ const columns: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridValueGetterParams) => {
             return (
-                <>
                <NextLink href={`/orders/${ params.row.id }`} passHref>
                     <Link underline='always'>
                         Ver orden
                     </Link>
                </NextLink>
-               </>
             )
         }
     }
 ];
 
-var inicio:any[] = []
+const inicio: any[] = []
 
 const HistoryPage =  () => {
     const{user,isLoggedIn}=useContext(AuthContext)
-        
+    const{cart} = useContext(CartContext);
         const userId= user?.email
+    const router= useRouter()
+//    if (isLoggedIn===false){router.push("/")}
 
 
     const [orders, setOrders]= useState(inicio)
+   
     
 
     useEffect(()=>{
         async function fetchData(){
             try {
-                const t= await fetch(`http://localhost:9000/orders/getAll`,{
+                const t= await fetch(`https://globalmarkets13.herokuapp.com/orders/getAll`,{
                     method:"POST",
                     headers:{
                         "Content-type":"application/json"
                     },
                     body:JSON.stringify({userId:userId})
                 })
-                const enviar= await t.json()
+                var enviar= await t.json()
                 setOrders(enviar)
-                console.log("orders",enviar) 
-
             } catch (err) {
                 console.log(err);
             }
             
         }
-        fetchData();
+        if(orders.length === 0){
+            fetchData();
+        }
     },[orders])
 
-//    console.log("orders",orders)
   
-    const rows = orders.map(p=>{
+
+
+   
+    const rows=orders.map(p=>{
         return{
             id:p._id,
-            firtsName:p.shippingAddress.firstName,
-            lastName:p.shippingAddress.lastName,
+            firtsName:p.shippingAddress?.firstName,
+            lastName:p.shippingAddress?.lastName,
             isPaid:p.isPaid
         }
     })
-   
-    
 
-    const result = orders.filter(p=> p.paypalId);
+    const result = orders.filter(p=> p.paypalId && p.isPaid===false);
 
-    result.map(async p =>{
-        try{ 
-            const r= await fetch(`http://localhost:9000/paypal/getDataOrderById/${p.paypalId}`,{
+    let array= result.map(async p =>{
+        try{
+            const r= await fetch(`https://globalmarkets13.herokuapp.com/paypal/getDataOrderById/${p.paypalId}`,{
                 method:"GET",
                 headers:{
                     "Content-type":"application/json"
@@ -105,34 +109,38 @@ const HistoryPage =  () => {
             const r2= await r.json()
 
             if(r2.status==="COMPLETED"){
-                try{
-                    const q= await fetch(`http://localhost:9000/orders/${p._id}`,{
+                    const q= await fetch(`https://globalmarkets13.herokuapp.com/orders/${p._id}`,{
                         method:"PUT",
                         headers:{
                             "Content-type":"application/json"
                         },
-                        body: JSON.stringify({isPaid:true})
-
+                        body: JSON.stringify({isPaid:true,email:p.userId})
                     })
-                }
-                catch(err) {
-                    console.log(err)
-
-                }
-
+            p.orderItems?.map(async (t:any)=>{
+                                const product= await fetch(`https://globalmarkets13.herokuapp.com/products/${t._id}`,{
+                                    method:"GET",
+                                    headers:{
+                                        "Content-type":"application/json"
+                                    },
+        
+                                }).then(r=>r.json());
+                                var nvoStock= product.inStock - (t.quantity);
+                                console.log("stock", nvoStock)
+                                const i= await fetch(`https://globalmarkets13.herokuapp.com/products/${t._id}`,{
+                            method:"PUT",
+                            headers:{
+                                "Content-type":"application/json"
+                            },
+                            body: JSON.stringify({inStock:nvoStock})
+                        })
+                        })
             }
-                    
         }
         catch(err) {
             console.log(err)
-
-        }
+        } 
     })
-    
 
-    
-        
-   
   return (
     <ShopLayout title={'Historial de ordenes'} pageDescription={'Historial de ordenes del cliente'}>
         <Typography variant='h1' component='h1'>Historial de ordenes</Typography>
@@ -160,7 +168,7 @@ export const datoss= async(userId)=>{
 
    
 
-    const datos= await fetch(`http://localhost:9000/orders/getAll  `,{
+    const datos= await fetch(`https://globalmarkets13.herokuapp.com/orders/getAll  `,{
         method:"POST",
         headers:{
             "Content-type":"application/json"
@@ -172,9 +180,6 @@ export const datoss= async(userId)=>{
     
     
     
-//   return date.map((order:any,i)=>{
-//       <li key={i} className="list-group-item">{order.userId}</li>
-//   })
 
     
 

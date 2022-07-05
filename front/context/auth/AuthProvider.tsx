@@ -40,9 +40,10 @@ export const AuthProvider:FC<any> = ({ children }) => {
         if (!Cookies.get('token')) { 
             return ;
         }
+        const tokenn = Cookies.get('token');
+        console.log(tokenn)
         try {
-            const { data } = await tesloApi.get('/users/users/secure',{withCredentials:true});
-            console.log(data)
+            const { data } = await tesloApi.post('/users/users/secure',{token:tokenn});
             const { token, user } = data;
             Cookies.set('token', token );
             dispatch({ type: '[Auth] - Login', payload: user });
@@ -52,7 +53,6 @@ export const AuthProvider:FC<any> = ({ children }) => {
             console.log(error)
         }
     } 
-    
 
 
 
@@ -60,7 +60,6 @@ export const AuthProvider:FC<any> = ({ children }) => {
 
         try {
             const { data } = await tesloApi.post('/users/users/login', {Username, email, password });
-            // console.log (data)
             const { token, user } = data;
             Cookies.set('token', token );
             dispatch({ type: '[Auth] - Login', payload: user });

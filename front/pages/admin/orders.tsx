@@ -3,15 +3,18 @@ import { ConfirmationNumberOutlined } from '@mui/icons-material'
 import { Chip, Grid } from '@mui/material'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import useSWR from 'swr';
-
+import {useState, useEffect} from "react"
 import { AdminLayout } from '../../components/layouts'
 import { IOrder, IUser } from '../../interfaces';
+import React,{useContext} from "react"
+import {AuthContext} from "../../context/auth/AuthContext"
+import { useRouter } from 'next/router';
 
 
 const columns:GridColDef[] = [
     { field: 'id', headerName: 'Orden ID', width: 250 },
-    { field: 'email', headerName: 'Correo', width: 250 },
-    { field: 'name', headerName: 'Nombre Completo', width: 300 },
+    { field: 'userId', headerName: 'Correo', width: 250 },
+    { field: 'firstName', headerName: 'Nombre', width: 300 },
     { field: 'total', headerName: 'Monto total', width: 300 },
     {
         field: 'isPaid',
@@ -28,14 +31,12 @@ const columns:GridColDef[] = [
         headerName: 'Ver orden',
         renderCell: ({ row }: GridValueGetterParams) => {
             return (
-                <a href={ `/admin/orders/${ row.id }` } target="_blank" rel="noreferrer" >
+                <a href={ `/admin/orders/${ row.id }` } >
                     Ver orden
                 </a>
             )
         }
     },
-    { field: 'createdAt', headerName: 'Creada en', width: 300 },
-
 ];
 
 
@@ -43,19 +44,42 @@ const columns:GridColDef[] = [
 
 const OrdersPage = () => {
 
-    const { data, error } = useSWR<IOrder[]>('/api/admin/orders');
+    const{user,isLoggedIn}=useContext(AuthContext)
+    var inicio:any[] = []
+    const [orders, setOrders]= useState(inicio)
+    const router = useRouter();
+useEffect(()=>{
+    async function fetchData(){
+        try {
+            const t= await fetch(`https://globalmarkets13.herokuapp.com/orders/getAllOrders`,{
+                method:"GET",
+                headers:{
+                    "Content-type":"application/json"
+                }
+            })
+            const enviar= await t.json()
+            setOrders(enviar) 
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    if(orders.length===0){
+        fetchData();
+    } 
+},[orders])
 
-    if ( !data && !error ) return (<></>);
-    
-    const rows = data!.map( order => ({
-        id    : order._id,
-        email : (order.user as IUser).email,
-        name  : (order.user as IUser).name,
-        total : order.total,
-        isPaid: order.isPaid,
-        noProducts: order.numberOfItems,
-        createdAt: order.createdAt,
-    }));
+
+const rows = orders.map(p=>{
+    return{
+        id:p._id,
+        userId:p.userId,
+        firstName:p.shippingAddress.firstName,
+        total:p.total,
+        isPaid:p.isPaid,
+        noProducts:p.numberOfItems,
+
+    }
+})
 
 
   return (

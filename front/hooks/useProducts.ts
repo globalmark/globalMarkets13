@@ -8,7 +8,7 @@ import { IProduct } from '../interfaces';
 export const useProducts = (url: string, config: SWRConfiguration = {} ) => {
 
     // const { data, error } = useSWR<IProduct[]>(`/api${ url }`, fetcher, config );
-    const { data, error } = useSWR<IProduct[]>(`https://globalmarkets.herokuapp.com${ url }`, config );
+    const { data, error } = useSWR<IProduct[]>(`https://globalmarkets13.herokuapp.com${ url }`, config );
 
     return {
         products: data || [],

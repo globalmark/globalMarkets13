@@ -6,6 +6,7 @@ import { CartContext, cartReducer } from "./";
 import * as React from "react";
 
 export interface CartState {
+  isLoaded:boolean;
   cart: ICartProduct[];
   numberOfItems: number;
   subTotal: number;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const CART_INITIAL_STATE: CartState = {
+  isLoaded:false,
   cart: [],
   numberOfItems: 0,
   subTotal: 0,
@@ -118,6 +120,12 @@ export const CartProvider: FC<Props> = ({ children }) => {
   const removeCartProduct = (product: ICartProduct) => {
     dispatch({ type: "[Cart] - Remove product in cart", payload: product });
   };
+  const removeAll = ()=>{
+    dispatch({
+      type: "[Cart] - Remove",
+      payload: [],
+    })
+  }
 
   return (
     <CartContext.Provider
@@ -128,6 +136,7 @@ export const CartProvider: FC<Props> = ({ children }) => {
         addProductToCart,
         removeCartProduct,
         updateCartQuantity,
+        removeAll
       }}>
       {children}
     </CartContext.Provider>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import useSWR from 'swr';
 import { AttachMoneyOutlined, CreditCardOffOutlined, CreditCardOutlined, DashboardOutlined, GroupOutlined, CategoryOutlined, CancelPresentationOutlined, ProductionQuantityLimitsOutlined, AccessTimeOutlined } from '@mui/icons-material';
 
@@ -6,49 +6,26 @@ import { AdminLayout } from '../../components/layouts'
 import { Grid, Typography } from '@mui/material'
 import { SummaryTile } from '../../components/admin'
 import { DashboardSummaryResponse } from '../../interfaces';
+import { tesloApi } from '../../api';
+import { GetServerSideProps } from 'next';
+import { AuthContext } from '../../context';
+import { useRouter } from 'next/router';
 
-const DashboardPage = () => {
 
-    const { data, error } = useSWR<DashboardSummaryResponse>('/api/admin/dashboard', {
-        refreshInterval: 30 * 1000 // 30 segundos
-    });
 
+const DashboardPage = (props) => {
+    const {user} = useContext(AuthContext);
+    const router = useRouter();
     const [refreshIn, setRefreshIn] = useState(30);
-
     useEffect(() => {
-      const interval = setInterval(()=>{
+    const interval = setInterval(()=>{
         console.log('Tick');
         setRefreshIn( refreshIn => refreshIn > 0 ? refreshIn - 1: 30 );
-      }, 1000 );
+    }, 1000 );
     
       return () => clearInterval(interval)
     }, []);
-    
-
-
-
-    if ( !error && !data ) {
-        return <></>
-    }
-
-    if ( error ){
-        console.log(error);
-        return <Typography>Error al cargar la información</Typography>
-    }
-
-
-    const {
-        numberOfOrders,
-        paidOrders,
-        numberOfClients,
-        numberOfProducts,
-        productsWithNoInventory,
-        lowInventory,
-        notPaidOrders,
-    } = data!;
-
-
-  return (
+    return (
     <AdminLayout
         title='Dashboard'
         subTitle='Estadisticas generales'
@@ -58,46 +35,42 @@ const DashboardPage = () => {
         <Grid container spacing={2}>
             
             <SummaryTile 
-                title={ numberOfOrders }
+                title={ props.ordenes.length }
                 subTitle="Ordenes totales"
                 icon={ <CreditCardOutlined color="secondary" sx={{ fontSize: 40 }} /> }
             />
 
             <SummaryTile 
-                title={ paidOrders }
+                title={ props.ordenes.filter(i=>i.isPaid).length }
                 subTitle="Ordenes pagadas"
                 icon={ <AttachMoneyOutlined color="success" sx={{ fontSize: 40 }} /> }
             />
 
             <SummaryTile 
-                title={ notPaidOrders }
+                title={ props.ordenes.filter(i=>i.isPaid === false).length }
                 subTitle="Ordenes pendientes"
                 icon={ <CreditCardOffOutlined color="error" sx={{ fontSize: 40 }} /> }
             />
 
             <SummaryTile 
-                title={ numberOfClients }
+                title={ props.usuarios.length }
                 subTitle="Clientes"
                 icon={ <GroupOutlined color="primary" sx={{ fontSize: 40 }} /> }
             />
 
             <SummaryTile 
-                title={ numberOfProducts }
+                title={ props.date.length }
                 subTitle="Productos"
                 icon={ <CategoryOutlined color="warning" sx={{ fontSize: 40 }} /> }
             />
 
             <SummaryTile 
-                title={ productsWithNoInventory }
+                title={ props.date.filter(i=>i.inStock <= 0).length }
                 subTitle="Sin existencias"
                 icon={ <CancelPresentationOutlined color="error" sx={{ fontSize: 40 }} /> }
             />
 
-            <SummaryTile 
-                title={ lowInventory }
-                subTitle="Bajo inventario"
-                icon={ <ProductionQuantityLimitsOutlined color="warning" sx={{ fontSize: 40 }} /> }
-            />
+            
 
             <SummaryTile 
                 title={ refreshIn }
@@ -112,4 +85,35 @@ const DashboardPage = () => {
   )
 }
 
+export const getServerSideProps: GetServerSideProps= async()=>{
+    const datos= await fetch(`https://globalmarkets13.herokuapp.com/products`,{
+        method:"GET",
+        headers:{
+            "Content-type":"application/json"
+        },
+        
+    })
+    const date= await datos.json()
+    const orders= await fetch(`https://globalmarkets13.herokuapp.com/orders/getAllOrders`,{
+        method:"GET",
+        headers:{
+            "Content-type":"application/json"
+        },
+        
+    })
+    const ordenes = await orders.json()
+    const users= await fetch(`https://globalmarkets13.herokuapp.com/users/user/`,{
+        method:"GET",
+        headers:{
+            "Content-type":"application/json"
+        },
+        
+    })
+    const usuarios = await users.json()
+    return {props:{date,ordenes,usuarios}}
+
+}
+
 export default DashboardPage
+
+

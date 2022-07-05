@@ -19,7 +19,3 @@ return (
     )
 }
 export default CocinaPage
-/*
-export const getServerSideProps:GetServerSideProps=>{
-
-}*/

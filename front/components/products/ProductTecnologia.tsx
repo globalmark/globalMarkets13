@@ -2,12 +2,9 @@ import { Typography,Button,FormControl,Stack,Pagination,InputLabel,Select,MenuIt
 import { useEffect,useState,FC} from 'react'
 import { ShopLayout } from "../../components/layouts";
 import { ProductList } from "../../components/products";
-import { useProducts } from "../../hooks";
 import { ExpandMoreRounded, ExpandMoreTwoTone } from "@mui/icons-material";
-import { SeedProduct } from "../../database/products";
-import { IProduct } from '../../interfaces'
 
-var inicio:any[] = [];
+
 
 interface Props {
     filtro:string,
@@ -15,7 +12,6 @@ interface Props {
     productos: any[];
 }
 const Tecnologia:FC<Props> = ({filtro,category,productos})=>{
-    //const { products } = useProducts('/products');
     const [product1, setProduct1] = useState([...productos]);
     const [respaldo,setRespaldo] = useState([...productos]);
     const [page,setPage] = useState(0);
@@ -25,11 +21,8 @@ const Tecnologia:FC<Props> = ({filtro,category,productos})=>{
     const [contador, setContador] = useState(1);
     const [filtros,setFiltros] = useState({min:false,max:false,A_Z:false,Z_A:false,restablecer:false,resTallas:false,accesorios:false,computadoras:false,monitores:false,consolas:false,juegos:false,controles:false,celulares:false,tablet:false,tv:false});
     useEffect(()=>{
-            //setProduct1(products.filter(i=>i.gender === filtro));
             setProduct1([...productos]);
-
-            //setRespaldo(products.filter(i=>i.gender === filtro))
-            setRespaldo([...productos])
+            setRespaldo([...productos]);
     },[productos]);
     const next = ()=>{
         if(product1.length > page + 11){
@@ -43,8 +36,6 @@ const Tecnologia:FC<Props> = ({filtro,category,productos})=>{
     }
     const respuesta = ():any[]=>{
         if(filtros.restablecer){
-            //setProduct1(products.filter(i=>i.gender === filtro));
-            //setRespaldo(products.filter(i=>i.gender === filtro));
             setProduct1([...productos]);
             setRespaldo([...productos]);
             setFiltros(prev=>{
@@ -217,7 +208,6 @@ const Tecnologia:FC<Props> = ({filtro,category,productos})=>{
         return product1.slice(page, page+11);
     }
     const prueba = (e:any)=>{ 
-        console.log("esto es product",product1);
         setFiltros(prev=>{
             return {
             ...prev,
