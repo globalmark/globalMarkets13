@@ -47,16 +47,16 @@ const RegisterPage = () => {
         }
         
         // Todo: navegar a la pantalla que el usuario estaba
-        router.replace('/');
+        router.push('/');
 
     }
 
     return (
         <AuthLayout title={'Ingresar'}>
             <form onSubmit={ handleSubmit(onRegisterForm) } noValidate>
-                <Box sx={{ width: 350, padding:'10px 20px' }}>
+                <Box sx={{ width: 300, height: 300 }}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
+                        <Grid item xs={8}>
                             <Typography variant='h1' component="h1">Crear cuenta</Typography>
                             <Chip 
                                 label="No reconocemos ese usuario / contraseña"
@@ -67,7 +67,7 @@ const RegisterPage = () => {
                             />
                         </Grid>
 
-                        <Grid item xs={12}>
+                        <Grid item xs={"auto"}>
                             <TextField
                                 label="Nombre"
                                 variant="filled"
@@ -80,7 +80,7 @@ const RegisterPage = () => {
                                 helperText={ errors.name?.message }
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={"auto"}>
                             <TextField
                                 label="Apellido"
                                 variant="filled"
@@ -91,7 +91,7 @@ const RegisterPage = () => {
                                 })}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={"auto"}>
                             <TextField
                                 label="Nombre De Usuario"
                                 variant="filled"
@@ -102,7 +102,7 @@ const RegisterPage = () => {
                                 })}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={"auto"}>
                             <TextField
                                 label="Contraseña"
                                 type='password'
@@ -117,7 +117,7 @@ const RegisterPage = () => {
                             />
                         </Grid>
                         
-                        <Grid item xs={12}>
+                        <Grid item xs={"auto"}>
                             <TextField
                                 type="email"
                                 label="Correo"
@@ -132,7 +132,7 @@ const RegisterPage = () => {
                                 helperText={ errors.email?.message }
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={"auto"}>
                             <TextField
                                 label="Nº De Identidad"
                                 variant="filled"
@@ -143,7 +143,7 @@ const RegisterPage = () => {
                                 })}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={"auto"}>
                             <TextField
                                 label="Edad"
                                 variant="filled"
@@ -154,7 +154,7 @@ const RegisterPage = () => {
                                 })}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={"auto"}>
                             <TextField
                                 label="Calle Y Numero"
                                 variant="filled"
@@ -165,7 +165,7 @@ const RegisterPage = () => {
                                 })}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={"auto"}>
                             <TextField
                                 label="Tel/Cel"
                                 variant="filled"
@@ -178,7 +178,7 @@ const RegisterPage = () => {
                         </Grid>
          
 
-                        <Grid item xs={12}>
+                        <Grid item xs={"auto"}>
                             <Button
                                 type="submit"
                                 color="secondary"
@@ -190,7 +190,7 @@ const RegisterPage = () => {
                             </Button>
                         </Grid>
 
-                        <Grid item xs={12} display='flex' justifyContent='end'>
+                        <Grid item xs={"auto"} display='flex' justifyContent='end'>
                             <NextLink href="/auth/login" passHref>
                                 <Link underline='always'>
                                     ¿Ya tienes cuenta?

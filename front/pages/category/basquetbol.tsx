@@ -1,23 +1,4 @@
-/*import Deporte from "../../components/products/ProductDeporte";
-import type { NextPage } from "next";
 
-const BasquetPage: NextPage = ({prueba}:any) => {
-
-    return (<>
-      <Deporte filtro="basquetbol" category="Basquetbol" productos={prueba}/>
-      <form action=""></form>
-    </>
-    );
-  };
-
-  
-  export default BasquetPage;
-
-  BasquetPage.getInitialProps = async()=>{
-    let data = await fetch('https://globalmarkets.herokuapp.com/products').then(res=>res.json());
-    let productos = data.filter((i:any)=>i.gender === 'basquetbol');
-    return  {prueba: productos} 
-}*/
 import type { NextPage } from 'next';
 import { useProducts } from '../../hooks';
 import { FullScreenLoading } from '../../components/ui';

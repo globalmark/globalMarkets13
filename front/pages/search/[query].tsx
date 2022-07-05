@@ -1,42 +1,58 @@
-import type { NextPage, GetServerSideProps } from 'next';
-import { Typography,Box } from '@mui/material';
-import { ShopLayout } from '../../components/layouts';
-import { ProductList } from '../../components/products';
-import { IProduct } from '../../interfaces';
+import type { NextPage, GetServerSideProps,GetStaticPaths,GetStaticProps } from 'next';
+import { dbProducts } from '../../database';
+import SearchPage1 from '../../components/products/Search';
+import { useProducts } from '../../hooks';
+
+
 interface Props {
-    products: IProduct[];
-    foundProducts: boolean;
     query: string;
-}
-
-const SearchPage: NextPage<Props> = ({ products, foundProducts, query }) => {
-
-    return (
-        <ShopLayout title={'Teslo-Shop - Search'} pageDescription={'Encuentra los mejores productos de Teslo aquí'}>
-            <Typography variant='h1' component='h1'>Buscar productos</Typography>
-            {
-                foundProducts 
-                    ? <Typography variant='h2' sx={{ mb: 1 }} textTransform="capitalize">Tu búsqueda: { query }</Typography>
-                    : (<>
-                        <Box display='flex'>
-                            <Typography variant='h2' sx={{ mb: 1 }}>No encontramos ningún produto</Typography>
-                            <Typography variant='h2' sx={{ ml: 1 }} color="secondary" textTransform="capitalize">{ query }</Typography>
-                        </Box>
-                        <Box display='flex'>
-                            <Typography variant='h2' sx={{ mb: 1 }}>Productos sugeridos: </Typography>
-                        </Box>
-                            
-                        </>)
-            }
-            <ProductList products={ products } />
-        </ShopLayout>
-    )
 };
 
+
+
+const SearchPage: NextPage<Props> = ({query}) => {
+    const {products} = useProducts('/products');
+    const prueba = ()=>{
+        const res = products.filter((i:any)=>{
+            let tag = Array.isArray(i.tags)? i.tags[0] : i.tags
+        if(i.title.toLowerCase().includes(query)) return i;
+        else if(i.description.toLowerCase().includes(query)) return i;
+        else if(!!i.slug && i.slug.toLowerCase().includes(query)) return i;
+        else if(!!i.tags && tag.toLowerCase().includes(query)) return i;
+        else if(!!i.gender && i.gender.toLowerCase().includes(query)) return i;
+        else if(!!i.types && i.types.toLowerCase().includes(query))return i;
+        else if(!!i.caterogiras && i.caterogiras.length > 0 && i.caterogiras[0].toLowerCase().includes(query)) return i
+        });
+        const ver = res.length > 0
+        if(!ver){
+            return {
+                productos: products.filter((i:any)=>{
+                    let tag = Array.isArray(i.tags)? i.tags[0] : i.tags
+                if(i.title.toLowerCase().includes("juegos")) return i;
+                else if(i.description.toLowerCase().includes("juegos")) return i;
+                else if(!!i.slug && i.slug.toLowerCase().includes("juegos")) return i;
+                else if(!!i.tags && tag.toLowerCase().includes("juegos")) return i;
+                else if(!!i.gender && i.gender.toLowerCase().includes("juegos")) return i;
+                else if(!!i.types && i.types.toLowerCase().includes("juegos"))return i;
+                else if(!!i.caterogiras && i.caterogiras.length > 0 && i.caterogiras[0].toLowerCase().includes("juegos")) return i
+                }),
+                ver
+            }
+        }
+        return {
+            productos:res,
+            ver
+        }
+    };
+    
+    return (
+        <SearchPage1 query={query} products={prueba().productos} foundProducts={prueba().ver} />
+    )
+};
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     
     const { query = '' } = params as { query: string };
-
+    
     if ( query.length === 0 ) {
         return {
             redirect: {
@@ -45,37 +61,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             }
         }
     }
-    let find  = query.toString().toLowerCase();
-    let response = await fetch('https://globalmarkets.herokuapp.com/products').then(res=>res.json());
-    let products = response.filter((i:any)=>{
-        let tag = Array.isArray(i.tags)? i.tags[0] : i.tags
-        if(i.title.toLowerCase().includes(find)) return i;
-        else if(i.description.toLowerCase().includes(find)) return i;
-        else if(!!i.slug && i.slug.toLowerCase().includes(find)) return i;
-        else if(!!i.tags && tag.toLowerCase().includes(find)) return i;
-        else if(!!i.gender && i.gender.toLowerCase().includes(find)) return i;
-        else if(!!i.types && i.types.toLowerCase().includes(find))return i;
-        else if(!!i.caterogiras && i.caterogiras.length > 0 && i.caterogiras[0].toLowerCase().includes(find)) return i
-    })   
-    const foundProducts = products.length > 0;
-    if(!foundProducts){
-
-        let data = await fetch("https://globalmarkets.herokuapp.com/products").then(res=>res.json());
-        return {
-            props: {
-                products:data.slice(0,15),
-                foundProducts,
-                query
-            }
-        }
-    }
     return {
         props: {
-            products,
-            foundProducts,
             query
         }
     }
-    
 }
+
 export default SearchPage;

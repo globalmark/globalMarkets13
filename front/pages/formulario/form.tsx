@@ -5,31 +5,32 @@ import BungalowOutlinedIcon from '@mui/icons-material/BungalowOutlined';
 import SurfingOutlinedIcon from '@mui/icons-material/SurfingOutlined';
 import TvOutlinedIcon from '@mui/icons-material/TvOutlined';
 import AccessibilityOutlinedIcon from '@mui/icons-material/AccessibilityOutlined';
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Typography, Toolbar} from '@mui/material';
 import { Box } from '@mui/system';
 import { Icon } from '@mui/material';
+import { ShopLayout } from '../../components/layouts';
+import { NextPage } from 'next';
 
-export default function form() {
-  return (
-    <div>
-        <div>
-            <h1>Bienvenido, aqui podras publicar un producto </h1>
-        </div>
-        <Grid container>
-            <Grid item xs={2}>
-                <Box border={2}>
+
+
+const Form:NextPage =  () => {
+return (
+    <ShopLayout title='Bienvenido, aqui podras publicar un producto' pageDescription='Formularios para crear productos' >
+        <Box  sx={{backgroundColor:'#3D3A3A',textAlign:'center',alignContent:'center',justifyContent:'center'}}>
+        <Typography sx={{color:'lightgray'}}  variant='h1' component='h1'>Bienvenido, aqui podras publicar un producto</Typography>
+
+            <Grid item xs={4}>
+                <Box sx={{backgroundColor:'lightgray'}}  border={2}>
                     <Link href="formIndumentaria" >
                         <Button 
-                            endIcon={<AccessibilityOutlinedIcon></AccessibilityOutlinedIcon>} >
-                            Indumentaria
+                            endIcon={<AccessibilityOutlinedIcon></AccessibilityOutlinedIcon>}>
+                            Moda
                         </Button>
                     </Link>
-                    
-                    
                 </Box>    
             </Grid>
-            <Grid item xs={2}>
-                <Box border={2}>
+        <Grid item xs={2}>
+                <Box sx={{backgroundColor:'lightgray'}} border={2}>
                     
                         <Link href="formTecnologia">
                             <Button 
@@ -42,30 +43,20 @@ export default function form() {
                     
                 </Box>
             </Grid>
+            
             <Grid item xs={2}>
-                <Box border={2}>
-                    <Link href="formElectrodomesticos">
-                        <Button 
-                        endIcon={<TvOutlinedIcon></TvOutlinedIcon>}>
-                            Electrodomesticos
-                        </Button>
-                    </Link>
-                    
-                </Box>
-            </Grid>
-            <Grid item xs={2}>
-                <Box border={2}>
-                    <Link href="formMuebles">
+                <Box sx={{backgroundColor:'lightgray'}} border={2}>
+                    <Link href="formHogar">
                         <Button 
                         endIcon={<BungalowOutlinedIcon></BungalowOutlinedIcon>}>
-                            Muebles
+                            Hogar
                         </Button>
                     </Link>
                     
                 </Box>
             </Grid>
             <Grid item xs={2}>
-                    <Box border={2}>
+                    <Box sx={{backgroundColor:'lightgray'}} border={2}>
                         <Link href="formDeporte"> 
                             <Button 
                             endIcon={<SurfingOutlinedIcon></SurfingOutlinedIcon>}>
@@ -76,10 +67,8 @@ export default function form() {
                     </Box>
                 
             </Grid>
-        </Grid>
-    </div>
-
-
-    
+    </Box>
+</ShopLayout>
   )
 };
+export default Form;

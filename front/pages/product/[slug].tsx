@@ -1,6 +1,5 @@
-/*
 import { useState, useContext } from 'react';
-import { NextPage, GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
+import { NextPage, GetStaticPaths, GetStaticProps, GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
@@ -11,252 +10,35 @@ import { ShopLayout } from '../../components/layouts';
 import { ProductSlideshow, SizeSelector } from '../../components/products';
 import { ItemCounter } from '../../components/ui/ItemCounter';
 
-import { dbProducts } from '../../database';
-import { IProduct, ICartProduct, ISize } from '../../interfaces';
+import {  ICartProduct, ISize } from '../../interfaces';
 
 
 interface Props {
-  product: IProduct
+  product: any
 }
 
 
-const ProductPage:NextPage<Props> = ({ product }) => {
-
+const ProductPage:NextPage<Props> = (props) => {
+  console.log("esto es props:",props);
+  
   const router = useRouter();
   const { addProductToCart } = useContext( CartContext )
-
+  
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
-    _id: product._id,
-    image: product.images ,
-    price: product.price,
+    _id:   props.product?._id,
+    image: props.product?.images ,
+    price: props.product?.price,
     size: undefined,
-    slug: product.slug,
-    title: product.title,
-    gender: product.gender,
+    slug:  props.product?.slug,
+    title: props.product?.title,
+    gender:props.product?.gender,
     quantity: 1,
   }) 
-
+  
 
   const selectedSize = ( size: ISize ) => {
-
-    setTempCartProduct( currentProduct => ({
-      ...currentProduct,
-      size
-    }));
-  }
-
-  const onUpdateQuantity = ( quantity: number ) => {
-    setTempCartProduct( currentProduct => ({
-      ...currentProduct,
-      quantity
-    }));
-  }
-
-
-  const onAddProduct = () => {
-    if(product.sizes.length < 1) {
-      addProductToCart(tempCartProduct);
-      router.push('/cart');
-    }
-    if ( !tempCartProduct.size ) { return; }
-
-    addProductToCart(tempCartProduct);
-    router.push('/cart');
-  }
-
- console.log("esto es el estado",tempCartProduct);
- 
-  return (
-    <ShopLayout title={ product.title } pageDescription={ product.description }>
-    
-      <Grid container spacing={3}>
-
-        <Grid item xs={12} sm={ 7 }>
-          <ProductSlideshow 
-            images={ product.images }
-          />
-        </Grid>
-
-        <Grid item xs={ 12 } sm={ 5 }>
-          <Box display='flex' flexDirection='column'>
-
-            <Typography variant='h1' component='h1'>{ product.title }</Typography>
-            <Typography variant='subtitle1' component='h2'>{ `$${product.price}` }</Typography>
-
-            <Box sx={{ my: 2 }}>
-              <Typography variant='subtitle2'>Cantidad</Typography>
-              <ItemCounter 
-                currentValue={tempCartProduct.quantity}
-                updatedQuantity={ onUpdateQuantity  }
-                maxValue={ product.inStock > 10 ? 10: product.inStock }
-              />
-              {<SizeSelector 
-                // selectedSize={ product.sizes[2] } 
-                sizes={ product.sizes }
-                selectedSize={ tempCartProduct.size }
-                onSelectedSize={ selectedSize }
-              />}
-
-            </Box>
-
-
-            {
-              (product.inStock > 0)
-               ? (
-                  <Button 
-                    color="secondary" 
-                    className='circular-btn'
-                    onClick={ onAddProduct }
-                  >
-                    {
-                      product.sizes.length === 0? 'Agregar al carrito' : 
-                      tempCartProduct.size
-                        ? 'Agregar al carrito'
-                        : 'Seleccione una talla'
-                    }
-                  </Button>
-               )
-               : (
-                 <Chip label="No hay disponibles" color="error" variant='outlined' />
-               )
-            }
-
-
-            <Box sx={{ mt:3 }}>
-              <Typography variant='subtitle2'>Descripción</Typography>
-              <Typography variant='body2'>{ product.description }</Typography>
-            </Box>
-
-          </Box>
-        </Grid>
-
-
-      </Grid>
-
-    </ShopLayout>
-  )
-}
-
-
-// getServerSideProps 
-// You should use getServerSideProps when:
-// - Only if you need to pre-render a page whose data must be fetched at request time
-//* No usar esto.... SSR
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  
-//   const { slug = '' } = params as { slug: string };
-//   const product = await dbProducts.getProductBySlug( slug );
-
-  // if ( !product ) {
-  //   return {
-  //     redirect: {
-  //       destination: '/',
-  //       permanent: false
-  //     }
-  //   }
-  // }
-
-//   return {
-//     props: {
-//       product
-//     }
-//   }
-// }
-
-
-// getStaticPaths....
-// You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
-/*export const getStaticPaths: GetStaticPaths = async (ctx) => {
-  
-  const productSlugs = await fetch("https://globalmarkets.herokuapp.com/products").then(res=>res.json());
-
-
-  
-  return {
-    paths: productSlugs.map( (i:any) => ({
-      params: {
-        slug : i._id? i._id: i.slug
-      }
-    })),
-    fallback: 'blocking'
-  }
-}
-
-// You should use getStaticProps when:
-//- The data required to render the page is available at build time ahead of a user’s request.
-//- The data comes from a headless CMS.
-//- The data can be publicly cached (not user-specific).
-//- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  
-  const { slug = '' } = params as { slug: string };
-  const product = await fetch(`https://globalmarkets.herokuapp.com/products/${slug}`).then(res=>res.json());
-  
-
-  if ( !product ) {
-    console.log("no hay productos");
-    
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false
-      }
-    }
-  }
-
-  return {
-    props: {
-      product
-    }
-  }
-}
-
-
-
-export default ProductPage
-*/
-
-import { useState, useContext } from 'react';
-import { NextPage, GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
-import { useRouter } from 'next/router';
-
-import { Box, Button, Chip, Grid, Typography } from '@mui/material';
-
-import { CartContext } from '../../context/cart/CartContext';
-
-import { ShopLayout } from '../../components/layouts';
-import { ProductSlideshow, SizeSelector } from '../../components/products';
-import { ItemCounter } from '../../components/ui/ItemCounter';
-
-import { dbProducts } from '../../database';
-import { IProduct, ICartProduct, ISize } from '../../interfaces';
-
-
-interface Props {
-  product: IProduct
-}
-
-
-const ProductPage:NextPage<Props> = ({ product }) => {
-
-  const router = useRouter();
-  const { addProductToCart } = useContext( CartContext )
-
-  const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
-    _id: product._id,
-    image: product.images ,
-    price: product.price,
-    size: undefined,
-    slug: product.slug,
-    title: product.title,
-    gender: product.gender,
-    quantity: 1,
-  }) 
-
-
-  const selectedSize = ( size: ISize ) => {
-    setTempCartProduct( currentProduct => ({
-      ...currentProduct,
+    setTempCartProduct( currentproduct => ({
+      ...currentproduct,
       size
     }));
   }
@@ -271,24 +53,25 @@ const ProductPage:NextPage<Props> = ({ product }) => {
 
   const onAddProduct = () => {
     
-    if(product.sizes.length < 1) {
+    if(props.product.sizes.length < 1) {
       addProductToCart(tempCartProduct)
       router.push('/cart');
     }
     if ( !tempCartProduct.size ) { return; }
     addProductToCart(tempCartProduct);
     router.push('/cart');
-  }
+  };
+  
 
   
   return (
-    <ShopLayout title={ product.title } pageDescription={ product.description }>
+    <ShopLayout title={ props.product.title } pageDescription={ props.product.description }>
     
       <Grid container spacing={3}>
 
         <Grid item xs={12} sm={ 7 }>
           <ProductSlideshow 
-            images={ product.images }
+            images={ props.product?.images }
           />
         </Grid>
 
@@ -296,8 +79,8 @@ const ProductPage:NextPage<Props> = ({ product }) => {
           <Box display='flex' flexDirection='column'>
 
             {/* titulos */}
-            <Typography variant='h1' component='h1'>{ product.title }</Typography>
-            <Typography variant='subtitle1' component='h2'>{ `$${product.price}` }</Typography>
+            <Typography variant='h1' component='h1'>{ props.product.title }</Typography>
+            <Typography variant='subtitle1' component='h2'>{ `$${props.product.price}` }</Typography>
 
             {/* Cantidad */}
             <Box sx={{ my: 2 }}>
@@ -305,11 +88,11 @@ const ProductPage:NextPage<Props> = ({ product }) => {
               <ItemCounter 
                 currentValue={tempCartProduct.quantity}
                 updatedQuantity={ onUpdateQuantity  }
-                maxValue={ product.inStock > 10 ? 10: product.inStock }
+                maxValue={ props.product.inStock > 10 ? 10: props.product.inStock }
               />
               {<SizeSelector 
                 // selectedSize={ product.sizes[2] } 
-                sizes={ product.sizes }
+                sizes={ props.product.sizes }
                 selectedSize={ tempCartProduct.size }
                 onSelectedSize={ selectedSize }
               />}
@@ -319,17 +102,17 @@ const ProductPage:NextPage<Props> = ({ product }) => {
 
             {/* Agregar al carrito */}
             {
-              (product.inStock > 0)
+              (props.product.inStock > 0)
                ? (
                   <Button 
                     color="secondary" 
                     className='circular-btn'
                     onClick={ onAddProduct }
                   >
-                    { product.sizes.length < 1? 'Agregar al carrito' : 
+                    { props.product.sizes.length < 1? 'Agregar al carrito' : 
                         tempCartProduct.size
                         ? 'Agregar al carrito'
-                        : 'Seleccione una talla'
+                        : 'Seleccione un tamaño'
                     }
                   </Button>
                )
@@ -337,12 +120,11 @@ const ProductPage:NextPage<Props> = ({ product }) => {
                  <Chip label="No hay disponibles" color="error" variant='outlined' />
                )
             }
-
-
+            
             {/* Descripción */}
             <Box sx={{ mt:3 }}>
               <Typography variant='subtitle2'>Descripción</Typography>
-              <Typography variant='body2'>{ product.description }</Typography>
+              <Typography variant='body2'>{ props.product.description }</Typography>
             </Box>
 
           </Box>
@@ -355,80 +137,69 @@ const ProductPage:NextPage<Props> = ({ product }) => {
   )
 }
 
-
-// getServerSideProps 
-// You should use getServerSideProps when:
-// - Only if you need to pre-render a page whose data must be fetched at request time
-//* No usar esto.... SSR
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps= async({req,query})=>{
+  console.log("query",query.slug)
+  const datos= await fetch(`https://globalmarkets13.herokuapp.com/products/${query.slug}`,{
+      method:"GET",
+      headers:{
+          "Content-type":"application/json"
+      },
+  })
+  const product= await datos.json()
   
-//   const { slug = '' } = params as { slug: string };
-//   const product = await dbProducts.getProductBySlug( slug );
-
-  // if ( !product ) {
-  //   return {
-  //     redirect: {
-  //       destination: '/',
-  //       permanent: false
-  //     }
-  //   }
-  // }
-
-//   return {
-//     props: {
-//       product
-//     }
-//   }
-// }
+  
+  
+  return {props:{product}}
 
 
-// getStaticPaths....
-// You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
+
+
+
+}
+
+/*
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   
-  const productSlugs = await fetch("http://localhost:9000/products/").then(res=>res.json());
+  const productSlugs = await fetch("https://globalmarkets13.herokuapp.com/products").then(res=>res.json());
 
 
   
   return {
     paths: productSlugs.map( (i:any) => ({
       params: {
-        slug : i._id
+        slug : i._id? `${i._id}` : `${i.slug}`
       }
     })),
     fallback: 'blocking'
   }
 }
 
-// You should use getStaticProps when:
-//- The data required to render the page is available at build time ahead of a user’s request.
-//- The data comes from a headless CMS.
-//- The data can be publicly cached (not user-specific).
-//- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   
   const { slug = '' } = params as { slug: string };
-  const product = await fetch(`https://globalmarkets.herokuapp.com/products/${slug}`).then(res=>res.json());
-  
-
-  if ( !product ) {
-    console.log("no hay productos");
+  const prueba = await fetch(`https://globalmarkets13.herokuapp.com/products`).then(res=>res.json());
+  const product = prueba.filter((i)=>{
+    if(i._id == slug) return i
+    else if (i.slug == slug) return i
+  })
+  if ( !product[0] ) {
     
     return {
       redirect: {
-        destination: '/',
+        destination: '/cart',
         permanent: false
       }
     }
   }
-
+  
   return {
+    
     props: {
       product
     }
   }
 }
-
+*/
 
 
   export default ProductPage

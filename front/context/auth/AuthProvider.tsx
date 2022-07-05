@@ -29,21 +29,30 @@ export const AuthProvider:FC<any> = ({ children }) => {
 
 
     useEffect(() => {
-        // checkToken();
+         checkToken();
     }, [])
 
-    // const checkToken = async() => {
 
-    //     try {
-    //         const { data } = await tesloApi.get('/users/validate-tokena');
-    //         const { token, user } = data;
-    //         Cookies.set('token', token );
-    //         dispatch({ type: '[Auth] - Login', payload: user });
-    //     } catch (error) {
-    //         Cookies.remove('token');
-    //     }
-    // }
-    
+
+
+
+    const checkToken = async() => {
+        if (!Cookies.get('token')) { 
+            return ;
+        }
+        const tokenn = Cookies.get('token');
+        console.log(tokenn)
+        try {
+            const { data } = await tesloApi.post('/users/users/secure',{token:tokenn});
+            const { token, user } = data;
+            Cookies.set('token', token );
+            dispatch({ type: '[Auth] - Login', payload: user });
+        } catch (error) {
+            // console.log('estro por aqui')
+            Cookies.remove('token');
+            console.log(error)
+        }
+    } 
 
 
 
@@ -51,7 +60,6 @@ export const AuthProvider:FC<any> = ({ children }) => {
 
         try {
             const { data } = await tesloApi.post('/users/users/login', {Username, email, password });
-            console.log (data)
             const { token, user } = data;
             Cookies.set('token', token );
             dispatch({ type: '[Auth] - Login', payload: user });

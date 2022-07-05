@@ -18,6 +18,7 @@ type CartActionType =
          total: number;
       }
    }
+   | { type: '[Cart] - Remove', payload: ICartProduct[] }
 
 
 export const cartReducer = ( state: CartState, action: CartActionType ): CartState => {
@@ -60,7 +61,11 @@ export const cartReducer = ( state: CartState, action: CartActionType ): CartSta
             ...state,
             ...action.payload
          }
-
+      case '[Cart] - Remove':
+            return {
+               ...state,
+               ...action.payload
+            }
        default:
           return state;
    }

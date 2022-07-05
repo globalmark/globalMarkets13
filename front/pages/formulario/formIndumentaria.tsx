@@ -1,10 +1,17 @@
 import React from 'react'
 import Link from "next/link";
 import {useState} from 'react'
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
+import {ShopLayout} from "../../components/layouts/ShopLayout"
+import { useRouter } from 'next/router';
+
+
+
 
 let inicio:String[] = []
 let otro:any[] = []
 function FormIndumentaria() {
+  const router = useRouter();
   const [input, setInput]= useState({
     title:"",
     description:"",
@@ -71,7 +78,7 @@ const postData= async(input:any)=>{
         console.log("esto es el input",input);
         console.log("esto es image",image);
         
-        const res= await fetch("http://localhost:9000/products",{
+        const res= await fetch("https://globalmarkets13.herokuapp.com/products",{
             method:"POST",
             headers:{
                 "Content-type":"application/json"
@@ -84,82 +91,85 @@ const postData= async(input:any)=>{
     } catch(error){
         console.log(error)
     }
-
+        alert('Producto Creado');
 
 }
   
   return (
     <div>
-        <div><h1> Bienvenidos a la seccion de indumentaria </h1></div>
-        <form onSubmit={handleSubmit} >
-          <div>
-            <label> * Nombre: </label>
-            <input type="text" name="title" defaultValue={input.title} onChange={(e)=> handleChange(e)} />
-          </div>
-          <div>
-            <label > *Genero:</label>
-            <select name='gender'  onChange={(e)=> handleChange(e)} >
-              <option>Todos los generos </option>
-              <option>Hombre</option>
-              <option>Mujer</option>
-              <option>Niños</option>
-            </select>
-          </div>
-          <div>
-            <label> *Tipo de indumentaria </label>
-            <select name="type" onChange={(e)=> handleChange(e)}  >
-              
-              <option> Remera</option>
-              <option> Campera </option>
-              <option>Gorra</option>
-              <option>Sweater</option>
-              <option>Pantalon</option>
-              <option>Short</option>
-            </select>
-          </div>
-          <div>
-            <label> * Descripcion </label>
-            <input type="text" name="description" onChange={(e)=> handleChange(e)} defaultValue={input.description}  />
-          </div>
-          <div>
-            <label > * Precio: $ </label>
-            <input type="text" name='price' onChange={(e)=> handleChange(e)} defaultValue={input.price}  />
-          </div>
-          <div>
-            <label > *Talles </label>
-            <select name='sizes'  onChange={(e)=> handleChange(e)}  >
-            <option > Todos los talles </option>
-            <option>XS </option>
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-            <option>XXL</option>
-            <option>XXXL</option>
-            </select>
-          </div>
-          <div>
-            <label > *Stock: </label>
-            <input type="number" min="0" name='inStock' defaultValue={input.inStock} onChange={(e)=> handleChange(e)} />
-          </div>
-          <div>
-            <label>* Imagen: </label>
-            <input type="file" name='images' defaultValue={input.images}  onChange={(e)=>subirImagen(e)} />
-          </div>
-          <div>
-            <button onClick={handleSubmit} > Crear</button>
-          </div>
-        </form> 
-        <div>
-          <Link href="/">
-            <button>
-              Home
-              </button>
-               </Link>
-        </div>
-        <div>
-          <p>(*) estos puntos son obligatorios </p>
-        </div>
+        <ShopLayout title="Bienvenidos a la seccion de indumentaria" pageDescription="Bienvenidos a la seccion de indumentaria" >
+       
+        <FormControl onSubmit={handleSubmit} sx={{  width:"100%",alignItems:"center" }} >
+            <Grid item xs={12} sm={ 10 }>             
+                <TextField label="* Nombre" variant="filled" name='title' defaultValue={input.title} onChange={(e)=> handleChange(e)} ></TextField>
+            </Grid>
+            <Grid    >
+                <FormControl sx={{ minWidth :180, padding:1,mt:1 }}>
+                    <InputLabel sx={{padding:1, mt:1}} > * Genero </InputLabel>
+                    <Select onChange={(e)=> handleChange(e)} name="gender" label="Genero" >
+                        <MenuItem value="men">Hombre </MenuItem>
+                        <MenuItem value="women" > Mujer </MenuItem>
+                        <MenuItem value="kid" > Niños </MenuItem>                       
+                    </Select>
+                </FormControl>
+            </Grid >
+            <Grid    >
+                <FormControl sx={{ minWidth :180, padding:1,mt:1 }}>
+                    <InputLabel sx={{padding:1, mt:1}} > * Tipo de articulo </InputLabel>
+                    <Select onChange={(e)=> handleChange(e)} name="type" label="Tipo de articulo" >
+                        <MenuItem value="Todas las catergorias">Todas las categorias </MenuItem>
+                        <MenuItem value="Remera" > Remera </MenuItem>
+                        <MenuItem value="Campera" > Campera </MenuItem>
+                        <MenuItem value="Sweater" > Sweater</MenuItem>
+                        <MenuItem value="Pantalon" > Pantalon</MenuItem>
+                    </Select>
+                </FormControl>
+            </Grid >
+            <Grid item xs={12} sm={ 10 } sx={{mt:1}} >
+                
+                <TextField label="* Descripcion" variant="filled" type="text" name='description' defaultValue={input.description} onChange={(e)=> handleChange(e)} />
+            </Grid>
+            <Grid item xs={12} sm={ 10 } sx={{mt:1}}>
+                
+                <TextField label="* Precio" variant="filled" type="text" name='price' defaultValue={input.price} onChange={(e)=> handleChange(e)} />
+            </Grid>
+            <Grid    >
+                <FormControl sx={{ minWidth :180, padding:1,mt:1 }}>
+                    <InputLabel sx={{padding:1, mt:1}} > * Tipo de articulo </InputLabel>
+                    <Select onChange={(e)=> handleChange(e)} name="sizes" label="Tallas" >
+                        
+                        <MenuItem value="XS" > xs </MenuItem>
+                        <MenuItem value="S" > s </MenuItem>
+                        <MenuItem value="M" > m</MenuItem>
+                        <MenuItem value="L"> l</MenuItem>
+                        <MenuItem value="XL">xl</MenuItem>
+                        <MenuItem value="XXL">xxl</MenuItem>
+                        <MenuItem value="XXXL">xxxl</MenuItem>
+                        <MenuItem value="XXXXL">xxxxl</MenuItem>
+                    </Select>
+                </FormControl>
+            </Grid >
+            <Grid item xs={12} sm={ 10 } sx={{mt:1}}>
+                
+                <TextField label="* Stock" type="number" variant="filled" name='inStock'  InputProps={{ inputProps: { min: 0 } }} defaultValue={input.inStock} onChange={(e)=> handleChange(e)} />
+            </Grid>
+            <Grid item xs={12} sm={ 10 } sx={{mt:1}}>
+                <Typography variant="h6" component="h6"> * imagen: </Typography> 
+                
+                <TextField  variant="filled" type="file" name='images' defaultValue={input.images}  onChange={(e)=>subirImagen(e)} />
+            </Grid>
+            <Box sx={{ mt: 5 }} display='flex' justifyContent='center' >
+                <Button color="secondary" className="circular-btn" size="large" onClick={handleSubmit} > Crear</Button>
+            </Box>
+            <Box sx={{ mt: 5 }} display='flex' >
+                <Link href="/">
+                    <Button color="secondary" size="large"  className="circular-btn" > HOME </Button  >
+                </Link>
+
+            </Box >
+          </FormControl> 
+         
+        </ShopLayout>  
 
     </div>
     

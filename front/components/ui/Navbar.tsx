@@ -1,4 +1,3 @@
-
 import { useContext, useState } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -29,8 +28,8 @@ export const Navbar = () => {
             <Toolbar>
                 <NextLink href='/' passHref>
                     <Link display='flex' alignItems='center'>
-                        <Typography variant='h6'>Teslo |</Typography>
-                        <Typography sx={{ ml: 0.5 }}>Shop</Typography>
+                        <Typography variant='h6'>Global |</Typography>
+                        <Typography sx={{ ml: 0.5 }}>Market</Typography>
                     </Link>  
                 </NextLink>
 

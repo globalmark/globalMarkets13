@@ -2,7 +2,7 @@ import { Typography,Button,FormControl,Stack,Pagination,InputLabel,Select,MenuIt
 import { useEffect,useState,FC} from 'react'
 import { ShopLayout } from "../../components/layouts";
 import { ProductList } from "../../components/products";
-import { ExpandMoreRounded, ExpandMoreTwoTone } from "@mui/icons-material";
+import { ExpandMoreRounded } from "@mui/icons-material";
 
 
 interface Props {
@@ -11,7 +11,6 @@ interface Props {
     productos: any[]
 }
 const Hogar:FC<Props> = ({filtro,category,productos})=>{
-    //const { products } = useProducts('/products');
     const [product1, setProduct1] = useState(productos);
     const [respaldo,setRespaldo] = useState(productos);
     const [page,setPage] = useState(0);
@@ -21,9 +20,7 @@ const Hogar:FC<Props> = ({filtro,category,productos})=>{
     const [contador, setContador] = useState(1);
     const [filtros,setFiltros] = useState({min:false,max:false,A_Z:false,Z_A:false,restablecer:false,resTallas:false,escritorio:false,cama:false,sofa:false,vajilla:false,comedor:false,utensilios:false,cristaleria:false,ventiladores:false,acondicionado:false,calentadores:false,chimeneas:false});
     useEffect(()=>{
-            //setProduct1(products.filter(i=>i.gender === filtro));
             setProduct1([...productos]);
-            //setRespaldo(products.filter(i=>i.gender === filtro))
             setRespaldo([...productos])
     },[productos]);
     const next = ()=>{
@@ -38,8 +35,6 @@ const Hogar:FC<Props> = ({filtro,category,productos})=>{
     }
     const respuesta = ():any[]=>{
         if(filtros.restablecer){
-            //setProduct1(products.filter(i=>i.gender === filtro));
-            //setRespaldo(products.filter(i=>i.gender === filtro));
             setProduct1([...productos]);
             setRespaldo([...productos]);
             setFiltros(prev=>{
@@ -232,7 +227,6 @@ const Hogar:FC<Props> = ({filtro,category,productos})=>{
         return product1.slice(page, page+11);
     }
     const prueba = (e:any)=>{ 
-        console.log("esto es product",product1);
         setFiltros(prev=>{
             return {
             ...prev,

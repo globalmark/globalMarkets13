@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { NextPage,GetServerSideProps } from 'next';
 import { useProducts } from '../../hooks';
 import { FullScreenLoading } from '../../components/ui';
 import Hogar from "../../components/products/ProductHogar";
